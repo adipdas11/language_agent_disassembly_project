@@ -46,5 +46,18 @@ for (const [width, height] of viewports) {
     expect(panels[3].top-panels[2].bottom).toBeGreaterThanOrEqual(minimumGap-1)
     const feedback = page.locator('.flow-feedback-line')
     await expect(feedback).not.toHaveCSS('display', 'none')
+    const route = await feedback.evaluate((node) => {
+      const path = node as SVGPathElement
+      const matrix = path.getScreenCTM()!
+      const start = path.getPointAtLength(0).matrixTransform(matrix)
+      const end = path.getPointAtLength(path.getTotalLength()).matrixTransform(matrix)
+      return { start: { x:start.x,y:start.y }, end: { x:end.x,y:end.y } }
+    })
+    const execution = await page.locator('[data-flow-panel="execution"]').boundingBox()
+    const state = await page.locator('[data-flow-panel="state"]').boundingBox()
+    expect(route.start.x).toBeCloseTo(execution!.x+execution!.width+8, 0)
+    expect(route.start.y).toBeCloseTo(execution!.y+execution!.height/2, 0)
+    expect(route.end.x).toBeCloseTo(state!.x+state!.width+8, 0)
+    expect(route.end.y).toBeCloseTo(state!.y+state!.height/2, 0)
   })
 }

@@ -119,8 +119,8 @@ export function AnimatedArchitectureDiagram() {
         const radius = Math.min(10, Math.abs(to.cx-from.cx)/2, (end-start)/4)
         return `M${from.cx},${start} V${middle-radius} Q${from.cx},${middle} ${from.cx+direction*radius},${middle} H${to.cx-direction*radius} Q${to.cx},${middle} ${to.cx},${middle+radius} V${end}`
       })
-      const execution = boxes[4], input = boxes[0]
-      setConnections({ width: parent.width, height: parent.height, paths, feedback: `M${execution.left-8},${execution.cy} H8 V${input.bottom-32} H${input.left-8}` })
+      const execution = boxes[4], worldState = boxes[1]
+      setConnections({ width: parent.width, height: parent.height, paths, feedback: `M${execution.right+8},${execution.cy} H${parent.width-8} V${worldState.cy} H${worldState.right+8}` })
     }
     const observer = new ResizeObserver(measure)
     observer.observe(board)
@@ -147,7 +147,7 @@ export function AnimatedArchitectureDiagram() {
       <div className="architecture-controls"><button className="icon-button" onClick={toggle} aria-label={`${playing ? 'Pause' : 'Play'} architecture animation`}>{playing ? <Pause /> : <Play />}{playing ? 'Pause' : 'Play'}</button></div>
 
       <div ref={boardRef} className="visual-flow-board">
-        <svg className="visual-flow-connectors" viewBox={`0 0 ${connections.width} ${connections.height}`} aria-hidden="true"><defs><marker id="visual-flow-arrow" markerUnits="userSpaceOnUse" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2 1 L10 6 L2 11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></marker></defs>{connections.paths.map((path, index) => <path key={index} d={path} className={mainIds.indexOf(currentMain) === index ? 'active-link' : ''} />)}<path className="flow-feedback-line" d={connections.feedback} /></svg>
+        <svg className="visual-flow-connectors" viewBox={`0 0 ${connections.width} ${connections.height}`} aria-hidden="true"><defs><marker id="visual-flow-arrow" markerUnits="userSpaceOnUse" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2 1 L10 6 L2 11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></marker><marker id="execution-feedback-arrow" markerUnits="userSpaceOnUse" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2 1 L10 6 L2 11" fill="none" stroke="#52877b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></marker></defs>{connections.paths.map((path, index) => <path key={index} d={path} className={mainIds.indexOf(currentMain) === index ? 'active-link' : ''} />)}<path className="flow-feedback-line" d={connections.feedback} /></svg>
         <article data-flow-panel="scene" className={`flow-panel ${currentMain === 'scene' ? 'active' : ''}`}>
           {heading('scene', '01', 'Perception pipeline', Camera)}
 
@@ -198,7 +198,7 @@ export function AnimatedArchitectureDiagram() {
           })}</div>
 
         </article>
-        <div className="flow-feedback-caption"><RefreshCw />Verification feedback</div>
+        <div className="flow-feedback-caption"><RefreshCw />Execution feedback updates world state</div>
       </div>
       <div className="diagram-legend"><button ref={expandRef} type="button" onClick={() => setExpanded(true)} aria-label="Expand animated architecture figure"><Expand />Original research figure</button></div>
       {expanded && <div className="modal-backdrop" onClick={() => setExpanded(false)}><div ref={dialogRef} className="figure-modal" role="dialog" aria-modal="true" aria-label="Original research architecture" onClick={(event) => event.stopPropagation()}><button className="modal-close" autoFocus onClick={() => setExpanded(false)} aria-label="Close figure"><X /></button><img src={sitePath('/assets/architecture-figure.png')} alt="Original architecture including perception, reasoning, skill interface, dual-arm execution, and device adaptation" /><p>Original research architecture.</p></div></div>}

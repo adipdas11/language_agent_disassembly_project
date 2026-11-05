@@ -247,6 +247,7 @@
 .architecture-controls { display:flex;justify-content:flex-end;padding:0 0 8px; }
 .visual-flow-board { background:transparent; }
 .visual-flow .diagram-legend { border:0;background:transparent; }
+.visual-flow-connectors > path.flow-feedback-line { color:#52877b;marker-end:url(#execution-feedback-arrow); }
 .flow-heading { height:auto; }
 .visual-flow .flow-heading .diagram-node { justify-content:center;text-align:center;min-height:52px;padding:8px 4px;gap:10px;font-size:clamp(18px,1.55vw,22px);font-weight:700;line-height:1.3; }
 .flow-heading .diagram-node > span:last-child { min-width:0;max-width:calc(100% - 68px); }
