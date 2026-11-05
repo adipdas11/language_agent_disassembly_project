@@ -1,0 +1,690 @@
+[
+  {
+    "id": "global-1",
+    "group": "global",
+    "label": "HDD lid",
+    "model": "RF-DETR-Large",
+    "raw": "/assets/vision/global-1-raw.webp",
+    "annotations": "/assets/vision/global-1-masks.webp",
+    "prediction": "/assets/vision/global-1-prediction.webp",
+    "detections": [
+      {
+        "box": [
+          68.6318359375,
+          113.18183135986328,
+          1012.2071533203125,
+          988.7423706054688
+        ],
+        "label": "lid",
+        "confidence": 0.9927279949188232
+      },
+      {
+        "box": [
+          952.9918212890625,
+          796.9249267578125,
+          1002.7532958984375,
+          861.9812622070312
+        ],
+        "label": "lid_screw",
+        "confidence": 0.9668580889701843
+      },
+      {
+        "box": [
+          90.09065246582031,
+          134.0357666015625,
+          136.050048828125,
+          198.55445861816406
+        ],
+        "label": "lid_screw",
+        "confidence": 0.9608980417251587
+      },
+      {
+        "box": [
+          107.38899993896484,
+          768.2909545898438,
+          154.85635375976562,
+          831.88427734375
+        ],
+        "label": "lid_screw",
+        "confidence": 0.9598357081413269
+      },
+      {
+        "box": [
+          463.2037658691406,
+          149.3040771484375,
+          509.8987121582031,
+          219.03758239746094
+        ],
+        "label": "lid_screw",
+        "confidence": 0.953467607498169
+      },
+      {
+        "box": [
+          495.51123046875,
+          930.6678466796875,
+          542.5951538085938,
+          985.84130859375
+        ],
+        "label": "lid_screw",
+        "confidence": 0.9529863595962524
+      },
+      {
+        "box": [
+          941.3180541992188,
+          128.24087524414062,
+          995.2989501953125,
+          198.4788818359375
+        ],
+        "label": "lid_screw",
+        "confidence": 0.9409874677658081
+      },
+      {
+        "box": [
+          299.839599609375,
+          425.5923156738281,
+          352.6010437011719,
+          493.0653991699219
+        ],
+        "label": "lid_screw",
+        "confidence": 0.925998866558075
+      }
+    ],
+    "source": "Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/test/images/orbbec_162944_352092_png.rf.cafe996c34f3e75ca71fc089a10b7eb3.jpg",
+    "annotationClasses": [
+      "lid",
+      "lid_screw"
+    ]
+  },
+  {
+    "id": "global-2",
+    "group": "global",
+    "label": "Mini PC internals",
+    "model": "RF-DETR-Large",
+    "raw": "/assets/vision/global-2-raw.webp",
+    "annotations": "/assets/vision/global-2-masks.webp",
+    "prediction": "/assets/vision/global-2-prediction.webp",
+    "detections": [
+      {
+        "box": [
+          542.0509033203125,
+          554.9086303710938,
+          959.285888671875,
+          985.7303466796875
+        ],
+        "label": "heat_sink",
+        "confidence": 0.9919254183769226
+      },
+      {
+        "box": [
+          576.3781127929688,
+          126.81564331054688,
+          943.8590087890625,
+          561.6603393554688
+        ],
+        "label": "core_holder",
+        "confidence": 0.9709591269493103
+      },
+      {
+        "box": [
+          418.5185241699219,
+          917.06201171875,
+          466.98736572265625,
+          971.1902465820312
+        ],
+        "label": "hdd_holder_screw",
+        "confidence": 0.9555105566978455
+      },
+      {
+        "box": [
+          94.41707611083984,
+          367.7665100097656,
+          518.7200317382812,
+          938.556396484375
+        ],
+        "label": "hdd_holder",
+        "confidence": 0.9523420929908752
+      },
+      {
+        "box": [
+          525.3779907226562,
+          253.64768981933594,
+          566.551025390625,
+          306.0368957519531
+        ],
+        "label": "core_holder_screw",
+        "confidence": 0.949251651763916
+      },
+      {
+        "box": [
+          192.77130126953125,
+          309.9033508300781,
+          225.54644775390625,
+          346.4310607910156
+        ],
+        "label": "hdd_holder_screw",
+        "confidence": 0.9461491107940674
+      },
+      {
+        "box": [
+          152.7139129638672,
+          930.2744140625,
+          202.572265625,
+          980.143798828125
+        ],
+        "label": "hdd_holder_screw",
+        "confidence": 0.9383565187454224
+      },
+      {
+        "box": [
+          438.0927734375,
+          298.28857421875,
+          470.50860595703125,
+          333.7075500488281
+        ],
+        "label": "hdd_holder_screw",
+        "confidence": 0.9310126304626465
+      },
+      {
+        "box": [
+          879.9761962890625,
+          388.826171875,
+          940.6431274414062,
+          449.9989013671875
+        ],
+        "label": "core_holder_screw",
+        "confidence": 0.9188921451568604
+      },
+      {
+        "box": [
+          928.2147827148438,
+          933.4957885742188,
+          961.8689575195312,
+          974.2277221679688
+        ],
+        "label": "pcb_screw",
+        "confidence": 0.9046477675437927
+      },
+      {
+        "box": [
+          530.2312622070312,
+          614.9463500976562,
+          578.0362548828125,
+          673.6394653320312
+        ],
+        "label": "core_holder_screw",
+        "confidence": 0.8977198004722595
+      },
+      {
+        "box": [
+          202.64138793945312,
+          886.6438598632812,
+          578.0665893554688,
+          1071.0843505859375
+        ],
+        "label": "pcb",
+        "confidence": 0.7230114340782166
+      }
+    ],
+    "source": "Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/test/images/orbbec_160532_137469_png.rf.6c16da3de7ee3bdf47b5e120fa699d6f.jpg",
+    "annotationClasses": [
+      "core_holder",
+      "core_holder_screw",
+      "hdd_holder",
+      "hdd_holder_screw",
+      "heat_sink",
+      "pcb",
+      "pcb_screw"
+    ]
+  },
+  {
+    "id": "global-3",
+    "group": "global",
+    "label": "Laptop internals",
+    "model": "RF-DETR-Large",
+    "raw": "/assets/vision/global-3-raw.webp",
+    "annotations": "/assets/vision/global-3-masks.webp",
+    "prediction": "/assets/vision/global-3-prediction.webp",
+    "detections": [
+      {
+        "box": [
+          86.6839599609375,
+          526.168701171875,
+          702.4774780273438,
+          954.9878540039062
+        ],
+        "label": "heat_sink",
+        "confidence": 0.9826307892799377
+      },
+      {
+        "box": [
+          356.26605224609375,
+          445.9629211425781,
+          1043.877197265625,
+          913.0344848632812
+        ],
+        "label": "pcb_holder",
+        "confidence": 0.9647446274757385
+      },
+      {
+        "box": [
+          87.77006530761719,
+          82.78105163574219,
+          856.8233032226562,
+          524.27685546875
+        ],
+        "label": "battery",
+        "confidence": 0.9581546187400818
+      },
+      {
+        "box": [
+          874.5018310546875,
+          130.8376922607422,
+          946.0100708007812,
+          533.041015625
+        ],
+        "label": "ssd_holder",
+        "confidence": 0.9574393630027771
+      },
+      {
+        "box": [
+          902.9303588867188,
+          139.4764862060547,
+          920.2311401367188,
+          166.57691955566406
+        ],
+        "label": "ssd_holder_Screw",
+        "confidence": 0.9245137572288513
+      },
+      {
+        "box": [
+          546.0510864257812,
+          995.3350219726562,
+          568.6983032226562,
+          1025.0394287109375
+        ],
+        "label": "pcb_screw",
+        "confidence": 0.9218751192092896
+      },
+      {
+        "box": [
+          813.1063842773438,
+          529.6384887695312,
+          829.2202758789062,
+          552.8134765625
+        ],
+        "label": "pcb_holder_screw",
+        "confidence": 0.9142728447914124
+      },
+      {
+        "box": [
+          490.28924560546875,
+          540.2637329101562,
+          506.02215576171875,
+          565.9408569335938
+        ],
+        "label": "pcb_holder_screw",
+        "confidence": 0.913167417049408
+      },
+      {
+        "box": [
+          273.0813293457031,
+          1010.2279663085938,
+          291.7904052734375,
+          1036.70361328125
+        ],
+        "label": "pcb_screw",
+        "confidence": 0.9042274951934814
+      },
+      {
+        "box": [
+          823.5777587890625,
+          988.0200805664062,
+          842.0638427734375,
+          1016.1788940429688
+        ],
+        "label": "pcb_screw",
+        "confidence": 0.8972143530845642
+      },
+      {
+        "box": [
+          477.3487854003906,
+          785.7115478515625,
+          495.47625732421875,
+          814.0462646484375
+        ],
+        "label": "heat_sink_screw",
+        "confidence": 0.8969026803970337
+      },
+      {
+        "box": [
+          964.8612670898438,
+          726.6843872070312,
+          982.0142211914062,
+          752.442626953125
+        ],
+        "label": "pcb_holder_screw",
+        "confidence": 0.895251989364624
+      },
+      {
+        "box": [
+          853.2102661132812,
+          513.0366821289062,
+          868.8436279296875,
+          535.8627319335938
+        ],
+        "label": "pcb_holder_screw",
+        "confidence": 0.8949074149131775
+      },
+      {
+        "box": [
+          480.1171875,
+          906.6739501953125,
+          497.1766662597656,
+          934.3333740234375
+        ],
+        "label": "heat_sink_screw",
+        "confidence": 0.8907124400138855
+      },
+      {
+        "box": [
+          376.0895690917969,
+          512.8546752929688,
+          398.185791015625,
+          542.1121826171875
+        ],
+        "label": "battery_screw",
+        "confidence": 0.886861264705658
+      },
+      {
+        "box": [
+          858.8820190429688,
+          119.87751770019531,
+          869.7777099609375,
+          145.13470458984375
+        ],
+        "label": "pcb_holder_screw",
+        "confidence": 0.8868120312690735
+      },
+      {
+        "box": [
+          686.3641967773438,
+          783.1220092773438,
+          703.6317138671875,
+          811.5274658203125
+        ],
+        "label": "heat_sink_screw",
+        "confidence": 0.8846057057380676
+      },
+      {
+        "box": [
+          205.34523010253906,
+          842.7875366210938,
+          221.0489501953125,
+          864.2704467773438
+        ],
+        "label": "heat_sink_screw",
+        "confidence": 0.8762728571891785
+      },
+      {
+        "box": [
+          687.1187744140625,
+          906.955810546875,
+          704.1533813476562,
+          934.3911743164062
+        ],
+        "label": "heat_sink_screw",
+        "confidence": 0.8324393630027771
+      },
+      {
+        "box": [
+          1022.68017578125,
+          60.74425506591797,
+          1040.101806640625,
+          89.61421203613281
+        ],
+        "label": "hole",
+        "confidence": 0.8258931040763855
+      },
+      {
+        "box": [
+          789.6840209960938,
+          499.576171875,
+          810.1643676757812,
+          523.69189453125
+        ],
+        "label": "battery_screw",
+        "confidence": 0.8246089220046997
+      },
+      {
+        "box": [
+          1023.5230102539062,
+          139.36953735351562,
+          1037.23583984375,
+          160.6303253173828
+        ],
+        "label": "pcb_holder_screw",
+        "confidence": 0.8100261092185974
+      },
+      {
+        "box": [
+          1022.517822265625,
+          414.1620788574219,
+          1037.482421875,
+          435.96295166015625
+        ],
+        "label": "hole",
+        "confidence": 0.7990771532058716
+      },
+      {
+        "box": [
+          333.53271484375,
+          553.2462158203125,
+          355.1360778808594,
+          583.8308715820312
+        ],
+        "label": "heat_sink_screw",
+        "confidence": 0.7763091921806335
+      },
+      {
+        "box": [
+          160.54379272460938,
+          584.4116821289062,
+          833.9358520507812,
+          900.4791259765625
+        ],
+        "label": "pcb",
+        "confidence": 0.7445760369300842
+      }
+    ],
+    "source": "Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/test/images/orbbec_154833_726084_png.rf.761d7e1391241af51e113fc25084ef85.jpg",
+    "annotationClasses": [
+      "battery",
+      "battery_screw",
+      "heat_sink",
+      "heat_sink_screw",
+      "hole",
+      "pcb",
+      "pcb_holder",
+      "pcb_holder_screw",
+      "pcb_screw",
+      "ssd_holder",
+      "ssd_holder_Screw"
+    ]
+  },
+  {
+    "id": "local-1",
+    "group": "local",
+    "label": "Lid screw",
+    "model": "RF-DETR-Small",
+    "raw": "/assets/vision/local-1-raw.webp",
+    "annotations": "/assets/vision/local-1-masks.webp",
+    "prediction": "/assets/vision/local-1-prediction.webp",
+    "detections": [
+      {
+        "box": [
+          245.71006774902344,
+          0.0,
+          393.6832275390625,
+          320.4264831542969
+        ],
+        "label": "tool_head",
+        "confidence": 0.9876519441604614
+      },
+      {
+        "box": [
+          398.389404296875,
+          166.3624267578125,
+          492.8174133300781,
+          270.1094970703125
+        ],
+        "label": "screw",
+        "confidence": 0.9756671786308289
+      },
+      {
+        "box": [
+          421.83642578125,
+          185.67213439941406,
+          473.6059875488281,
+          235.4075469970703
+        ],
+        "label": "screw_head",
+        "confidence": 0.9671640992164612
+      }
+    ],
+    "source": "Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/valid/images/tool_camera_164645_182734_png.rf.1a8913548a40f204ac42c11f8f1ebcd4.jpg",
+    "annotationClasses": [
+      "screw",
+      "screw_head",
+      "tool_head"
+    ]
+  },
+  {
+    "id": "local-2",
+    "group": "local",
+    "label": "PCB fastener",
+    "model": "RF-DETR-Small",
+    "raw": "/assets/vision/local-2-raw.webp",
+    "annotations": "/assets/vision/local-2-masks.webp",
+    "prediction": "/assets/vision/local-2-prediction.webp",
+    "detections": [
+      {
+        "box": [
+          253.30831909179688,
+          0.1337146759033203,
+          395.5593566894531,
+          319.7252197265625
+        ],
+        "label": "tool_head",
+        "confidence": 0.9841902852058411
+      },
+      {
+        "box": [
+          417.4417724609375,
+          42.89519500732422,
+          495.7578125,
+          120.96031951904297
+        ],
+        "label": "screw",
+        "confidence": 0.9653695821762085
+      },
+      {
+        "box": [
+          441.6199035644531,
+          59.485530853271484,
+          474.86126708984375,
+          97.92753601074219
+        ],
+        "label": "screw_head",
+        "confidence": 0.9428418278694153
+      }
+    ],
+    "source": "Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/test/images/tool_camera_165335_188763_png.rf.cb904fb0d66e0a19a9532a6421e92dfe.jpg",
+    "annotationClasses": [
+      "screw",
+      "screw_head",
+      "tool_head"
+    ]
+  },
+  {
+    "id": "local-3",
+    "group": "local",
+    "label": "Component fastener",
+    "model": "RF-DETR-Small",
+    "raw": "/assets/vision/local-3-raw.webp",
+    "annotations": "/assets/vision/local-3-masks.webp",
+    "prediction": "/assets/vision/local-3-prediction.webp",
+    "detections": [
+      {
+        "box": [
+          235.3993377685547,
+          190.0920867919922,
+          401.9537353515625,
+          368.8395690917969
+        ],
+        "label": "screw",
+        "confidence": 0.981792151927948
+      },
+      {
+        "box": [
+          260.643310546875,
+          0.28052330017089844,
+          385.9452819824219,
+          296.8579406738281
+        ],
+        "label": "tool_head",
+        "confidence": 0.9789918065071106
+      }
+    ],
+    "source": "Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/test/images/tool_camera_170313_527281_png.rf.4a7571502e251930da988d272b845247.jpg",
+    "annotationClasses": [
+      "screw",
+      "tool_head"
+    ]
+  },
+  {
+    "id": "state-1",
+    "group": "state",
+    "label": "Contact misaligned",
+    "model": "YOLOv11-Nano classifier",
+    "raw": "/assets/vision/state-1-raw.webp",
+    "annotations": null,
+    "prediction": "/assets/vision/state-1-prediction.webp",
+    "detections": [
+      {
+        "label": "Contact Aligned",
+        "confidence": 1.8890824549089302e-07
+      },
+      {
+        "label": "Contact Misaligned",
+        "confidence": 0.9999997615814209
+      }
+    ],
+    "source": "Project 3 (Classification)/yolo11/yolo11-train.ipynb \u00b7 cell 2 image output",
+    "annotationClasses": [
+      "Contact misaligned"
+    ]
+  },
+  {
+    "id": "state-2",
+    "group": "state",
+    "label": "Contact aligned",
+    "model": "YOLOv11-Nano classifier",
+    "raw": "/assets/vision/state-2-raw.webp",
+    "annotations": null,
+    "prediction": "/assets/vision/state-2-prediction.webp",
+    "detections": [
+      {
+        "label": "Contact Aligned",
+        "confidence": 0.9996321201324463
+      },
+      {
+        "label": "Contact Misaligned",
+        "confidence": 0.00036786735290661454
+      }
+    ],
+    "source": "Project 3 (Classification)/yolo11/yolo11-train.ipynb \u00b7 cell 2 image output",
+    "annotationClasses": [
+      "Contact aligned"
+    ]
+  }
+]

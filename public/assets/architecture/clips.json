@@ -1,0 +1,46 @@
+[
+  {
+    "id": "execution",
+    "label": "Dual-arm execution",
+    "start": 80.0,
+    "duration": 12.0,
+    "src": "/assets/architecture/execution.mp4",
+    "poster": "/assets/architecture/execution-poster.webp",
+    "crop": "688:516:0:148",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "speed": "As shown in the experiment recording"
+  },
+  {
+    "id": "hdd",
+    "label": "HDD PCB extraction",
+    "start": 54.4,
+    "duration": 6.2,
+    "src": "/assets/architecture/hdd.mp4",
+    "poster": "/assets/architecture/hdd-poster.webp",
+    "crop": "688:516:0:148",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "speed": "As shown in the experiment recording"
+  },
+  {
+    "id": "mini-pc",
+    "label": "Mini PC heat-sink extraction",
+    "start": 66.6,
+    "duration": 6.6,
+    "src": "/assets/architecture/mini-pc.mp4",
+    "poster": "/assets/architecture/mini-pc-poster.webp",
+    "crop": "688:516:0:148",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "speed": "As shown in the experiment recording"
+  },
+  {
+    "id": "laptop",
+    "label": "Laptop heat-sink extraction",
+    "start": 134.4,
+    "duration": 7.8,
+    "src": "/assets/architecture/laptop.mp4",
+    "poster": "/assets/architecture/laptop-poster.webp",
+    "crop": "688:516:0:148",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "speed": "As shown in the experiment recording"
+  }
+]

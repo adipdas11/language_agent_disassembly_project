@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 142" role="img" aria-labelledby="arm-title arm-desc">
+  <title id="arm-title">ARM squared Lab</title>
+  <desc id="arm-desc">Autonomous Robotic Manipulation and Multi Agent Systems</desc>
+  <g fill="#30353b">
+    <path d="M20 90 52 14h28l32 76H88l-6-16H49l-6 16H20Zm36-35h20L66 28 56 55Z"/>
+    <path d="M120 90V14h39c24 0 36 10 36 29 0 12-6 21-18 25l21 22h-29l-17-19h-8v19h-24Zm24-38h14c9 0 13-3 13-9s-4-9-13-9h-14v18Z"/>
+    <path d="M207 90V14h28l22 42 22-42h28v76h-23V48l-18 34h-18l-18-34v42h-23Z"/>
+  </g>
+  <text x="312" y="32" fill="#b69339" font-family="Arial, sans-serif" font-size="30" font-weight="800">2</text>
+  <text x="332" y="90" fill="#30353b" font-family="Arial, sans-serif" font-size="76" font-style="italic" font-weight="700">Lab</text>
+  <path d="M18 106h644" stroke="#b69339" stroke-width="3"/>
+  <text x="20" y="132" fill="#30353b" font-family="Arial, sans-serif" font-size="20" font-weight="600" letter-spacing=".25">Autonomous Robotic Manipulation &amp; Multi Agent Systems</text>
+</svg>

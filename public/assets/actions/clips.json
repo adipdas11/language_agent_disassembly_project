@@ -1,0 +1,38 @@
+[
+  {
+    "id": "unscrew",
+    "start": 22.5,
+    "duration": 7.3,
+    "label": "Unscrew",
+    "description": "The tooling arm aligns the screwdriver, engages a lid fastener, and retracts after screw removal.",
+    "src": "/assets/actions/unscrew.mp4",
+    "poster": "/assets/actions/unscrew-poster.webp",
+    "crop": "688:516:0:148",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "playback": "Original demonstration speed (source contains 3\u00d7 segments)"
+  },
+  {
+    "id": "pick",
+    "start": 30.2,
+    "duration": 6.4,
+    "label": "Pick-and-Extract",
+    "description": "The manipulation arm grasps the released HDD lid, lifts it clear of the drive, and transfers it away.",
+    "src": "/assets/actions/pick.mp4",
+    "poster": "/assets/actions/pick-poster.webp",
+    "crop": "688:516:0:148",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "playback": "Original demonstration speed (source contains 3\u00d7 segments)"
+  },
+  {
+    "id": "flip",
+    "start": 38.2,
+    "duration": 7.8,
+    "label": "Flip",
+    "description": "The manipulation arm grasps the HDD, rotates it through 180 degrees, and places it back with the PCB exposed.",
+    "src": "/assets/actions/flip.mp4",
+    "poster": "/assets/actions/flip-poster.webp",
+    "crop": "688:516:0:148",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "playback": "Original demonstration speed (source contains 3\u00d7 segments)"
+  }
+]
