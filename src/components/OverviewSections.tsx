@@ -18,7 +18,7 @@ export function ArchitectureSection() {
 
 export function DatasetsSection() {
   return <section className="section section-tint-mint" id="datasets" aria-labelledby="datasets-title"><div className="section-shell">
-    <SectionHeader id="datasets-title" eyebrow="03 / Perception data" title="Compare the input, labels, and predictions" intro="Additional samples complement the architecture examples. Original images, annotation masks, and model outputs are displayed together." />
+    <SectionHeader id="datasets-title" eyebrow="03 / Perception data" title="Explore the labelled perception data" intro="Additional camera samples and their supplied dataset labels are displayed side by side." />
     <DatasetSamples />
   </div></section>
 }

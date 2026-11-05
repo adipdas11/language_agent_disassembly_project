@@ -144,7 +144,7 @@ export function AnimatedArchitectureDiagram() {
   const toggle = () => { if (!playing) setSkillManual(false); setPlaying(!playing) }
   return (
     <div ref={rootRef} className={`system-diagram visual-flow ${running ? 'is-playing' : ''}`}>
-      <div className="diagram-toolbar"><span><span className="trace-dot" />Visual system walkthrough </span><button className="icon-button" onClick={toggle} aria-label={`${playing ? 'Pause' : 'Play'} architecture animation`}>{playing ? <Pause /> : <Play />}{playing ? 'Pause' : 'Play'}</button></div>
+      <div className="architecture-controls"><button className="icon-button" onClick={toggle} aria-label={`${playing ? 'Pause' : 'Play'} architecture animation`}>{playing ? <Pause /> : <Play />}{playing ? 'Pause' : 'Play'}</button></div>
 
       <div ref={boardRef} className="visual-flow-board">
         <svg className="visual-flow-connectors" viewBox={`0 0 ${connections.width} ${connections.height}`} aria-hidden="true"><defs><marker id="visual-flow-arrow" markerUnits="userSpaceOnUse" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2 1 L10 6 L2 11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></marker></defs>{connections.paths.map((path, index) => <path key={index} d={path} className={mainIds.indexOf(currentMain) === index ? 'active-link' : ''} />)}<path className="flow-feedback-line" d={connections.feedback} /></svg>

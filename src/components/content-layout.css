@@ -20,6 +20,8 @@
 .prompt-list { grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start; }.prompt-template { min-width:0;border:1px solid var(--line);border-radius:7px;background:#fff;overflow:hidden; }.prompt-template > header { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px; }.prompt-template h3 { margin:0;font-size:14px; }.prompt-template > header .icon-button { font-size:10px; }.prompt-template .prompt-body pre { padding:18px;font-size:11px;overflow:visible; }.prompt-template .prompt-body { min-width:0; }
 .site-footer { padding-top:24px;padding-bottom:24px; }.site-footer .footer-bottom { border:0;padding:0;margin:0; }
 .chart-card table.sr-only { width:1px; }
+.sample-image-grid.two-images { max-width:none; }
+.figure-image-label { position:absolute;left:10px;bottom:10px;max-width:calc(100% - 120px);padding:6px 8px;background:#172338ed;border-radius:3px;color:#fff;font-size:12px;font-weight:600;text-align:left; }
 #actions,#devices { scroll-margin-top:100px; }
 .prompt-template > header { flex-wrap:wrap; }
 .dataset-model-heading a { max-width:100%;overflow-wrap:anywhere; }

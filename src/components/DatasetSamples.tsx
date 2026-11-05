@@ -16,10 +16,9 @@ export function DatasetSamples() {
     <header className="dataset-model-heading"><div><span className="eyebrow">{group.label}</span><h3 id={`dataset-model-${group.id}`}>{group.model}</h3><p>{group.purpose}</p></div><a href={group.dataset.href} target="_blank" rel="noreferrer">{group.dataset.label}<ExternalLink aria-hidden="true" /></a></header>
     <div className="sample-comparisons">{samples.filter((sample) => sample.group === group.id && !architectureSamples.has(sample.id)).map((sample) => <article className="sample-comparison" key={sample.id} aria-label={`${sample.label} comparison`}>
       <h4>{sample.label}</h4>
-      <div className={`sample-image-grid ${sample.annotations ? '' : 'two-images'}`}>
-        <Figure src={sample.raw} alt={`${sample.label}: original camera image`} caption="Original image" contain />
-        {sample.annotations && <Figure src={sample.annotations} alt={`${sample.label}: supplied annotation masks`} caption="Annotation masks" contain />}
-        <Figure src={sample.prediction} alt={`${sample.label}: ${sample.model} output`} caption={group.id === 'state' ? 'Classification' : 'Model detections'} contain />
+      <div className="sample-image-grid two-images">
+        <Figure src={sample.raw} alt={`${sample.label}: original camera image`} caption="Raw image" contain />
+        <Figure src={sample.annotations ?? sample.raw} alt={`${sample.label}: supplied dataset labels`} caption="Labelled image" imageLabel={sample.annotations ? undefined : sample.annotationClasses.join(' · ')} contain />
       </div>
     </article>)}</div>
   </article>)}</div>

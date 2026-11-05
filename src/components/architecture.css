@@ -241,3 +241,25 @@
 .flow-panel[data-flow-panel="execution"] > .flow-clip { width:100%;max-width:800px;align-self:center;height:auto;aspect-ratio:4/3; }
 .flow-panel[data-flow-panel="execution"] > .flow-arm-roles { width:100%;max-width:800px;align-self:center; }
 .flow-panel[data-flow-panel="execution"] .flow-arm-roles > span { padding:8px 0; }
+
+/* Let the coloured stages define the diagram without an enclosing card. */
+.visual-flow.system-diagram { border:0;border-radius:0;background:transparent;overflow:visible; }
+.architecture-controls { display:flex;justify-content:flex-end;padding:0 0 8px; }
+.visual-flow-board { background:transparent; }
+.visual-flow .diagram-legend { border:0;background:transparent; }
+.flow-heading { height:auto; }
+.visual-flow .flow-heading .diagram-node { justify-content:center;text-align:center;min-height:52px;padding:8px 4px;gap:10px;font-size:clamp(18px,1.55vw,22px);font-weight:700;line-height:1.3; }
+.flow-heading .diagram-node > span:last-child { min-width:0;max-width:calc(100% - 68px); }
+.flow-heading svg { width:22px;height:22px; }
+.flow-number { font-size:10px;padding:4px 5px; }
+.vision-column-headings { font-size:12px; }
+.visual-flow .vision-model strong { font-size:12px; }
+.flow-panel[data-flow-panel="skills"] .parallel-skill > button,.parallel-device > strong { font-size:16px;font-weight:650;text-align:center; }
+.visual-flow .flow-interface { justify-content:center;text-align:center; }
+.flow-interface strong { font-size:14px; }.flow-interface code { font-size:11px; }
+.react-centre > strong { font-size:14px; }
+@media (max-width:650px) {
+  .visual-flow .flow-heading .diagram-node { font-size:18px;gap:8px; }
+  .vision-column-headings { font-size:10px; }.visual-flow .vision-model strong { font-size:10px; }
+  .flow-panel[data-flow-panel="skills"] .parallel-skill > button,.parallel-device > strong { font-size:15px; }
+}

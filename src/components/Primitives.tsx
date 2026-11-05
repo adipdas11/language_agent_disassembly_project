@@ -54,7 +54,7 @@ export function CopyButton({ value, label = 'Copy' }: { value: string; label?: s
   )
 }
 
-export function Figure({ src, original, alt, caption, contain = false }: { src: string; original?: string; alt: string; caption: string; contain?: boolean }) {
+export function Figure({ src, original, alt, caption, imageLabel, contain = false }: { src: string; original?: string; alt: string; caption: string; imageLabel?: string; contain?: boolean }) {
   const [open, setOpen] = useState(false)
   useEffect(() => {
     if (!open) return
@@ -71,6 +71,7 @@ export function Figure({ src, original, alt, caption, contain = false }: { src: 
       <figure className="research-figure">
         <button type="button" className="figure-button" onClick={() => setOpen(true)} aria-label={`Open full-size figure: ${caption}`}>
           <img className={contain ? 'contain' : ''} src={sitePath(src)} alt={alt} loading="lazy" />
+          {imageLabel && <span className="figure-image-label">{imageLabel}</span>}
           <span className="expand-label"><Expand aria-hidden="true" /> Expand figure</span>
         </button>
         <figcaption>{caption}</figcaption>
@@ -80,7 +81,7 @@ export function Figure({ src, original, alt, caption, contain = false }: { src: 
           <div className="figure-modal" role="dialog" aria-modal="true" aria-label={caption} onMouseDown={(event) => event.stopPropagation()}>
             <button className="modal-close" type="button" onClick={() => setOpen(false)} autoFocus aria-label="Close figure"><X aria-hidden="true" /></button>
             <img src={sitePath(original ?? src)} alt={alt} />
-            <p>{caption}</p>
+            <p>{imageLabel ? `${caption} · ${imageLabel}` : caption}</p>
           </div>
         </div>
       )}
