@@ -10,7 +10,7 @@ const scenarios = [
 
 export function AgentSkillsSection() {
   return <section className="section section-tint-peach" id="agent" aria-labelledby="agent-title"><div className="section-shell">
-    <SectionHeader id="agent-title" eyebrow="05 / Decision examples" title="How observations change the next action" intro="These illustrative cases show when the agent advances, retries, or updates its view of the assembly." />
+    <SectionHeader id="agent-title" eyebrow="05 / Decision examples" title="How observations change the next action" intro="The agent checks the result of each action before choosing the next one. These examples show how success, poor contact, a failed grasp, or a newly visible part changes its response." />
     <div className="parallel-scenarios">{scenarios.map(({ title, icon: Icon, evidence, response, patch }) => <article className="scenario-card" key={title}><Icon aria-hidden="true" /><h3>{title}</h3><dl><div><dt>Observation</dt><dd>{evidence}</dd></div><div><dt>Response</dt><dd>{response}</dd></div></dl><code>{patch}</code></article>)}</div>
   </div></section>
 }

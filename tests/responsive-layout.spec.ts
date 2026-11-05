@@ -22,7 +22,7 @@ for (const [width, height] of viewports) {
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1)
 
-    const clipped = await page.locator('.sample-image-grid, .parallel-skills, .parallel-devices, .parallel-states, .parallel-scenarios, .prompt-list, .hero-actions, .prompt-template > header, .state-example .panel-toolbar').evaluateAll((groups) => groups.flatMap((group) => {
+    const clipped = await page.locator('.perception-matrix tr, .parallel-skills, .parallel-devices, .state-walkthrough, .parallel-scenarios, .prompt-list, .hero-actions, .prompt-template > header, .state-example .panel-toolbar').evaluateAll((groups) => groups.flatMap((group) => {
       const parent = group.getBoundingClientRect()
       return [...group.children].filter((child) => {
         const box = child.getBoundingClientRect()

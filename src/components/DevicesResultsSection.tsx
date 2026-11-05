@@ -38,7 +38,7 @@ export function ResultsSection() {
   return (
     <section className="section section-tint-lavender" id="results" aria-labelledby="results-title">
       <div className="section-shell">
-        <SectionHeader id="results-title" eyebrow="Results" title="Higher completion. Fewer failure cascades." intro="Aggregate physical-trial results compare the integrated agentic system with a fixed scripted baseline." />
+        <SectionHeader id="results-title" eyebrow="Results" title="Higher completion. Fewer failure cascades." intro="These charts compare completed physical task targets for the agentic system and the fixed scripted baseline. They also summarise recovery from failed actions and the reduction in later failures caused by earlier errors." />
         <div className="chart-grid"><CompletionChart /><ResilienceChart /></div>
       </div>
     </section>

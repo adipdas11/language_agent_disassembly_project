@@ -27,7 +27,7 @@ test('core interactive story is operable', async ({ page }) => {
   await expect(page.getByText('{force_torque}', { exact: true }).first()).toBeVisible()
 
   await expect(page.locator('.state-display details')).toHaveCount(0)
-  await expect(page.locator('.state-example')).toHaveCount(3)
+  await expect(page.locator('.state-example')).toHaveCount(1)
 
   await expect(page.getByTitle(/adaptive dual-arm robotic disassembly experiment video/i)).toHaveAttribute('src', /youtube-nocookie/)
 })

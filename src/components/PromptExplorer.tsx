@@ -50,7 +50,7 @@ export function PromptExplorer() {
   return (
     <section className="section" id="prompts" aria-labelledby="prompts-title">
       <div className="section-shell">
-        <SectionHeader id="prompts-title" eyebrow="06 / Research resources" title="Inside the agent’s instructions" intro="The mission, reasoning, planning, and action templates are shown in full, with their state placeholders highlighted." />
+        <SectionHeader id="prompts-title" eyebrow="06 / Research resources" title="Inside the agent’s instructions" intro="These templates define the agent’s mission, current-state context, reasoning, planning, and action output. Highlighted placeholders are filled with the latest observations, verified history, and available skills at runtime." />
         {status === 'loading' && <p role="status">Loading prompt file…</p>}
         {status === 'error' && <div className="prompt-error" role="alert"><AlertCircle aria-hidden="true" /><div><strong>Prompt file unavailable</strong><p>The prompt library could not load <code>/content/system-prompts.txt</code>. The rest of the research site remains available.</p></div></div>}
         <div className="prompt-list">

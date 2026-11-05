@@ -81,7 +81,7 @@ export function Hero() {
       </div>
       <div className="hero-title-content">
         <h1 id="hero-title">Language-Agent Guided <em>Adaptive</em> Dual-Arm Robotic Disassembly</h1>
-        <p className="hero-summary">Structured world states. Grounded reasoning. Adaptive physical execution.</p>
+        <p className="hero-summary">A dual-arm robot uses camera observations and a language agent to choose and verify disassembly actions as parts become accessible.</p>
         <AuthorCards />
         <div className="hero-actions hero-title-actions" aria-label="Project resources and page shortcuts">
           <ComingSoon label="Paper" />

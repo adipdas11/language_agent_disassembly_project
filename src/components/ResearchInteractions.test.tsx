@@ -41,13 +41,18 @@ describe('research interactions', () => {
     for (const name of ['Successful removal', 'Misaligned contact', 'Failed grasp', 'Newly revealed part']) expect(screen.getByRole('heading', { name })).toBeInTheDocument()
   })
 
-  it('shows all formatted device states without switching or collapsing fields', () => {
+  it('explains one verified removal and shows the updated record without tabs', () => {
     render(<WorldStateSection />)
-    expect(screen.getAllByRole('article')).toHaveLength(3)
+    expect(screen.getAllByRole('article')).toHaveLength(1)
+    expect(screen.getByRole('heading', { name: 'Removing one lid screw' })).toBeInTheDocument()
+    expect(screen.getByText('"removed"')).toBeInTheDocument()
+    expect(screen.getByText('"installed"')).toBeInTheDocument()
+    expect(screen.getByText('"unscrew"')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Copy updated state' })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /simulate failed unscrew/i })).not.toBeInTheDocument()
     expect(screen.queryByText('State is ready')).not.toBeInTheDocument()
 
-    expect(screen.getByText('laptop_illustrative_001', { exact: false })).toBeInTheDocument()
+    expect(screen.queryByText('laptop_illustrative_001', { exact: false })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Laptop', exact: true })).not.toBeInTheDocument()
   })
 })
