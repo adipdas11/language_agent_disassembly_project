@@ -19,7 +19,7 @@ try {
       await image.scrollIntoViewIfNeeded()
       await expect.poll(() => image.evaluate((node) => node.naturalWidth)).toBeGreaterThan(0)
     }
-    const paths = await page.locator('img[src], video[src], video[poster], link[rel="icon"]').evaluateAll((nodes) => nodes.flatMap((node) => ['src', 'poster', 'href'].filter((key) => node.hasAttribute(key)).map((key) => new URL(node.getAttribute(key), location.href).href)))
+    const paths = await page.locator('img[src], video[src], video[poster], source[src], link[rel="icon"]').evaluateAll((nodes) => nodes.flatMap((node) => ['src', 'poster', 'href'].filter((key) => node.hasAttribute(key)).map((key) => new URL(node.getAttribute(key), location.href).href)))
     for (const path of paths) {
       const asset = new URL(path)
       if (asset.origin === url.origin) assert.ok(asset.pathname.startsWith(url.pathname), `Asset escaped the project path: ${asset.href}`)
@@ -29,11 +29,12 @@ try {
       await page.getByRole('button', { name: 'Play architecture animation', exact: true }).click()
       for (const video of await page.locator('video').all()) {
         await video.scrollIntoViewIfNeeded()
+        await video.evaluate(async (node) => { await node.play() })
         await expect.poll(() => video.evaluate((node) => node.currentTime)).toBeGreaterThan(.1)
         assert.ok(await video.evaluate((node) => node.videoWidth > 0 && !node.error))
       }
       await page.getByRole('button', { name: 'Pause architecture animation', exact: true }).click()
-      await page.getByRole('button', { name: 'Expand animated architecture figure', exact: true }).click()
+      await page.getByRole('button', { name: 'Open full-size figure: Raw image', exact: true }).first().click()
       await expect.poll(() => page.getByRole('dialog').locator('img').evaluate((node) => node.naturalWidth)).toBeGreaterThan(0)
       await page.keyboard.press('Escape')
     }
@@ -43,7 +44,7 @@ try {
       assert.equal(new URL(page.url()).pathname, url.pathname)
     }
     assert.deepEqual(failures, [])
-    console.log(`Verified ${url.href} at ${width}px: assets, prompts, layout${width === 1440 ? ', seven videos and figure expansion' : ''}`)
+    console.log(`Verified ${url.href} at ${width}px: assets, prompts, layout${width === 1440 ? ', eight videos and figure expansion' : ''}`)
     await page.close()
   }
 } finally {

@@ -1,54 +1,61 @@
-# Adaptive Dual-Arm Robotic Disassembly — interactive research site
+# UNMAKE
 
-A React, TypeScript, and Vite research website with an animated architecture, real perception samples, robot action clips, structured-state examples, and system prompt templates.
+**Language-Agent-Guided Adaptive Dual-Arm Robotic Disassembly**
+
+A React, TypeScript, and Vite research website. The redesign uses a light editorial layout, a responsive hybrid SVG/video architecture, real annotated perception samples, and manuscript-based evaluation tables.
 
 Website: https://adipdas11.github.io/language_agent_disassembly_project/
 
-## Run locally
+The reviewed redesign is published through the GitHub Pages workflow on `main`.
+
+## Local review
 
 ```bash
 npm ci
-npm run dev
+npm run dev -- --port 5180 --strictPort
 ```
 
-Production check:
-
-```bash
-npm run build
-npm run preview
-```
-
-The development server uses `/`. The production preview uses `/language_agent_disassembly_project/`, matching GitHub Pages.
-
-## GitHub Pages deployment
-
-Push changes to `main` to run `.github/workflows/deploy.yml`. The workflow installs dependencies, runs unit tests, builds `dist`, and deploys the website to GitHub Pages. It can also be run manually from the repository's Actions tab. Pages uses **GitHub Actions** as its publishing source.
-
-Vite's production base and the shared `sitePath` helper keep images, videos, icons, and prompt loading inside the repository's URL path. The workflow uses GitHub's built-in token; no personal access token or application secrets are needed.
-
-## Content controls
-
-- Authors and the `showAuthors` switch live in `src/content/research-data.ts`.
-- Runtime-editable prompt templates live in `public/content/system-prompts.txt`.
-- Devices, results, limitations, schemas, skills, and author details are centralised in `src/content/research-data.ts`.
-- Paper and Code controls intentionally remain disabled and labelled “Coming soon”.
-- The three Roboflow dataset controls are live external links supplied by the project owner.
-
-When `showAuthors` is false, author cards, email actions, and author metadata are omitted.
-
-## Verification
+Open http://localhost:5180/.
 
 ```bash
 npm test
 npm run test:e2e
-```
-
-The Playwright suite covers media playback, prompts, keyboard navigation, diagram geometry, eighteen responsive viewport sizes, reduced motion, and accessibility.
-
-To verify a production build under the Pages path, run the preview on port 5181, then:
-
-```bash
+npm run build
+npm run preview -- --port 5181 --strictPort
 node scripts/verify-pages.mjs
 ```
 
-The same check accepts a live website URL as its first argument.
+Production preview uses `/language_agent_disassembly_project/`; development uses `/`. Asset paths and runtime prompt loading use the shared `sitePath` helper.
+
+## Content and provenance
+
+- `src/content/research-data.ts`: title, authors, author visibility, dataset links.
+- `src/content/world-state.ts`: illustrative four-field runtime packet and paper dispatch example. Pixel measurements are not six-dimensional poses.
+- `src/content/manuscript-results.json`: all seven active result tables extracted from `RAL-mainV10.tex`. Commented-out earlier drafts are excluded.
+- `src/components/DevicesResultsSection.tsx`: perception tables, controller comparisons, metric definitions, skill breakdown, and additional-HDD example. Repeated cross-device metrics appear once; unique replanning values are included in the controller cards.
+- `public/content/system-prompts.txt`: editable generic prompt templates. These are interface templates, not recorded agent reasoning.
+- `public/assets/vision/samples.json`: real input imagery, labels, and saved model predictions. The architecture uses prediction coordinates; the separate sample matrix uses supplied dataset annotations.
+
+**Data status matters:** V10 explicitly describes controller, skill, and additional-HDD numbers as generated numerical examples, not measured robot outcomes. The page preserves this qualification. Perception metrics are supplied development-set results from a split performed after augmentation. Do not relabel either as independently validated physical performance.
+
+To regenerate result data from a revised manuscript:
+
+```bash
+python3 scripts/extract-paper-results.py /path/to/RAL-mainV10.tex
+```
+
+Review provenance and copy if the status of those tables changes. Older commented tables have different recovery values and must not be substituted for active V10 tables.
+
+## Media and animation
+
+The primary film is the original YouTube experiment, trimmed from 21.2s to 142.5s. Opening title/architecture slides and closing result/title slides are removed. It retains the multi-view composition and demonstration timing, without audio. Edit provenance is in `public/assets/experiment-edit.json`.
+
+Seven unique, previously reviewed action and evaluation snippets are kept under `public/assets/actions/` and `public/assets/architecture/`, with crop and timing metadata. All skills and devices are shown together; narrow screens stack them without tabs. Reduced motion starts the animation paused. Offscreen or hidden-page media pauses automatically.
+
+The architecture is one compact scientific figure, following the original four-column composition: perception; world state, ReAct, and skills; dual-arm execution; cross-device evaluation. Highlighted title strips and outlined groups follow the ASPIRE reference. The original arm illustrations are displayed through clipped SVG viewports, alongside seven real video windows. Measured SVG connectors, detection overlays, camera scans, image packets, a circular reasoning orbit, and cycling skill selection animate the loop. Execution feedback returns directly to the four-field world state. Tablets use two columns and phones follow a continuous vertical flow; no views are hidden in tabs.
+
+The visual direction draws on [ASPIRE](https://research.nvidia.com/labs/gear/aspire/) and [Agentic World Action Models](https://agentic-wam.github.io/); the scientific flow remains UNMAKE’s.
+
+## Publishing
+
+The GitHub Actions workflow deploys pushes to `main`, running unit tests and a production build before publishing. Develop and review future changes locally before publishing. Paper and research Code buttons remain “Coming soon”; the website repository is not presented as a release of the robotics implementation.

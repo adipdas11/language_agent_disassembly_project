@@ -1,24 +1,94 @@
-import { AnimatedArchitectureDiagram } from './AnimatedArchitectureDiagram'
-import { DatasetSamples } from './DatasetSamples'
-import { Reveal, SectionHeader } from './Primitives'
+import { AnimatedArchitectureDiagram } from "./AnimatedArchitectureDiagram";
+import { DatasetSamples } from "./DatasetSamples";
+import { SectionHeader } from "./Primitives";
 
 export function AbstractSection() {
-  return <section className="section abstract-section" id="abstract" aria-labelledby="abstract-title"><div className="section-shell">
-    <SectionHeader id="abstract-title" eyebrow="01 / Overview" title="From a fixed sequence to a responsive system" intro="Every removed part changes what the robot can see and reach. This project connects visual perception, shared memory, and language reasoning so the next action reflects the current device." />
-    <Reveal className="abstract-card concise-abstract"><p className="abstract-lead">A perception-to-action system represents a changing device as structured state, selects a constrained skill, and checks the physical result before deciding what comes next.</p><p>Global vision identifies components, a tool camera localises fasteners, and contact verification grounds execution. The language agent uses this evidence to choose among unscrewing, extraction, and reorientation, recovering when the observed result differs from the intended effect.</p></Reveal>
-  </div></section>
+  return (
+    <section
+      className="section overview-section"
+      id="abstract"
+      aria-labelledby="abstract-title"
+    >
+      <div className="section-shell overview-layout">
+        <div>
+          <span className="eyebrow">01 / The idea</span>
+          <h2 id="abstract-title">
+            Taking things apart
+            <br />
+            takes <em>understanding.</em>
+          </h2>
+        </div>
+        <div className="overview-copy">
+          <p className="lead">
+            A screw can stay seated. A part can remain stuck. The next action
+            should follow what actually happened.
+          </p>
+          <p>
+            UNMAKE connects three vision models, a structured world state, and a
+            ReAct language agent. The agent chooses the next task from the
+            observed device state, without a supplied device name or ordered
+            action sequence. Two specialised arms carry out the programmed
+            skills, and verification updates the evidence for the next decision.
+          </p>
+          <div className="idea-sequence">
+            <span>Observe the scene</span>
+            <b>→</b>
+            <span>Select one skill</span>
+            <b>→</b>
+            <span>Verify the result</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export function ArchitectureSection() {
-  return <section className="section" id="architecture" aria-labelledby="architecture-title"><div className="section-shell">
-    <SectionHeader id="architecture-title" eyebrow="02 / System architecture" title="A closed loop, from observation to action" intro="This diagram traces how camera images become a structured state, how the ReAct agent selects a skill, and how the robot carries it out. Execution results feed back into the state before the next decision." />
-    <AnimatedArchitectureDiagram />
-  </div></section>
+  return (
+    <section
+      className="section architecture-section"
+      id="architecture"
+      aria-labelledby="architecture-title"
+    >
+      <div className="section-shell">
+        <SectionHeader
+          id="architecture-title"
+          eyebrow="02 / How UNMAKE works"
+          title={
+            <>
+              One state. One action.
+              <br />
+              <em>A continuous feedback loop.</em>
+            </>
+          }
+          intro="Camera observations become structured evidence. The language agent selects a validated skill, the robot executes it, and the verified outcome updates the world state before the next decision. Follow the animated path below."
+        />
+        <AnimatedArchitectureDiagram />
+      </div>
+    </section>
+  );
 }
 
 export function DatasetsSection() {
-  return <section className="section section-tint-mint" id="datasets" aria-labelledby="datasets-title"><div className="section-shell">
-    <SectionHeader id="datasets-title" eyebrow="03 / Perception data" title="Explore the labelled perception data" intro="Each row shows one of the three vision models and a sample from its dataset. Compare the raw camera image with its supplied masks or class label to see what the model is trained to recognise." />
-    <DatasetSamples />
-  </div></section>
+  return (
+    <section
+      className="section perception-section"
+      id="datasets"
+      aria-labelledby="datasets-title"
+    >
+      <div className="section-shell">
+        <SectionHeader
+          id="datasets-title"
+          eyebrow="03 / Perception"
+          title={
+            <>
+              Three views of <em>the task.</em>
+            </>
+          }
+          intro="The overhead camera finds parts and fasteners; the tool camera refines alignment; a classifier checks contact and removal states. Each row pairs a real dataset image with its supplied annotation. The aligned class is shown for verification."
+        />
+        <DatasetSamples />
+      </div>
+    </section>
+  );
 }

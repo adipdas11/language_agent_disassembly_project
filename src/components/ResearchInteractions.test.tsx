@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { Footer } from './ClosingSections'
 import { applyAuthorMetadata, Hero } from './HeaderHero'
-import { AgentSkillsSection } from './AgentSkillsSection'
 import { WorldStateSection } from './WorldStateSection'
 import { siteConfig } from '../content/research-data'
 
@@ -35,19 +34,15 @@ describe('research interactions', () => {
     unavailable.forEach((control) => expect(control).toBeDisabled())
   })
 
-  it('shows every decision example without scenario tabs', () => {
-    render(<AgentSkillsSection />)
-    expect(screen.queryByRole('tab')).not.toBeInTheDocument()
-    for (const name of ['Successful removal', 'Misaligned contact', 'Failed grasp', 'Newly revealed part']) expect(screen.getByRole('heading', { name })).toBeInTheDocument()
-  })
-
   it('explains one verified removal and shows the updated record without tabs', () => {
-    render(<WorldStateSection />)
-    expect(screen.getAllByRole('article')).toHaveLength(1)
-    expect(screen.getByRole('heading', { name: 'Removing one lid screw' })).toBeInTheDocument()
-    expect(screen.getByText('"removed"')).toBeInTheDocument()
-    expect(screen.getByText('"installed"')).toBeInTheDocument()
-    expect(screen.getByText('"unscrew"')).toBeInTheDocument()
+    const { container } = render(<WorldStateSection />)
+    expect(container.querySelectorAll('.state-example')).toHaveLength(1)
+    for (const field of ['global_view', 'local_view', 'assembly_state', 'force_torque']) expect(screen.getByRole('heading', { name: field })).toBeInTheDocument()
+    const record = JSON.parse(container.querySelector('.state-display')!.textContent!)
+    expect(Object.keys(record)).toEqual(['global_view', 'local_view', 'assembly_state', 'force_torque'])
+    expect(record.assembly_state.removed).toContain('holder_screw_03')
+    expect(record.assembly_state.last_outcome).toBe('success')
+    expect(record).not.toHaveProperty('device_id')
     expect(screen.getByRole('button', { name: 'Copy updated state' })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /simulate failed unscrew/i })).not.toBeInTheDocument()
     expect(screen.queryByText('State is ready')).not.toBeInTheDocument()

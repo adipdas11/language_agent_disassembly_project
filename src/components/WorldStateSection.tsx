@@ -1,36 +1,118 @@
-import { Braces, CheckCircle2, History, Layers3 } from 'lucide-react'
-import { makeWorldState } from '../content/research-data'
-import { CopyButton, SectionHeader } from './Primitives'
+import {
+  Activity,
+  Camera,
+  CheckCircle2,
+  Crosshair,
+  Database,
+} from "lucide-react";
+import { exampleState, readableJson } from "../content/world-state";
+import { CopyButton, SectionHeader } from "./Primitives";
 
-function JsonTree({ value, name }: { value: unknown; name?: string }) {
-  if (value === null || typeof value !== 'object' || (Array.isArray(value) && value.every((item) => typeof item !== 'object'))) return <div className="tree-leaf"><span>{name}</span><code>{JSON.stringify(value)}</code></div>
-  const entries = Object.entries(value as Record<string, unknown>)
-  return <div className="tree-branch"><div className="tree-name">{name ?? 'state'} <small>{Array.isArray(value) ? `[${entries.length}]` : `{${entries.length}}`}</small></div><div className="tree-children">{entries.map(([key, child]) => <JsonTree key={key} name={key} value={child} />)}</div></div>
-}
-
-const example = makeWorldState('hdd').paper
-example.fasteners[0].status = 'removed'
-example.history.push({ action: 'unscrew', outcome: 'success', at: 't1' })
-example.timestamp = '2026-01-01T12:00:01.000Z'
+const fields = [
+  {
+    key: "global_view",
+    symbol: "Oₜ",
+    name: "Scene detections",
+    text: "Component labels, confidence scores, and pixel bounding boxes.",
+    icon: Camera,
+  },
+  {
+    key: "local_view",
+    symbol: "Fₜ",
+    name: "Target alignment",
+    text: "The target ID, tool and target pixel centres, and contact alignment.",
+    icon: Crosshair,
+  },
+  {
+    key: "assembly_state",
+    symbol: "Eₜ",
+    name: "Execution status",
+    text: "What is held or removed, plus the latest action and verified outcome.",
+    icon: CheckCircle2,
+  },
+  {
+    key: "force_torque",
+    symbol: "Wₜ",
+    name: "Contact measurements",
+    text: "Sensor-frame force in newtons and torque in newton-metres.",
+    icon: Activity,
+  },
+];
 
 export function WorldStateSection() {
-  return <section className="section" id="state" aria-labelledby="state-title"><div className="section-shell">
-    <SectionHeader id="state-title" eyebrow="04 / Structured state" title="A shared memory of the device" intro="The world state is the robot’s shared record of visible parts, fasteners, and past actions. Perception fills this record; verified execution results update it before the agent chooses what to do next." />
-    <div className="schema-callouts static-schema">
-      <div><Layers3 aria-hidden="true" /><strong>Parts · Oₜ</strong><span>What is visible, where it is, and whether it is still installed.</span></div>
-      <div><Braces aria-hidden="true" /><strong>Fasteners · Fₜ</strong><span>Which screws hold parts in place and which have been removed.</span></div>
-      <div><History aria-hidden="true" /><strong>Action history · Eₜ</strong><span>What the robot tried and whether each action succeeded.</span></div>
-    </div>
-    <div className="state-walkthrough">
-      <div className="state-explanation"><span className="eyebrow">A simplified example</span><h3>Removing one lid screw</h3>
-        <ol className="state-example-steps">
-          <li><span>01</span><div><h4>Observe the device</h4><p>The lid is installed, and the fastener entry <code>lid_screw_03</code> is marked <strong>present</strong>.</p></div></li>
-          <li><span>02</span><div><h4>Execute and verify</h4><p>The tooling arm runs <code>unscrew(lid_screw_03)</code>. Verification confirms that the screw has been removed.</p></div></li>
-          <li><span>03</span><div><h4>Update the record</h4><p>The fastener becomes <strong>removed</strong>, and a successful <code>unscrew</code> event is added to <code>history</code>. The lid remains installed until a separate extraction succeeds.</p></div></li>
-        </ol>
-        <p className="state-example-note"><CheckCircle2 aria-hidden="true" />The JSON record shows the device state after the verified removal.</p>
+  return (
+    <section
+      className="section state-section"
+      id="state"
+      aria-labelledby="state-title"
+    >
+      <div className="section-shell">
+        <SectionHeader
+          id="state-title"
+          eyebrow="04 / The planning interface"
+          title={
+            <>
+              Evidence in.
+              <br />
+              <em>Decisions grounded.</em>
+            </>
+          }
+          intro="The language agent reads a JSON record, rather than raw images. Dedicated perception and verification models update its four fields after each skill call. The record describes what was observed—not what the agent assumes an action achieved."
+        />
+        <div className="state-walkthrough">
+          <div className="state-explanation">
+            <div className="schema-equation">
+              <Database aria-hidden="true" /> Sₜ = {"{Oₜ, Fₜ, Eₜ, Wₜ}"}
+            </div>
+            <div className="state-fields">
+              {fields.map((field) => (
+                <article key={field.key}>
+                  <field.icon aria-hidden="true" />
+                  <div>
+                    <span>
+                      {field.symbol} / {field.name}
+                    </span>
+                    <h3>
+                      <code>{field.key}</code>
+                    </h3>
+                    <p>{field.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="state-change">
+              <strong>After a verified removal</strong>
+              <p>
+                <code>holder_screw_03</code> enters <code>removed</code>, and{" "}
+                <code>last_outcome</code> becomes <code>success</code>. The
+                agent then reassesses which operation is possible.
+              </p>
+            </div>
+          </div>
+          <article
+            className="state-example"
+            aria-label="Updated world-state example"
+          >
+            <div className="panel-toolbar">
+              <div>
+                <span className="eyebrow">Illustrative values</span>
+                <h3>world_state.json</h3>
+              </div>
+              <CopyButton
+                value={JSON.stringify(exampleState, null, 2)}
+                label="Copy updated state"
+              />
+            </div>
+            <pre className="state-display">
+              <code>{readableJson(exampleState)}</code>
+            </pre>
+            <p className="code-note">
+              Schema follows the paper. Values demonstrate the interface; this
+              is not a recorded trial packet.
+            </p>
+          </article>
+        </div>
       </div>
-      <article className="state-example" aria-label="Updated world-state example"><div className="panel-toolbar"><h3>Updated state</h3><CopyButton value={JSON.stringify(example, null, 2)} label="Copy updated state" /></div><div className="state-display"><JsonTree value={example} /></div></article>
-    </div>
-  </div></section>
+    </section>
+  );
 }
