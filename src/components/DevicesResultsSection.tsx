@@ -24,12 +24,14 @@ function NumberValue({ value }: { value: string }) {
 }
 function Table({
   title,
+  description,
   headers,
   rows,
   note,
   className = "",
 }: {
   title: string;
+  description?: string;
   headers: string[];
   rows: string[][];
   note?: ReactNode;
@@ -38,7 +40,10 @@ function Table({
   return (
     <article className={`paper-table ${className}`}>
       <table>
-        <caption>{title}</caption>
+        <caption>
+          {title}
+          {description && <span className="table-description">{description}</span>}
+        </caption>
         <thead>
           <tr>
             {headers.map((header) => (
@@ -170,8 +175,17 @@ export function ResultsSection() {
         <SectionHeader
           id="results-title"
           title="Experimental results"
-          intro="The original comparison includes 45 trials: five scripted and ten agentic runs on each of three devices. Both controllers share the hardware, perception, motion planning, and skills. Ten additional agentic HDD trials are reported separately."
+          intro="The experiments compare a fixed scripted action order with an agentic controller that chooses the next skill from the updated world state. We measure how much each system completes autonomously, how it handles failures, and how long execution takes."
         />
+        <div className="results-subheading">
+          <h3>Task completion and time</h3>
+          <p>
+            The 45-trial comparison includes five scripted and ten agentic runs
+            per device, using the same hardware, perception, motion planning,
+            and skills. Each chart pairs the two controllers; labels show the
+            average and variation across trials (mean ± sample SD).
+          </p>
+        </div>
         <div className="results-summary">
           <p>
             <strong>58.1% → 89.7%</strong>
@@ -193,9 +207,18 @@ export function ResultsSection() {
         <div className="results-context">
           <p>
             The completion gain is <strong>31.6 percentage points</strong>.
-            These are device-level macro-averages; the comparison assesses the
-            combined planning and feedback system, rather than isolating the
-            language model.
+            The agentic controller completes more targets on every device,
+            with longer cycle times. The headline averages give each device
+            equal weight and assess planning, verification, and recovery together.
+          </p>
+        </div>
+        <div className="results-subheading">
+          <h3>Failures and recovery</h3>
+          <p>
+            These tables separate initially failed targets, autonomous recovery,
+            failures that spread to later steps, and physical assistance.
+            Lower failure and assistance counts are better; a higher recovery
+            ratio means more successful recovery per failed invocation.
           </p>
         </div>
         <div className="device-results">
@@ -227,17 +250,28 @@ export function ResultsSection() {
             paper reports a device-averaged ratio of 84.0%.
           </p>
           <p>
+            <strong>Cascade failures:</strong> an unresolved earlier step makes
+            a later target inaccessible or invalid, such as lifting a lid while
+            a screw is still seated.
+          </p>
+          <p>
             <strong>Assistance:</strong> assisted targets contribute neither to
             autonomous completion nor to recovery. Initial deviations and
             subsequent recovery calls are counted separately.
+          </p>
+          <p>
+            <strong>Replanning:</strong> new recovery calls and other changes to
+            the remaining task sequence. Corrections inside a skill and routine
+            progression to the next target are excluded.
           </p>
         </div>
         <div className="additional-hdd">
           <div>
             <h3>Additional HDD</h3>
             <p>
-              A different-brand HDD excluded from global-camera detector
-              training was evaluated in ten further trials. It achieved 90.9%
+              This separate test checks transfer to a different-brand HDD
+              excluded from global-camera detector training. Across ten
+              further agentic trials, it achieved 90.9%
               mean autonomous completion and 88.9% mean recovery. This case is
               separate from the three-device aggregate.
             </p>
@@ -256,8 +290,10 @@ export function ResultsSection() {
         <div className="results-subheading">
           <h3>Skill execution</h3>
           <p>
-            Invocation counts and initial success distinguish programmed
-            corrections within a skill from new planner-issued recovery calls.
+            An invocation is one complete request to unscrew, extract, or flip.
+            Initial success measures completion on the first invocation;
+            recovery calls are additional requests for the same target. The
+            table separates these calls from corrections performed inside a skill.
           </p>
         </div>
         <Table
@@ -278,14 +314,16 @@ export function ResultsSection() {
         <div className="results-subheading">
           <h3>Perception performance</h3>
           <p>
-            Development-set metrics from a 70/20/10 split performed after
-            augmentation. Related image variants occur across partitions; these
-            scores do not measure independent unseen-image generalisation.
+            Precision measures how often predictions are correct; recall
+            measures how many labelled objects are found. Average precision
+            (AP) summarises detection quality, with AP@0.5:0.95 requiring tighter
+            box overlap. The classifier is evaluated by correct state labels.
           </p>
         </div>
         <div className="perception-metrics">
           <Table
             title="RF-DETR-Large"
+            description="Global camera: component and fastener detection across the device."
             headers={[
               "Class",
               "Precision %",
@@ -298,6 +336,7 @@ export function ResultsSection() {
           <div>
             <Table
               title="RF-DETR-Small"
+              description="Tool camera: local detection for screwdriver and fastener alignment."
               headers={[
                 "Class",
                 "Precision %",
@@ -309,6 +348,7 @@ export function ResultsSection() {
             />
             <Table
               title="YOLOv11-Nano"
+              description="Verification: classifies aligned contact, misaligned contact, or a removed component."
               headers={["Class", "Samples", "Correct", "Accuracy %", "Errors"]}
               rows={tables.vision_cls.map((row) => [
                 row[0].replaceAll("_", " "),
@@ -317,6 +357,11 @@ export function ResultsSection() {
             />
           </div>
         </div>
+        <p className="results-split-note">
+          Perception scores use a 70/20/10 development split made after
+          augmentation. Related image variants occur across partitions, so
+          these scores do not measure independent unseen-image generalisation.
+        </p>
       </div>
     </section>
   );

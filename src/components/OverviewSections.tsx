@@ -13,7 +13,7 @@ export function AbstractSection() {
         <SectionHeader
           id="abstract-title"
           title="Overview"
-          intro="REMAKE combines hierarchical perception, a structured world state, and ReAct-based task planning for dual-arm disassembly. The agent selects one of three programmed skills from observed conditions, without a supplied device identity or action sequence."
+          intro="REMAKE lets a dual-arm robot choose its next disassembly action as new parts become visible. A language agent uses observations and verified outcomes to select one of three programmed skills: unscrew, pick-and-extract, or flip."
         />
       </div>
     </section>
@@ -30,7 +30,7 @@ export function ArchitectureSection() {
         <SectionHeader
           id="architecture-title"
           title="System architecture"
-          intro="Perception updates the shared state, the agent selects a validated skill, and the arms execute it. Verified outcomes feed back into the state before the next decision."
+          intro="The diagram follows the path from camera observations to a shared world state, a language-agent decision, and robot execution. Feedback updates the state after each action; the right-hand videos show the same system working on three devices."
         />
         <AnimatedArchitectureDiagram />
       </div>
@@ -48,7 +48,7 @@ export function DatasetsSection() {
         <SectionHeader
           id="datasets-title"
           title="Perception"
-          intro="Global detection identifies components; local detection refines tool alignment; classification checks execution states. The raw and labelled dataset examples below illustrate these three roles."
+          intro="Three vision models answer different questions: which parts are visible, where the tool and screw are, and whether contact is aligned. Each row pairs a raw camera image with its supplied dataset labels, showing what that model is trained to recognise."
         />
         <DatasetSamples />
       </div>

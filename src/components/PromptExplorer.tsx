@@ -6,6 +6,13 @@ import { readableJson } from "../content/world-state";
 import { CopyButton, SectionHeader } from "./Primitives";
 import { sitePath } from "../lib/site-path";
 
+const descriptions: Record<string, string> = {
+  "System instruction": "Defines the task and keeps decisions grounded in the supplied observations and available skills.",
+  "Available skills": "Describes what each skill can do and the conditions needed to use it.",
+  "Reasoning and selection": "Turns the current world state into one proposed action, with a short justification and confidence value.",
+  "Action formatting": "Converts the selected action into a structured skill request, including verification and failure handling.",
+};
+
 export function parsePromptFile(text: string): PromptSection[] {
   return text
     .split(/^## /gm)
@@ -71,7 +78,7 @@ export function PromptExplorer() {
         <SectionHeader
           id="prompts-title"
           title="Agent instructions"
-          intro="The system instruction and skill descriptions are fixed context. The reasoning stage reads the current state; the action stage formats the selected decision as a validated skill request. The text and JSON examples below come from V11."
+          intro="These prompts define how the agent turns the world state into a skill request. Fixed instructions describe the task and skills; the reasoning and action stages use the latest observations to choose and format the next step. The full prompt text and example responses follow the paper."
         />
         <div className="prompt-flow">
           <span>World state</span>
@@ -109,6 +116,9 @@ export function PromptExplorer() {
                     label={`Copy ${section.title}`}
                   />
                 </header>
+                {descriptions[section.title] && (
+                  <p className="prompt-description">{descriptions[section.title]}</p>
+                )}
                 <div className="prompt-layout">
                   <div className="prompt-body">
                     <div className="prompt-prose">

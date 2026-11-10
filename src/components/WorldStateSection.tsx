@@ -50,7 +50,7 @@ export function WorldStateSection() {
         <SectionHeader
           id="state-title"
           title="Structured world state"
-          intro="The planner reads four JSON fields maintained by perception and verification. The example below is the packet printed in V11; it records a failed unscrewing action, so success must not be assumed."
+          intro="The world state is the robot’s shared record of visible parts, tool alignment, execution outcomes, and contact measurements. The planner reads these four JSON fields before choosing an action. The paper’s example below records a failed unscrewing attempt."
         />
         <div className="state-walkthrough">
           <div className="state-explanation">

@@ -1059,3 +1059,82 @@
   .skill-playback-modes button { font-size: 11px; min-height: 36px; }
   .sequence-caption { font-size: 11px; }
 }
+
+/* Shared corner sizes keep media, cards, and controls visually consistent. */
+:root {
+  --card-radius: 16px;
+  --media-radius: 10px;
+  --control-radius: 10px;
+}
+.dataset-samples,
+.state-example,
+.comparison-plot,
+.paper-table,
+.prompt-template,
+.figure-modal { border-radius: var(--card-radius); }
+.flow-panel { border-radius: 18px; }
+.vision-row,
+.parallel-skill,
+.parallel-device,
+.flow-json-window,
+.flow-interface { border-radius: 12px; }
+.flow-clip,
+.vision-input,
+.vision-output,
+.figure-button,
+.figure-button img,
+.figure-modal img { border-radius: var(--media-radius); }
+.perception-matrix .figure-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+.perception-matrix .figure-button img {
+  display: block;
+  max-width: 255px;
+  max-height: none;
+  margin-inline: auto;
+}
+.flow-heading button,
+.skill-playback-modes button,
+.button,
+.icon-button,
+.modal-close { border-radius: var(--control-radius); }
+.skill-select { border-radius: 8px; }
+.placeholder { border-radius: 4px; }
+.prompt-description {
+  margin: 0;
+  padding: 12px 20px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  background: #f8fafd;
+  border-bottom: 1px solid var(--line);
+}
+.paper-table .table-description {
+  display: block;
+  margin-top: 7px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+}
+.results-split-note {
+  margin: 20px 0 0;
+  max-width: 920px;
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+#feedback-arrow path {
+  fill: #477d40;
+  stroke: #477d40;
+  stroke-width: 1.3;
+}
+@media (min-width: 1151px) {
+  .visual-flow-board { padding-top: 76px; }
+}
+@media (max-width: 650px) {
+  .prompt-description { padding: 12px 16px; font-size: 11px; }
+}

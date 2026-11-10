@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { Check, Clipboard, Expand, X } from "lucide-react";
+import { Check, Clipboard, X } from "lucide-react";
 import { EvidenceSource } from "../content/research-data";
 import { sitePath } from "../lib/site-path";
 
@@ -141,9 +141,6 @@ export function Figure({
           {imageLabel && (
             <span className="figure-image-label">{imageLabel}</span>
           )}
-          <span className="expand-label">
-            <Expand aria-hidden="true" /> Expand figure
-          </span>
         </button>
         <figcaption>{caption}</figcaption>
       </figure>

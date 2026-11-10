@@ -269,14 +269,14 @@ export function AnimatedArchitectureDiagram() {
             <marker
               id="feedback-arrow"
               markerUnits="userSpaceOnUse"
-              viewBox="0 0 12 12"
-              markerWidth="12"
-              markerHeight="12"
-              refX="10"
-              refY="6"
+              viewBox="0 0 14 14"
+              markerWidth="14"
+              markerHeight="14"
+              refX="12"
+              refY="7"
               orient="auto"
             >
-              <path d="M1 1 L10 6 L1 11" />
+              <path d="M2 2 L12 7 L2 12 Z" />
             </marker>
           </defs>
           {connections.lines.map((line, index) => (
