@@ -21,12 +21,12 @@ test("perception matrix has raw and labelled images, including aligned contact",
     ).toHaveCount(1);
 });
 
-test("all eight unique videos decode and the primary recording starts at execution", async ({
+test("all seven unique diagram clips decode, including the wider execution view", async ({
   page,
 }) => {
   await page.goto("/");
   const videos = page.locator("video");
-  await expect(videos).toHaveCount(8);
+  await expect(videos).toHaveCount(7);
   const sources = await videos.evaluateAll((items) =>
     items.map(
       (video) =>
@@ -35,7 +35,7 @@ test("all eight unique videos decode and the primary recording starts at executi
         video.querySelector("source")?.src,
     ),
   );
-  expect(new Set(sources).size).toBe(8);
+  expect(new Set(sources).size).toBe(7);
   for (const video of await videos.all()) {
     await video.scrollIntoViewIfNeeded();
     await expect
@@ -52,40 +52,24 @@ test("all eight unique videos decode and the primary recording starts at executi
         video.evaluate((node) => (node as HTMLVideoElement).currentTime),
       )
       .toBeGreaterThan(0);
+    await video.evaluate(node => (node as HTMLVideoElement).pause());
   }
-  const film = page.getByLabel("UNMAKE physical disassembly experiment", {
-    exact: true,
-  });
-  expect(
-    await film.evaluate((node) => (node as HTMLVideoElement).duration),
-  ).toBeCloseTo(121.3, 0);
-  const edit = await (
-    await page.request.get("/assets/experiment-edit.json")
-  ).json();
-  expect(edit.source_start_seconds).toBe(21.2);
-  expect(edit.source_end_seconds).toBe(142.5);
+  const film = page.getByLabel("Dual-arm execution video", { exact: true });
+  expect(await film.evaluate(node => ({width:(node as HTMLVideoElement).videoWidth, height:(node as HTMLVideoElement).videoHeight}))).toEqual({width:950,height:612});
+
 });
 
-test("results distinguish examples from perception measurements and retain revised values", async ({
-  page,
-}) => {
+test("results retain V11 physical-trial values and separate the additional HDD", async ({ page }) => {
   await page.goto("/#results");
-  await expect(page.locator(".data-status")).toContainText(
-    "not measured robot performance",
-  );
-  await expect(page.locator(".controller-card")).toHaveCount(3);
-  await expect(
-    page.locator(".perception-results .data-table tbody tr"),
-  ).toHaveCount(18);
-  await expect(page.locator(".skill-results .data-table tbody tr")).toHaveCount(
-    7,
-  );
-  await expect(page.locator(".controller-card").nth(0)).toContainText("49.6");
-  await expect(page.locator(".controller-card").nth(1)).toContainText("11.5");
-  await expect(page.locator(".controller-card").nth(2)).toContainText("6.8");
-  await expect(page.locator(".metric-definitions")).toContainText("22.6%");
-  await expect(page.locator(".comparison-intro")).toContainText("16.1%");
-  await expect(page.locator("#results")).not.toContainText("72.2%");
+  await expect(page.locator(".results-summary")).toContainText("58.1% → 89.7%");
+  await expect(page.locator(".device-results .paper-table")).toHaveCount(3);
+  await expect(page.locator(".perception-metrics tbody tr")).toHaveCount(18);
+  await expect(page.locator(".skill-table tbody tr")).toHaveCount(10);
+  await expect(page.locator(".comparison-plots")).toContainText("96.4 ± 4.7%");
+  await expect(page.locator(".comparison-plots")).toContainText("360.4 ± 30.6 s");
+  await expect(page.locator(".results-summary")).toContainText("22.2%");
+  await expect(page.locator(".additional-hdd")).toContainText("90.9%");
+  await expect(page.locator("#results")).not.toContainText("generated examples");
 });
 
 test("worked state contains only the four runtime fields and no product identifier", async ({
@@ -101,6 +85,33 @@ test("worked state contains only the four runtime fields and no product identifi
     "force_torque",
   ]);
   expect(parsed).not.toHaveProperty("device_id");
-  expect(parsed.assembly_state.last_outcome).toBe("success");
+  expect(parsed.assembly_state.last_outcome).toBe("failure");
   await expect(page.locator(".state-example")).toHaveCount(1);
+});
+
+test('device videos include all recorded actions and execution combines them at twice the recording speed', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#architecture');
+  const manifest = await (await page.request.get('/assets/architecture/clips.json')).json();
+  const execution = manifest.find((clip: {id: string}) => clip.id === 'execution');
+  expect(execution.speed_factor).toBe(2);
+  expect(execution.segments.map((clip: {id: string}) => clip.id)).toEqual(['hdd', 'mini-pc', 'laptop']);
+  for (const [label, duration] of [
+    ['Hard disk drive evaluation video', 41.5],
+    ['Mini PC evaluation video', 41.5],
+    ['Laptop evaluation video', 30.8],
+    ['Dual-arm execution video', 56.9],
+  ] as const) {
+    const video = page.getByLabel(label, { exact: true });
+    await video.scrollIntoViewIfNeeded();
+    await expect.poll(() => video.evaluate(node => (node as HTMLVideoElement).duration)).toBeGreaterThan(0);
+    expect(await video.evaluate(node => (node as HTMLVideoElement).duration)).toBeCloseTo(duration, 1);
+    expect(await video.evaluate(node => (node as HTMLVideoElement).controls)).toBe(false);
+    for (const proportion of [0.5, 0.99]) {
+      await video.evaluate((node, proportion) => { const clip = node as HTMLVideoElement; clip.pause(); clip.currentTime = clip.duration * proportion; }, proportion);
+      await expect.poll(() => video.evaluate(node => !(node as HTMLVideoElement).seeking && (node as HTMLVideoElement).readyState >= 2)).toBe(true);
+    }
+  }
+  const total = manifest.filter((clip: {id: string}) => clip.id !== 'execution').reduce((sum: number, clip: {duration: number}) => sum + clip.duration, 0);
+  expect(execution.duration).toBeCloseTo(total / 2, 1);
 });

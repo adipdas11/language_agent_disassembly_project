@@ -5,44 +5,20 @@ import { SectionHeader } from "./Primitives";
 export function AbstractSection() {
   return (
     <section
-      className="section overview-section"
+      className="section abstract-section"
       id="abstract"
       aria-labelledby="abstract-title"
     >
-      <div className="section-shell overview-layout">
-        <div>
-          <span className="eyebrow">01 / The idea</span>
-          <h2 id="abstract-title">
-            Taking things apart
-            <br />
-            takes <em>understanding.</em>
-          </h2>
-        </div>
-        <div className="overview-copy">
-          <p className="lead">
-            A screw can stay seated. A part can remain stuck. The next action
-            should follow what actually happened.
-          </p>
-          <p>
-            UNMAKE connects three vision models, a structured world state, and a
-            ReAct language agent. The agent chooses the next task from the
-            observed device state, without a supplied device name or ordered
-            action sequence. Two specialised arms carry out the programmed
-            skills, and verification updates the evidence for the next decision.
-          </p>
-          <div className="idea-sequence">
-            <span>Observe the scene</span>
-            <b>→</b>
-            <span>Select one skill</span>
-            <b>→</b>
-            <span>Verify the result</span>
-          </div>
-        </div>
+      <div className="section-shell">
+        <SectionHeader
+          id="abstract-title"
+          title="Overview"
+          intro="REMAKE lets a dual-arm robot choose its next disassembly action as new parts become visible. A language agent uses observations and verified outcomes to select one of three programmed skills: unscrew, pick-and-extract, or flip."
+        />
       </div>
     </section>
   );
 }
-
 export function ArchitectureSection() {
   return (
     <section
@@ -53,39 +29,26 @@ export function ArchitectureSection() {
       <div className="section-shell">
         <SectionHeader
           id="architecture-title"
-          eyebrow="02 / How UNMAKE works"
-          title={
-            <>
-              One state. One action.
-              <br />
-              <em>A continuous feedback loop.</em>
-            </>
-          }
-          intro="Camera observations become structured evidence. The language agent selects a validated skill, the robot executes it, and the verified outcome updates the world state before the next decision. Follow the animated path below."
+          title="System architecture"
+          intro="The diagram follows the path from camera observations to a shared world state, a language-agent decision, and robot execution. Feedback updates the state after each action; the right-hand videos show the same system working on three devices."
         />
         <AnimatedArchitectureDiagram />
       </div>
     </section>
   );
 }
-
 export function DatasetsSection() {
   return (
     <section
-      className="section perception-section"
+      className="section section-tint-blue"
       id="datasets"
       aria-labelledby="datasets-title"
     >
       <div className="section-shell">
         <SectionHeader
           id="datasets-title"
-          eyebrow="03 / Perception"
-          title={
-            <>
-              Three views of <em>the task.</em>
-            </>
-          }
-          intro="The overhead camera finds parts and fasteners; the tool camera refines alignment; a classifier checks contact and removal states. Each row pairs a real dataset image with its supplied annotation. The aligned class is shown for verification."
+          title="Perception"
+          intro="Three vision models answer different questions: which parts are visible, where the tool and screw are, and whether contact is aligned. Each row pairs a raw camera image with its supplied dataset labels, showing what that model is trained to recognise."
         />
         <DatasetSamples />
       </div>

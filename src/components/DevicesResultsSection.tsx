@@ -1,52 +1,49 @@
 import type { ReactNode } from "react";
-import { ArrowUpRight, FlaskConical } from "lucide-react";
-import manuscript from "../content/manuscript-results.json";
+import data from "../content/manuscript-results.json";
 import { SectionHeader } from "./Primitives";
-
-const tables = manuscript.tables;
-const detectionHeaders = [
-  "Class",
-  "Precision %",
-  "Recall %",
-  "AP@0.5 %",
-  "AP@0.5:0.95 %",
-];
-const labels: Record<string, string> = {
-  "R_{comp} (%)": "Completion (%)",
+const tables = data.tables;
+const names = ["HDD", "Mini PC", "Laptop"];
+const metricNames: Record<string, string> = {
+  "R_{comp} (%)": "Autonomous completion (%)",
   "T_{cycle} (s)": "Cycle time (s)",
-  "F_{step}": "Initial deviations",
+  "F_{step}": "Initially failed targets",
   "R_{rec} (%)": "Recovery ratio (%)",
   F_C: "Cascade failures",
   "H_{int}": "Physical assistance",
   "N_{replan}": "Replanning events",
 };
-
-function Value({ value }: { value: string }) {
-  const [mean, sd] = value.split(" ± ");
+const mean = (value: string) => parseFloat(value);
+function NumberValue({ value }: { value: string }) {
+  const [valueMean, sd] = value.split(" ± ");
   return (
-    <span className="metric-value">
-      {mean}
+    <span className="number-value">
+      {valueMean}
       {sd && <small> ± {sd}</small>}
     </span>
   );
 }
-function DataTable({
+function Table({
   title,
+  description,
   headers,
   rows,
   note,
   className = "",
 }: {
   title: string;
+  description?: string;
   headers: string[];
   rows: string[][];
   note?: ReactNode;
   className?: string;
 }) {
   return (
-    <article className={`result-table-card ${className}`}>
-      <table className="data-table">
-        <caption>{title}</caption>
+    <article className={`paper-table ${className}`}>
+      <table>
+        <caption>
+          {title}
+          {description && <span className="table-description">{description}</span>}
+        </caption>
         <thead>
           <tr>
             {headers.map((header) => (
@@ -62,11 +59,11 @@ function DataTable({
               {row.map((cell, column) =>
                 column === 0 ? (
                   <th scope="row" key={column}>
-                    {labels[cell] ?? cell}
+                    {metricNames[cell] ?? cell}
                   </th>
                 ) : (
                   <td data-label={headers[column]} key={column}>
-                    <Value value={cell} />
+                    <NumberValue value={cell} />
                   </td>
                 ),
               )}
@@ -78,253 +75,293 @@ function DataTable({
     </article>
   );
 }
-
+function ComparisonPlot({ time = false }: { time?: boolean }) {
+  const left = 108,
+    right = 516,
+    scale = time ? 450 : 100;
+  const x = (value: number) => left + (value / scale) * (right - left);
+  const ticks = time ? [0, 100, 200, 300, 400] : [0, 25, 50, 75, 100];
+  return (
+    <figure className="comparison-plot">
+      <figcaption>
+        {time ? "Cycle time" : "Autonomous target-step completion"}
+      </figcaption>
+      <div className="plot-legend">
+        <span className="scripted-dot" />
+        Scripted
+        <span className="agentic-dot" />
+        Agentic
+      </div>
+      <svg
+        viewBox="0 0 580 310"
+        role="img"
+        aria-label={
+          time
+            ? "Cycle time comparison, seconds. Agentic execution takes longer on all three devices."
+            : "Autonomous target-step completion comparison, percent. Agentic completion is higher on all three devices."
+        }
+      >
+        {ticks.map((tick) => (
+          <g key={tick}>
+            <line x1={x(tick)} x2={x(tick)} y1="30" y2="260" stroke="#e5ebf3" />
+            <text
+              x={x(tick)}
+              y="285"
+              textAnchor="middle"
+              className="axis-label"
+            >
+              {tick}
+              {time ? "" : "%"}
+            </text>
+          </g>
+        ))}
+        {names.map((name, index) => {
+          const baseline = tables.ablation[index * 2],
+            agent = tables.ablation[index * 2 + 1],
+            column = time ? 3 : 2,
+            y = 60 + index * 84,
+            a = x(mean(baseline[column])),
+            b = x(mean(agent[column]));
+          return (
+            <g key={name}>
+              <text x="0" y={y + 5} className="plot-device">
+                {name}
+              </text>
+              <line
+                x1={a}
+                x2={b}
+                y1={y}
+                y2={y}
+                stroke="#bed1ee"
+                strokeWidth="5"
+              />
+              <circle cx={a} cy={y} r="5" fill="#7b8799" />
+              <circle cx={b} cy={y} r="6" fill="#245bd8" />
+              <text
+                x={a}
+                y={y + 25}
+                textAnchor="middle"
+                className="baseline-label"
+              >
+                {baseline[column]}
+                {time ? " s" : "%"}
+              </text>
+              <text
+                x={Math.min(520, b)}
+                y={y - 17}
+                textAnchor="middle"
+                className="agent-label"
+              >
+                {agent[column]}
+                {time ? " s" : "%"}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+      <p>
+        {time
+          ? "Elapsed time per trial; higher completion comes with longer execution."
+          : "Completed autonomous targets divided by the fixed task size."}{" "}
+        Labels show mean ± sample SD.
+      </p>
+    </figure>
+  );
+}
 export function ResultsSection() {
   return (
-    <section
-      className="section results-section"
-      id="results"
-      aria-labelledby="results-title"
-    >
+    <section className="section" id="results" aria-labelledby="results-title">
       <div className="section-shell">
         <SectionHeader
           id="results-title"
-          eyebrow="05 / Evaluation"
-          title={
-            <>
-              Look beyond <em>a single score.</em>
-            </>
-          }
-          intro="Perception is evaluated by detection and classification quality. The task-level protocol separately tracks autonomous target completion, time, recovery, failure propagation, and physical assistance, so each number answers a specific question."
+          title="Experimental results"
+          intro="The experiments compare a fixed scripted action order with an agentic controller that chooses the next skill from the updated world state. We measure how much each system completes autonomously, how it handles failures, and how long execution takes."
         />
-        <div className="result-group-heading">
-          <span className="result-index">A</span>
+        <div className="results-subheading">
+          <h3>Task completion and time</h3>
+          <p>
+            The 45-trial comparison includes five scripted and ten agentic runs
+            per device, using the same hardware, perception, motion planning,
+            and skills. Each chart pairs the two controllers; labels show the
+            average and variation across trials (mean ± sample SD).
+          </p>
+        </div>
+        <div className="results-summary">
+          <p>
+            <strong>58.1% → 89.7%</strong>
+            <span>Mean autonomous completion</span>
+          </p>
+          <p>
+            <strong>90.0% lower</strong>
+            <span>Mean cascade-failure count</span>
+          </p>
+          <p>
+            <strong>258.0 → 315.3 s</strong>
+            <span>Mean cycle time · +22.2%</span>
+          </p>
+        </div>
+        <div className="comparison-plots">
+          <ComparisonPlot />
+          <ComparisonPlot time />
+        </div>
+        <div className="results-context">
+          <p>
+            The completion gain is <strong>31.6 percentage points</strong>.
+            The agentic controller completes more targets on every device,
+            with longer cycle times. The headline averages give each device
+            equal weight and assess planning, verification, and recovery together.
+          </p>
+        </div>
+        <div className="results-subheading">
+          <h3>Failures and recovery</h3>
+          <p>
+            These tables separate initially failed targets, autonomous recovery,
+            failures that spread to later steps, and physical assistance.
+            Lower failure and assistance counts are better; a higher recovery
+            ratio means more successful recovery per failed invocation.
+          </p>
+        </div>
+        <div className="device-results">
+          {names.map((name, index) => {
+            const base = tables.ablation[index * 2],
+              agent = tables.ablation[index * 2 + 1],
+              replan = tables.generalisation[index][8];
+            return (
+              <Table
+                key={name}
+                title={`${name} · execution outcomes`}
+                headers={["Metric", "Scripted", "Agentic"]}
+                rows={[
+                  ["Initially failed targets", base[4], agent[4]],
+                  ["Recovery ratio (%)", base[5], agent[5]],
+                  ["Cascade failures", base[6], agent[6]],
+                  ["Physical assistance", base[7], agent[7]],
+                  ["Replanning events", "n/a", replan],
+                ]}
+                note={`Means ± sample SD per trial. Recovery uses ${[8, 8, 9][index]} eligible agentic trials.`}
+              />
+            );
+          })}
+        </div>
+        <div className="metric-notes">
+          <p>
+            <strong>Recovery:</strong> autonomously recovered targets divided by
+            all failed full invocations, averaged over trials with failures. The
+            paper reports a device-averaged ratio of 84.0%.
+          </p>
+          <p>
+            <strong>Cascade failures:</strong> an unresolved earlier step makes
+            a later target inaccessible or invalid, such as lifting a lid while
+            a screw is still seated.
+          </p>
+          <p>
+            <strong>Assistance:</strong> assisted targets contribute neither to
+            autonomous completion nor to recovery. Initial deviations and
+            subsequent recovery calls are counted separately.
+          </p>
+          <p>
+            <strong>Replanning:</strong> new recovery calls and other changes to
+            the remaining task sequence. Corrections inside a skill and routine
+            progression to the next target are excluded.
+          </p>
+        </div>
+        <div className="additional-hdd">
           <div>
-            <h3>Perception performance</h3>
+            <h3>Additional HDD</h3>
             <p>
-              Supplied development-set results · post-augmentation 70/20/10
-              split
+              This separate test checks transfer to a different-brand HDD
+              excluded from global-camera detector training. Across ten
+              further agentic trials, it achieved 90.9%
+              mean autonomous completion and 88.9% mean recovery. This case is
+              separate from the three-device aggregate.
+            </p>
+            <p className="small-note">
+              Only the agentic controller was tested on this unit. Recovery
+              statistics use nine eligible trials.
             </p>
           </div>
-        </div>
-        <div className="perception-results">
-          <DataTable
-            title="RF-DETR-Large · scene understanding"
-            headers={detectionHeaders}
-            rows={tables.vision_det}
-            note="11 classes · 1,088 × 1,088 input · 800 raw images → 2,800 augmented samples"
+          <Table
+            title="HDD comparison"
+            headers={["Metric", "Original HDD", "Additional HDD"]}
+            rows={tables.additional_hdd}
+            note="Ten trials per device; mean ± sample SD."
           />
-          <div className="perception-results-right">
-            <DataTable
-              title="RF-DETR-Small · local alignment"
-              headers={detectionHeaders}
+        </div>
+        <div className="results-subheading">
+          <h3>Skill execution</h3>
+          <p>
+            An invocation is one complete request to unscrew, extract, or flip.
+            Initial success measures completion on the first invocation;
+            recovery calls are additional requests for the same target. The
+            table separates these calls from corrections performed inside a skill.
+          </p>
+        </div>
+        <Table
+          title="Per-skill performance"
+          headers={[
+            "Device",
+            "Skill",
+            "Invocations",
+            "Initial success",
+            "Initial success %",
+            "Recovery calls",
+            "Duration (s)",
+          ]}
+          rows={tables.perskill}
+          className="skill-table"
+          note="Initial success is S₀/N₀. A complete initial invocation may include internal alignment or contact corrections. Counts span ten trials per device; duration is mean ± sample SD."
+        />
+        <div className="results-subheading">
+          <h3>Perception performance</h3>
+          <p>
+            Precision measures how often predictions are correct; recall
+            measures how many labelled objects are found. Average precision
+            (AP) summarises detection quality, with AP@0.5:0.95 requiring tighter
+            box overlap. The classifier is evaluated by correct state labels.
+          </p>
+        </div>
+        <div className="perception-metrics">
+          <Table
+            title="RF-DETR-Large"
+            description="Global camera: component and fastener detection across the device."
+            headers={[
+              "Class",
+              "Precision %",
+              "Recall %",
+              "AP@0.5 %",
+              "AP@0.5:0.95 %",
+            ]}
+            rows={tables.vision_det}
+          />
+          <div>
+            <Table
+              title="RF-DETR-Small"
+              description="Tool camera: local detection for screwdriver and fastener alignment."
+              headers={[
+                "Class",
+                "Precision %",
+                "Recall %",
+                "AP@0.5 %",
+                "AP@0.5:0.95 %",
+              ]}
               rows={tables.vision_local}
-              note="4 classes · 640 × 640 input · 800 raw images → 2,800 augmented samples"
             />
-            <DataTable
-              title="YOLOv11-Nano · state verification"
+            <Table
+              title="YOLOv11-Nano"
+              description="Verification: classifies aligned contact, misaligned contact, or a removed component."
               headers={["Class", "Samples", "Correct", "Accuracy %", "Errors"]}
               rows={tables.vision_cls.map((row) => [
                 row[0].replaceAll("_", " "),
                 ...row.slice(1),
               ])}
-              note="3 classes · 224 × 224 input · 175 raw images → 1,225 augmented samples"
             />
           </div>
         </div>
-        <p className="evaluation-note">
-          <strong>What the scores show.</strong> Precision measures how often
-          detections are correct; recall measures how many labelled targets are
-          found. Stricter box-overlap thresholds expose a localisation gap:
-          scene-level AP@0.5:0.95 is 61.5% for screws versus 88.4% for cases.
-          This is detection quality, not manipulation success.
+        <p className="results-split-note">
+          Perception scores use a 70/20/10 development split made after
+          augmentation. Related image variants occur across partitions, so
+          these scores do not measure independent unseen-image generalisation.
         </p>
-        <p className="evaluation-note">
-          Augmentation preceded the split, so related image variants occur
-          across partitions. These scores describe the development split and do
-          not establish independent unseen-image generalisation.
-        </p>
-
-        <div className="result-group-heading controller-heading">
-          <span className="result-index">B</span>
-          <div>
-            <h3>Task-level controller comparison</h3>
-            <p>
-              Same hardware, vision models, motion planning, skills, and target
-              sets
-            </p>
-          </div>
-        </div>
-        <div className="data-status">
-          <FlaskConical aria-hidden="true" />
-          <p>
-            <strong>Numerical reporting examples.</strong> The supplied V10
-            manuscript explicitly identifies the controller, skill, and
-            additional-HDD values as generated examples for calculation and
-            layout checks. They are shown below as examples, not measured robot
-            performance.
-          </p>
-        </div>
-        <div className="comparison-intro">
-          <div>
-            <span>Completion, equal weight per device</span>
-            <h4>
-              58.1% <ArrowUpRight aria-hidden="true" /> <em>86.0%</em>
-            </h4>
-            <p>+27.9 percentage points in the example records</p>
-          </div>
-          <p>
-            Higher completion comes with longer execution: the mean device-wise
-            cycle-time increase is <strong>16.1%</strong>. The protocol compares
-            the complete feedback and planning systems; it does not isolate the
-            language model’s contribution.
-          </p>
-        </div>
-        <div className="controller-cards">
-          {["HDD", "Mini PC", "Laptop"].map((device, index) => {
-            const baseline = tables.ablation[index * 2],
-              agent = tables.ablation[index * 2 + 1];
-            const metrics = [
-              ["Cycle time (s)", baseline[3], agent[3]],
-              ["Initial deviations", baseline[4], agent[4]],
-              ["Recovery ratio (%)", baseline[5], agent[5]],
-              ["Cascade failures", baseline[6], agent[6]],
-              ["Physical assistance", baseline[7], agent[7]],
-              ["Replanning events", "n/a", tables.generalisation[7][index + 1]],
-            ];
-            return (
-              <article className="controller-card" key={device}>
-                <header>
-                  <h4>{device}</h4>
-                  <span>{[11, 9, 12][index]} target steps</span>
-                </header>
-                <div
-                  className="completion-comparison"
-                  aria-label={`${device} autonomous target completion`}
-                >
-                  <span className="eyebrow">Autonomous target completion</span>
-                  {[baseline, agent].map((row) => (
-                    <div
-                      className={`completion-row ${row[1].toLowerCase()}`}
-                      key={row[1]}
-                    >
-                      <div>
-                        <span>{row[1]}</span>
-                        <strong>
-                          <Value value={row[2]} />%
-                        </strong>
-                      </div>
-                      <div className="completion-track">
-                        <span style={{ width: `${parseFloat(row[2])}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <table className="controller-metrics">
-                  <caption className="sr-only">
-                    {device} controller example metrics, mean plus or minus
-                    sample standard deviation
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Metric</th>
-                      <th scope="col">Scripted</th>
-                      <th scope="col">Agentic</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {metrics.map((row) => (
-                      <tr key={row[0]}>
-                        <th scope="row">{row[0]}</th>
-                        <td>
-                          <Value value={row[1]} />
-                        </td>
-                        <td>
-                          <Value value={row[2]} />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <p className="table-note">
-                  5 scripted / 10 agentic example records.
-                  <br />
-                  Means ± sample SD; events counted per record.
-                  <br />Recovery: {[10, 9, 10][index]} eligible agentic records.
-                </p>
-              </article>
-            );
-          })}
-        </div>
-        <div className="metric-definitions">
-          <article>
-            <h4>Completion is per target</h4>
-            <p>
-              Autonomously completed targets ÷ the fixed target count. Assisted
-              targets do not count; retries do not add targets.
-            </p>
-          </article>
-          <article>
-            <h4>Recovery is per failed call</h4>
-            <p>
-              Targets recovered autonomously ÷ all failed invocations, averaged
-              over eligible records. The revised example macro-average is 22.6%.
-            </p>
-          </article>
-          <article>
-            <h4>Cascades are downstream failures</h4>
-            <p>
-              Initial deviations caused by an unresolved earlier step. The
-              example mean counts decrease by 84.3% across devices.
-            </p>
-          </article>
-        </div>
-
-        <div className="result-group-heading">
-          <span className="result-index">C</span>
-          <div>
-            <h3>Where the skills spend their effort</h3>
-            <p>
-              Generated examples · totals across ten agentic records per device
-            </p>
-          </div>
-        </div>
-        <DataTable
-          title="Skill execution · initial success and recovery calls"
-          headers={[
-            "Device",
-            "Skill",
-            "Invocations",
-            "First attempt %",
-            "Recovery calls",
-            "Time (s) ± SD",
-            "Condition category",
-          ]}
-          rows={tables.perskill}
-          className="skill-results"
-          note="Initial attempts = invocations − recovery calls. First-attempt success uses initial attempts as its denominator. Condition categories are reporting labels, not measured diagnoses in these generated records. Flip is used only for the HDD."
-        />
-        <div className="additional-results">
-          <div>
-            <span className="eyebrow">A separate case</span>
-            <h3>An additional HDD</h3>
-            <p>
-              The paper identifies another-brand HDD excluded from task-specific
-              perception training. Its table is also a numerical example, so it
-              does not establish transfer to an unseen device.
-            </p>
-            <p>
-              These values are excluded from the three-device summaries above. A
-              measured result would need the actual run count, target set,
-              configuration, and variability.
-            </p>
-          </div>
-          <DataTable
-            title="Additional-HDD example · means only"
-            headers={["Metric", "Original HDD", "Additional HDD"]}
-            rows={tables["additional-hdd"]}
-          />
-        </div>
       </div>
     </section>
   );

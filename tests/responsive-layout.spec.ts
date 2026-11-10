@@ -24,7 +24,7 @@ for (const [width, height] of viewports) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.setViewportSize({ width, height });
     await page.goto("/");
-    await expect(page.locator(".prompt-template")).toHaveCount(5);
+    await expect(page.locator(".prompt-template")).toHaveCount(4);
     await page.evaluate(() => document.fonts.ready);
     expect(
       await page.evaluate(
@@ -33,7 +33,7 @@ for (const [width, height] of viewports) {
     ).toBeLessThanOrEqual(1);
     const clipped = await page
       .locator(
-        ".parallel-skills, .parallel-devices, .state-walkthrough, .prompt-list, .controller-cards, .perception-results",
+        ".parallel-skills, .parallel-devices, .state-walkthrough, .prompt-list, .comparison-plots, .device-results, .perception-metrics, .prompt-layout",
       )
       .evaluateAll((groups) =>
         groups.flatMap((group) => {
@@ -80,7 +80,7 @@ for (const [width, height] of viewports) {
     const perception = (await page
       .locator('[data-flow-panel="scene"]')
       .boundingBox())!;
-    if (state.y > perception.y + perception.height) {
+    if (state.y > perception.y + perception.height || execution.y > perception.y + perception.height) {
       expect(route.start.x).toBeCloseTo(execution.x + execution.width + 4, 0);
       expect(route.start.y).toBeCloseTo(execution.y + execution.height / 2, 0);
       expect(route.end.x).toBeCloseTo(state.x + state.width + 8, 0);
@@ -91,6 +91,17 @@ for (const [width, height] of viewports) {
       expect(route.end.x).toBeCloseTo(state.x + state.width / 2, 0);
       expect(route.end.y).toBeCloseTo(state.y - 23, 0);
     }
+    // Feedback must travel through gutters, never through a video or JSON card.
+    const blocked = await page.locator('.feedback .connector-base').evaluate(node => {
+      const path = node as SVGPathElement, matrix = path.getScreenCTM()!;
+      const panels = [...document.querySelectorAll('.flow-panel')].map(panel => panel.getBoundingClientRect());
+      for (let at = 0; at <= path.getTotalLength(); at += 4) {
+        const point = path.getPointAtLength(at).matrixTransform(matrix);
+        if (panels.some(panel => point.x > panel.left + 2 && point.x < panel.right - 2 && point.y > panel.top + 2 && point.y < panel.bottom - 2)) return true;
+      }
+      return false;
+    });
+    expect(blocked).toBe(false);
     const orbit = (await page.locator(".react-orbit").boundingBox())!;
     expect(Math.abs(orbit.width - orbit.height)).toBeLessThan(1);
     expect(

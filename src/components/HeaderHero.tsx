@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowDown, Menu, Play, X } from "lucide-react";
+import { Menu, Play, X } from "lucide-react";
 import { siteConfig } from "../content/research-data";
 import { ComingSoon } from "./Primitives";
 import { sitePath } from "../lib/site-path";
@@ -9,8 +9,8 @@ const navItems = [
   ["architecture", "System"],
   ["datasets", "Perception"],
   ["actions", "Actions"],
+  ["prompts", "Instructions"],
   ["results", "Results"],
-  ["prompts", "Resources"],
 ];
 
 export function applyAuthorMetadata(showAuthors: boolean) {
@@ -50,12 +50,9 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <a className="brand" href="#top" aria-label="UNMAKE home">
-        <span className="brand-symbol" aria-hidden="true">
-          ↗
-        </span>
+      <a className="brand" href="#top" aria-label="REMAKE home">
         <span>
-          UNMAKE<span className="brand-period">.</span>
+          <strong>REMAKE</strong>
         </span>
       </a>
       <button
@@ -123,36 +120,10 @@ export function Hero() {
       id="top"
       aria-labelledby="hero-title"
     >
-      <div className="hero-title-content">
-        <div className="hero-overline">
-          <span /> Observe. Reason. Disassemble.
-        </div>
-        <h1 id="hero-title" aria-label={siteConfig.title}>
-          <span className="project-wordmark">
-            UN<span>MAKE</span>
-            <i>.</i>
-          </span>
-          <span className="project-subtitle">
-            Language-Agent-Guided Adaptive
-            <br className="desktop-break" /> Dual-Arm Robotic Disassembly
-          </span>
-        </h1>
-        <p className="hero-summary">
-          Two arms. Three skills. A plan that evolves with the device.
-        </p>
-        <AuthorCards />
-        <div
-          className="hero-actions hero-title-actions"
-          aria-label="Project resources and page shortcuts"
-        >
-          <ComingSoon label="Paper" />
-          <ComingSoon label="Code" />
-          <a className="button button-primary" href="#video">
-            <Play aria-hidden="true" /> Watch experiment
-          </a>
-        </div>
-      </div>
-      <div className="identity-strip" aria-label="Research institutions">
+      <div
+        className="identity-strip identity-strip-top"
+        aria-label="Research institutions"
+      >
         <div className="identity-logo">
           <img
             src={sitePath("/assets/heriot-watt-university.png")}
@@ -162,20 +133,34 @@ export function Hero() {
         <div className="identity-logo">
           <img
             src={sitePath("/assets/national-robotarium.png")}
-            alt="The National Robotarium"
+            alt="The National Robotarium — People Centred, Intelligence Driven"
           />
         </div>
         <div className="identity-logo">
-          <img src={sitePath("/assets/arm2-lab.svg")} alt="ARM squared Lab" />
+          <img
+            src={sitePath("/assets/arm2-lab.svg")}
+            alt="ARM squared Lab — Autonomous Robotic Manipulation and Multi Agent Systems"
+          />
         </div>
       </div>
-      <a
-        href="#abstract"
-        className="hero-scroll"
-        aria-label="Scroll to the overview"
-      >
-        <ArrowDown />
-      </a>
+      <div className="hero-title-content">
+        <h1 id="hero-title">
+          <em>REMAKE:</em> Language-Agent Planning over Structured World States
+          for Adaptive Dual-arm Robotic Disassembly
+        </h1>
+
+        <AuthorCards />
+        <div
+          className="hero-actions hero-title-actions"
+          aria-label="Project resources and page shortcuts"
+        >
+          <ComingSoon label="Paper" />
+          <ComingSoon label="Code" />
+          <a className="button button-primary" href="#architecture">
+            <Play aria-hidden="true" /> Explore system
+          </a>
+        </div>
+      </div>
     </section>
   );
 }

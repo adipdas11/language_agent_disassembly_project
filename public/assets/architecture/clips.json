@@ -1,46 +1,76 @@
 [
   {
     "id": "execution",
-    "label": "Dual-arm execution",
-    "start": 80.0,
-    "duration": 12.0,
-    "src": "/assets/architecture/execution.mp4",
-    "poster": "/assets/architecture/execution-poster.webp",
-    "crop": "688:516:0:148",
+    "label": "All three recorded disassembly sequences",
+    "duration": 56.9,
+    "src": "/assets/architecture/execution-all-devices.mp4",
+    "poster": "/assets/architecture/execution-all-devices-poster.webp",
+    "crop": "950:612:0:50",
     "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
-    "speed": "As shown in the experiment recording"
+    "speed_factor": 2,
+    "speed": "2x recording playback; source includes accelerated passages",
+    "segments": [
+      {
+        "id": "hdd",
+        "label": "HDD recorded disassembly sequence",
+        "start": 21.2,
+        "end": 62.7,
+        "output_start": 0.0
+      },
+      {
+        "id": "mini-pc",
+        "label": "Mini PC recorded disassembly sequence",
+        "start": 66.8,
+        "end": 108.3,
+        "output_start": 20.75
+      },
+      {
+        "id": "laptop",
+        "label": "Laptop recorded disassembly sequence",
+        "start": 112.4,
+        "end": 143.2,
+        "output_start": 41.5
+      }
+    ],
+    "note": "HDD, Mini PC, then Laptop; full recorded action segments, with title and summary slides omitted."
   },
   {
     "id": "hdd",
-    "label": "HDD PCB extraction",
-    "start": 54.4,
-    "duration": 6.2,
-    "src": "/assets/architecture/hdd.mp4",
-    "poster": "/assets/architecture/hdd-poster.webp",
-    "crop": "688:516:0:148",
+    "label": "HDD recorded disassembly sequence",
+    "start": 21.2,
+    "end": 62.7,
+    "duration": 41.5,
+    "src": "/assets/architecture/hdd-full.mp4",
+    "poster": "/assets/architecture/hdd-full-poster.webp",
+    "crop": "950:612:0:50",
     "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
-    "speed": "As shown in the experiment recording"
+    "speed": "1x recording playback; source includes accelerated passages",
+    "note": "Complete recorded device segment, not an uncut recording of every target step. Original tool-camera inset retained."
   },
   {
     "id": "mini-pc",
-    "label": "Mini PC heat-sink extraction",
-    "start": 66.6,
-    "duration": 6.6,
-    "src": "/assets/architecture/mini-pc.mp4",
-    "poster": "/assets/architecture/mini-pc-poster.webp",
-    "crop": "688:516:0:148",
+    "label": "Mini PC recorded disassembly sequence",
+    "start": 66.8,
+    "end": 108.3,
+    "duration": 41.5,
+    "src": "/assets/architecture/mini-pc-full.mp4",
+    "poster": "/assets/architecture/mini-pc-full-poster.webp",
+    "crop": "950:612:0:50",
     "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
-    "speed": "As shown in the experiment recording"
+    "speed": "1x recording playback; source includes accelerated passages",
+    "note": "Complete recorded device segment, not an uncut recording of every target step. Original tool-camera inset retained."
   },
   {
     "id": "laptop",
-    "label": "Laptop heat-sink extraction",
-    "start": 134.4,
-    "duration": 7.8,
-    "src": "/assets/architecture/laptop.mp4",
-    "poster": "/assets/architecture/laptop-poster.webp",
-    "crop": "688:516:0:148",
+    "label": "Laptop recorded disassembly sequence",
+    "start": 112.4,
+    "end": 143.2,
+    "duration": 30.8,
+    "src": "/assets/architecture/laptop-full.mp4",
+    "poster": "/assets/architecture/laptop-full-poster.webp",
+    "crop": "950:612:0:50",
     "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
-    "speed": "As shown in the experiment recording"
+    "speed": "1x recording playback; source includes accelerated passages",
+    "note": "Complete recorded device segment, not an uncut recording of every target step. Original tool-camera inset retained."
   }
 ]

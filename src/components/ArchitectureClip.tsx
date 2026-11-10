@@ -6,11 +6,17 @@ export function ArchitectureClip({
   poster,
   label,
   playing,
+  loop = true,
+  restartKey = 0,
+  onEnded,
 }: {
   src: string;
   poster: string;
   label: string;
   playing: boolean;
+  loop?: boolean;
+  restartKey?: number;
+  onEnded?: () => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [visible, setVisible] = useState(false);
@@ -25,6 +31,9 @@ export function ArchitectureClip({
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.currentTime = 0;
+  }, [restartKey, src]);
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -46,10 +55,11 @@ export function ArchitectureClip({
           poster={sitePath(poster)}
           muted
           playsInline
-          loop
+          loop={loop}
           preload="metadata"
           aria-label={label}
           onError={() => setFailed(true)}
+          onEnded={onEnded}
         />
       )}
     </div>

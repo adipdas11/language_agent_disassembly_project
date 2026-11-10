@@ -13,7 +13,7 @@ try {
     })
     await page.goto(url.href)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    await expect(page.locator('.prompt-template')).toHaveCount(5)
+    await expect(page.locator('.prompt-template')).toHaveCount(4)
     for (const section of await page.locator('main > section').all()) await section.scrollIntoViewIfNeeded()
     for (const image of await page.locator('main img').all()) {
       await image.scrollIntoViewIfNeeded()
@@ -32,6 +32,7 @@ try {
         await video.evaluate(async (node) => { await node.play() })
         await expect.poll(() => video.evaluate((node) => node.currentTime)).toBeGreaterThan(.1)
         assert.ok(await video.evaluate((node) => node.videoWidth > 0 && !node.error))
+        await video.evaluate(node => node.pause())
       }
       await page.getByRole('button', { name: 'Pause architecture animation', exact: true }).click()
       await page.getByRole('button', { name: 'Open full-size figure: Raw image', exact: true }).first().click()
@@ -40,11 +41,11 @@ try {
     }
     if (width === 390) {
       await page.getByRole('button', { name: 'Toggle navigation' }).click()
-      await page.getByRole('navigation').getByRole('link', { name: 'Resources', exact: true }).click()
+      await page.getByRole('navigation').getByRole('link', { name: 'Instructions', exact: true }).click()
       assert.equal(new URL(page.url()).pathname, url.pathname)
     }
     assert.deepEqual(failures, [])
-    console.log(`Verified ${url.href} at ${width}px: assets, prompts, layout${width === 1440 ? ', eight videos and figure expansion' : ''}`)
+    console.log(`Verified ${url.href} at ${width}px: assets, prompts, layout${width === 1440 ? ', seven videos and figure expansion' : ''}`)
     await page.close()
   }
 } finally {

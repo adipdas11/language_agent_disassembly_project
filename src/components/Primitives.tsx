@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { Check, Clipboard, Expand, X } from "lucide-react";
+import { Check, Clipboard, X } from "lucide-react";
 import { EvidenceSource } from "../content/research-data";
 import { sitePath } from "../lib/site-path";
 
@@ -10,23 +10,17 @@ export function SourceBadge({ source }: { source: EvidenceSource }) {
 
 export function SectionHeader({
   id,
-  eyebrow,
   title,
   intro,
-  source,
 }: {
   id?: string;
-  eyebrow: string;
+  eyebrow?: string;
   title: ReactNode;
   intro: string;
   source?: EvidenceSource;
 }) {
   return (
     <div className="section-header reveal">
-      <div className="eyebrow-row">
-        <span className="eyebrow">{eyebrow}</span>
-        {source && <SourceBadge source={source} />}
-      </div>
       <h2 id={id}>{title}</h2>
       <p>{intro}</p>
     </div>
@@ -99,6 +93,7 @@ export function Figure({
   alt,
   caption,
   imageLabel,
+  showCaption = true,
   contain = false,
 }: {
   src: string;
@@ -106,6 +101,7 @@ export function Figure({
   alt: string;
   caption: string;
   imageLabel?: string;
+  showCaption?: boolean;
   contain?: boolean;
 }) {
   const [open, setOpen] = useState(false);
@@ -147,11 +143,8 @@ export function Figure({
           {imageLabel && (
             <span className="figure-image-label">{imageLabel}</span>
           )}
-          <span className="expand-label">
-            <Expand aria-hidden="true" /> Expand figure
-          </span>
         </button>
-        <figcaption>{caption}</figcaption>
+        {showCaption && <figcaption>{caption}</figcaption>}
       </figure>
       {open && (
         <div

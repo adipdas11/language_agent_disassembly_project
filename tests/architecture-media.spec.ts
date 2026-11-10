@@ -118,9 +118,57 @@ test("execution verification updates the state preview", async ({ page }) => {
     '"last_outcome": null',
   );
   await page
-    .getByRole("button", { name: /06 Cross-device evaluation/ })
+    .getByRole("button", { name: /Cross-device evaluation/ })
     .click();
   await expect(page.getByLabel("Illustrative world-state JSON")).toContainText(
     '"last_outcome": "success"',
   );
+});
+
+
+test("only the selected highlighted skill plays while all three remain visible", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/#actions");
+  await page.getByRole("button", { name: "Play architecture animation", exact: true }).evaluate(node => (node as HTMLButtonElement).click());
+  const skills = page.locator(".parallel-skills");
+  await skills.getByRole("button", { name: "Unscrew", exact: true }).click();
+  await expect.poll(() => skills.locator("video").evaluateAll(nodes => nodes.map(n => n.paused))).toEqual([false, true, true]);
+  await skills.getByRole("button", { name: "Pick-and-Extract", exact: true }).click();
+  await expect.poll(() => skills.locator("video").evaluateAll(nodes => nodes.map(n => n.paused))).toEqual([true, false, true]);
+  await expect(page.locator(".parallel-skill.selected .skill-select")).toHaveText("Pick-and-Extract");
+  await expect(page.locator(".parallel-skill")).toHaveCount(3);
+});
+
+test('manual skill mode waits for a click and plays the chosen skill once', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#actions');
+  await page.getByRole('button', { name: 'Play on click', exact: true }).click();
+  const videos = page.locator('.parallel-skills video');
+  await expect.poll(() => videos.evaluateAll(nodes => nodes.map(node => node.paused))).toEqual([true, true, true]);
+  await page.locator('.parallel-skills').getByRole('button', { name: 'Flip', exact: true }).click();
+  await expect.poll(() => videos.evaluateAll(nodes => nodes.map(node => node.paused))).toEqual([true, true, false]);
+  const flip = videos.nth(2);
+  await expect.poll(() => flip.evaluate(node => (node as HTMLVideoElement).currentTime)).toBeGreaterThan(0.05);
+  await flip.evaluate(node => { const video = node as HTMLVideoElement; video.currentTime = video.duration - 0.12; });
+  await expect.poll(() => flip.evaluate(node => (node as HTMLVideoElement).ended)).toBe(true);
+  await expect.poll(() => videos.evaluateAll(nodes => nodes.map(node => node.paused))).toEqual([true, true, true]);
+  await expect(page.locator('.parallel-skill.selected .skill-select')).toHaveAccessibleName('Flip');
+  await expect(page.getByRole('button', { name: 'Play on click', exact: true })).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('automatic skill mode plays each clip to its end and cycles first to last repeatedly', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#actions');
+  await page.getByRole('button', { name: 'Loop all skills', exact: true }).click();
+  const videos = page.locator('.parallel-skills video');
+  for (const [index, name] of ['Unscrew', 'Pick-and-Extract', 'Flip', 'Unscrew'].entries()) {
+    const selected = index % 3;
+    await expect(page.locator('.parallel-skill.selected .skill-select')).toHaveAccessibleName(name);
+    await expect.poll(() => videos.evaluateAll(nodes => nodes.map(node => node.paused))).toEqual([0, 1, 2].map(i => i !== selected));
+    const video = videos.nth(selected);
+    await expect.poll(() => video.evaluate(node => (node as HTMLVideoElement).currentTime)).toBeGreaterThan(0);
+    if (index < 3) await video.evaluate(node => { const clip = node as HTMLVideoElement; clip.currentTime = clip.duration - 0.12; });
+  }
+  await page.getByRole('button', { name: 'Play on click', exact: true }).click();
+  await expect.poll(() => videos.evaluateAll(nodes => nodes.map(node => node.paused))).toEqual([true, true, true]);
 });

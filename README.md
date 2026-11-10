@@ -1,61 +1,69 @@
-# UNMAKE
+# REMAKE — research website
 
-**Language-Agent-Guided Adaptive Dual-Arm Robotic Disassembly**
+**REMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly**
 
-A React, TypeScript, and Vite research website. The redesign uses a light editorial layout, a responsive hybrid SVG/video architecture, real annotated perception samples, and manuscript-based evaluation tables.
+This website combines the first deployment's white-and-blue design with the animated architecture from `v2`. Content, tables, runtime prompts, and JSON examples follow `RAL-mainV11.tex`.
 
-Website: https://adipdas11.github.io/language_agent_disassembly_project/
-
-The reviewed redesign is published through the GitHub Pages workflow on `main`.
-
-## Local review
+## Review locally
 
 ```bash
 npm ci
 npm run dev -- --port 5180 --strictPort
 ```
 
-Open http://localhost:5180/.
+Local preview: **http://localhost:5180/**.
+
+Published site: **https://adipdas11.github.io/language_agent_disassembly_project/**.
+
+- `v1`: preserved reviewed version, based on the first deployment (`0e47c1d`).
+- `v2`: preserved UNMAKE redesign (`a942e23`).
+- `main`: the reviewed `v1` website merged for publication. The GitHub Pages workflow publishes on pushes to `main`; no push is needed for local review.
+
+## Presentation
+
+The six architecture headers use distinct blue, teal, violet, green, cyan, and rose accents on white surfaces.
+
+The page follows overview → architecture → perception → world state → agent instructions → results → conclusion. Sections have short headings and brief explanations, without numbering or information tabs. Decorative microcopy and image expansion overlays are omitted. The project icon is removed from the header and browser icons.
+
+The architecture keeps all three perception lanes, skills, and evaluated devices visible. Skills offer two modes: **Play on click** plays the chosen skill once, and **Loop all skills** plays Unscrew → Pick-and-Extract → Flip in sequence and repeats. Only one skill plays at a time; the green border follows it. Selecting a skill switches to manual mode. The animation pauses when offscreen, when the page is hidden, or for reduced-motion preferences; its control can explicitly resume it. Verified execution connects back to the world state.
+
+The execution block contains all three recorded device sequences at **2× recording speed**, using a wider crop without the separate static arm drawings. The evaluation videos contain each complete recorded device segment at the recording's playback speed. These are edited demonstrations, not uncut footage of every target step. Native video controls and timelines are hidden to keep the figure clean; playback follows the diagram animation control. It shows both arms and retains the recording's original tool-camera inset; it is not footage from a new external camera. Crop coordinates and time ranges are recorded in `public/assets/architecture/clips.json` and `public/assets/actions/clips.json`. Opening and summary slides are excluded. The source already contains accelerated passages; the combined video applies a further 2× speed-up. No experiment video appears above the method.
+
+## Paper content
+
+The source manuscript stays outside the repository. To regenerate its active tables, four prompt listings, and three JSON examples:
+
+```bash
+python3 scripts/extract-paper-results.py /home/adip/Downloads/RAL-mainV11.tex
+```
+
+Generated files:
+
+- `src/content/manuscript-results.json`: all seven V11 result tables.
+- `src/content/paper-interfaces.json`: world-state, decision, and action-request examples.
+- `public/content/system-prompts.txt`: the four prompt listings, loaded at runtime.
+
+Controller results are the physical-trial summaries reported in V11: 45 original trials and ten additional HDD trials, reported separately. Charts compare autonomous completion and elapsed time on their own scales; labels show mean ± sample SD. Summary statistics are unweighted device averages. Recovery excludes trials without failed invocations. Perception scores use the paper's post-augmentation development split and are not independent unseen-image validation.
+
+JSON values are illustrative interface examples. The world-state example records a failed invocation with an empty removed list, exactly as the paper does. The website does not present it as a successful removal or a recorded trial trace.
+
+Authors and links are configured in `src/content/research-data.ts`. Paper and code links remain disabled until publication. The `showAuthors` switch also controls author metadata and email actions.
+
+## Checks
 
 ```bash
 npm test
 npm run test:e2e
 npm run build
 npm run preview -- --port 5181 --strictPort
+```
+
+Production builds use `/language_agent_disassembly_project/`. To check the local production preview, including all media, prompt loading, image expansion, and the project base path:
+
+```bash
 node scripts/verify-pages.mjs
 ```
 
-Production preview uses `/language_agent_disassembly_project/`; development uses `/`. Asset paths and runtime prompt loading use the shared `sitePath` helper.
+Browser checks cover 17 viewport sizes from 320 to 2560 pixels, reduced motion, manual playback, end-driven skill cycling, full-sequence duration and seeking, feedback connector geometry, seven video decodes, keyboard navigation, and desktop/phone accessibility.
 
-## Content and provenance
-
-- `src/content/research-data.ts`: title, authors, author visibility, dataset links.
-- `src/content/world-state.ts`: illustrative four-field runtime packet and paper dispatch example. Pixel measurements are not six-dimensional poses.
-- `src/content/manuscript-results.json`: all seven active result tables extracted from `RAL-mainV10.tex`. Commented-out earlier drafts are excluded.
-- `src/components/DevicesResultsSection.tsx`: perception tables, controller comparisons, metric definitions, skill breakdown, and additional-HDD example. Repeated cross-device metrics appear once; unique replanning values are included in the controller cards.
-- `public/content/system-prompts.txt`: editable generic prompt templates. These are interface templates, not recorded agent reasoning.
-- `public/assets/vision/samples.json`: real input imagery, labels, and saved model predictions. The architecture uses prediction coordinates; the separate sample matrix uses supplied dataset annotations.
-
-**Data status matters:** V10 explicitly describes controller, skill, and additional-HDD numbers as generated numerical examples, not measured robot outcomes. The page preserves this qualification. Perception metrics are supplied development-set results from a split performed after augmentation. Do not relabel either as independently validated physical performance.
-
-To regenerate result data from a revised manuscript:
-
-```bash
-python3 scripts/extract-paper-results.py /path/to/RAL-mainV10.tex
-```
-
-Review provenance and copy if the status of those tables changes. Older commented tables have different recovery values and must not be substituted for active V10 tables.
-
-## Media and animation
-
-The primary film is the original YouTube experiment, trimmed from 21.2s to 142.5s. Opening title/architecture slides and closing result/title slides are removed. It retains the multi-view composition and demonstration timing, without audio. Edit provenance is in `public/assets/experiment-edit.json`.
-
-Seven unique, previously reviewed action and evaluation snippets are kept under `public/assets/actions/` and `public/assets/architecture/`, with crop and timing metadata. All skills and devices are shown together; narrow screens stack them without tabs. Reduced motion starts the animation paused. Offscreen or hidden-page media pauses automatically.
-
-The architecture is one compact scientific figure, following the original four-column composition: perception; world state, ReAct, and skills; dual-arm execution; cross-device evaluation. Highlighted title strips and outlined groups follow the ASPIRE reference. The original arm illustrations are displayed through clipped SVG viewports, alongside seven real video windows. Measured SVG connectors, detection overlays, camera scans, image packets, a circular reasoning orbit, and cycling skill selection animate the loop. Execution feedback returns directly to the four-field world state. Tablets use two columns and phones follow a continuous vertical flow; no views are hidden in tabs.
-
-The visual direction draws on [ASPIRE](https://research.nvidia.com/labs/gear/aspire/) and [Agentic World Action Models](https://agentic-wam.github.io/); the scientific flow remains UNMAKE’s.
-
-## Publishing
-
-The GitHub Actions workflow deploys pushes to `main`, running unit tests and a production build before publishing. Develop and review future changes locally before publishing. Paper and research Code buttons remain “Coming soon”; the website repository is not presented as a release of the robotics implementation.
+The aligned-contact example is an original `Contact_Aligned` image from version 5 of the supplied process-state dataset. It shows the bit seated in the screw, and was checked using the supplied classifier. Its filename and provenance are recorded in `public/assets/vision/samples.json`; no signed download URL or credential is included. Refresh it from an exported folder-format archive with `scripts/refresh-aligned-sample.py`.

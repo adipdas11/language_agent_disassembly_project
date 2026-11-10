@@ -1,12 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("research story explains the method and evidence before the full demonstration", async ({
+test("research story follows the paper with parallel content", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
-    "UNMAKE: Language-Agent-Guided Adaptive Dual-Arm Robotic Disassembly",
+    "REMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly",
   );
   const sections = await page
     .locator("main > section")
@@ -17,12 +17,11 @@ test("research story explains the method and evidence before the full demonstrat
     "architecture",
     "datasets",
     "state",
-    "results",
-    "video",
     "prompts",
-    "limitations",
+    "results",
+    "conclusion",
   ]);
-  await expect(page.locator(".prompt-template")).toHaveCount(5);
+  await expect(page.locator(".prompt-template")).toHaveCount(4);
   await expect(page.getByRole("tab")).toHaveCount(0);
   await expect(page.locator("main details")).toHaveCount(0);
   await expect(page.locator(".author")).toHaveCount(3);

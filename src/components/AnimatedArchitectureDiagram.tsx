@@ -45,41 +45,6 @@ const execution = experimentClips.find((clip) => clip.id === "execution")!;
 type Connection = { path: string; kind: "forward" | "feedback" };
 type Box = { l: number; r: number; t: number; b: number; x: number; y: number };
 
-// The arm illustrations are viewports onto the supplied research figure.
-// They retain the actual hardware depiction without embedding the old diagram.
-function ArmIllustration({ tooling }: { tooling?: boolean }) {
-  const clipId = tooling ? "tooling-arm-window" : "manipulation-arm-window";
-  return (
-    <svg
-      className="arm-illustration"
-      viewBox={tooling ? "1120 207 210 258" : "885 207 205 258"}
-      role="img"
-      aria-label={
-        tooling
-          ? "xArm5 tooling arm with screwdriver"
-          : "UF850 manipulation arm with gripper"
-      }
-    >
-      <defs>
-        <clipPath id={clipId}>
-          <rect
-            x={tooling ? 1120 : 885}
-            y="207"
-            width={tooling ? 210 : 205}
-            height="258"
-          />
-        </clipPath>
-      </defs>
-      <image
-        href={sitePath("/assets/architecture-figure.webp")}
-        width="2000"
-        height="902"
-        clipPath={`url(#${clipId})`}
-      />
-    </svg>
-  );
-}
-
 function curvedArrow(start: number) {
   const point = (radius: number, angle: number) => {
     const radians = (angle * Math.PI) / 180;
@@ -114,7 +79,6 @@ function ReActLoop() {
       <span className="flow-phase phase-2">Act</span>
       <div className="react-centre">
         <strong>ReAct</strong>
-        <span>Language agent</span>
       </div>
     </div>
   );
@@ -128,7 +92,9 @@ export function AnimatedArchitectureDiagram() {
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState(0);
-  const [manualSkill, setManualSkill] = useState(false);
+  const [skillMode, setSkillMode] = useState<"manual" | "cycle">("cycle");
+  const [manualPlaying, setManualPlaying] = useState(false);
+  const [skillReplay, setSkillReplay] = useState(0);
   const [connections, setConnections] = useState({
     width: 1200,
     height: 700,
@@ -138,15 +104,16 @@ export function AnimatedArchitectureDiagram() {
   const running = playing && visible && pageVisible;
   const active = stages[step];
   const skill = skills[selected];
+  const skillsPlaying = pageVisible && (skillMode === "cycle" ? running : manualPlaying);
   const verified = step === 5;
   const stateText = `{
   "global_view": { "detections": ["lid", "screw"] },
-  "local_view": { "alignment": "contact_aligned" },
+  "local_view": { "alignment": "aligned" },
   "assembly_state": {
     "last_action": ${verified ? `"${skill.call}"` : "null"},
     "last_outcome": ${verified ? '"success"' : "null"}
   },
-  "force_torque": { "force_N": [0.1, 0.2, 2.4] }
+  "force_torque": { "force_n": [0.0, 0.0, -0.2] }
 }`;
 
   useEffect(() => {
@@ -179,14 +146,6 @@ export function AnimatedArchitectureDiagram() {
     return () => window.clearInterval(timer);
   }, [running]);
   useEffect(() => {
-    if (!running || manualSkill) return;
-    const timer = window.setInterval(
-      () => setSelected((value) => (value + 1) % skills.length),
-      stages.length * 3200,
-    );
-    return () => window.clearInterval(timer);
-  }, [running, manualSkill]);
-  useEffect(() => {
     const element = board.current;
     if (!element) return;
     const measure = () => {
@@ -209,7 +168,7 @@ export function AnimatedArchitectureDiagram() {
         // Adjacent figure columns: the elbow stays in their shared gutter.
         if (b.l > a.r && b.t < a.b) {
           const startY = a.y;
-          const endY = i === 3 ? b.b - 110 : b.y;
+          const endY = b.y;
           const gutter = (a.r + b.l) / 2;
           return {
             path: `M${a.r + 4},${startY} H${gutter} V${endY} H${b.l - 8}`,
@@ -228,10 +187,13 @@ export function AnimatedArchitectureDiagram() {
         state = boxes[1],
         scene = boxes[0],
         rail = parent.width - 7;
+      const bottom = Math.max(...boxes.map((box) => box.b)) + 26;
       const feedback =
-        state.t > scene.b
+        // On stacked layouts, use the outer gutter instead of crossing the
+        // device evaluation row below the full-width execution video.
+        state.t > scene.b || a.t > scene.b
           ? `M${a.r + 4},${a.y} H${rail - 8} Q${rail},${a.y} ${rail},${a.y - 8} V${state.y + 8} Q${rail},${state.y} ${rail - 8},${state.y} H${state.r + 8}`
-          : `M${a.x},${a.b + 4} V${a.b + 18} Q${a.x},${a.b + 26} ${a.x + 8},${a.b + 26} H${rail - 8} Q${rail},${a.b + 26} ${rail},${a.b + 18} V18 Q${rail},10 ${rail - 8},10 H${state.x + 8} Q${state.x},10 ${state.x},18 V${state.t - 23}`;
+          : `M${a.x},${a.b + 4} V${bottom - 8} Q${a.x},${bottom} ${a.x + 8},${bottom} H${rail - 8} Q${rail},${bottom} ${rail},${bottom - 8} V18 Q${rail},10 ${rail - 8},10 H${state.x + 8} Q${state.x},10 ${state.x},18 V${state.t - 23}`;
       lines.push({ path: feedback, kind: "feedback" });
       setConnections({ width: parent.width, height: parent.height, lines });
     };
@@ -246,7 +208,7 @@ export function AnimatedArchitectureDiagram() {
 
   const heading = (
     id: (typeof stages)[number],
-    number: string,
+    _number: string,
     title: string,
     Icon: typeof Camera,
   ) => (
@@ -258,7 +220,6 @@ export function AnimatedArchitectureDiagram() {
         }}
         aria-pressed={active === id}
       >
-        <span className="sr-only">{number} </span>
         <Icon aria-hidden="true" />
         {title}
       </button>
@@ -269,13 +230,12 @@ export function AnimatedArchitectureDiagram() {
       className={`system-diagram compact-architecture ${running ? "is-playing" : ""}`}
     >
       <div className="architecture-controls">
-        <p>
-          Perception-grounded planning{" "}
-          <span>· animated system architecture</span>
-        </p>
         <button
           className="icon-button"
-          onClick={() => setPlaying((value) => !value)}
+          onClick={() => {
+            setPlaying((value) => !value);
+            setManualPlaying(false);
+          }}
           aria-label={`${playing ? "Pause" : "Play"} architecture animation`}
         >
           {playing ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
@@ -304,14 +264,14 @@ export function AnimatedArchitectureDiagram() {
             <marker
               id="feedback-arrow"
               markerUnits="userSpaceOnUse"
-              viewBox="0 0 12 12"
-              markerWidth="12"
-              markerHeight="12"
-              refX="10"
-              refY="6"
+              viewBox="0 0 14 14"
+              markerWidth="14"
+              markerHeight="14"
+              refX="12"
+              refY="7"
               orient="auto"
             >
-              <path d="M1 1 L10 6 L1 11" />
+              <path d="M2 2 L12 7 L2 12 Z" />
             </marker>
           </defs>
           {connections.lines.map((line, index) => (
@@ -374,12 +334,6 @@ export function AnimatedArchitectureDiagram() {
                     }}
                   />
                 </div>
-                <div className="vision-key">
-                  <span>Raw image</span>
-                  <span>
-                    {lane.id === "state-2" ? "Contact aligned" : "Detections"}
-                  </span>
-                </div>
               </div>
             ))}
           </div>
@@ -395,7 +349,6 @@ export function AnimatedArchitectureDiagram() {
               <code>{stateText}</code>
             </pre>
           </div>
-          <span className="state-equation">Sₜ = {"{Oₜ, Fₜ, Eₜ, Wₜ}"}</span>
         </article>
 
         <article
@@ -405,7 +358,6 @@ export function AnimatedArchitectureDiagram() {
           {heading("agent", "03", "Language-agent reasoning", BrainCircuit)}
           <ReActLoop />
           <div className="agent-context">
-            <span>LangGraph + GPT-5.1</span>
             <code>
               {skill.call}({skill.target})
             </code>
@@ -418,6 +370,31 @@ export function AnimatedArchitectureDiagram() {
           data-flow-panel="skills"
         >
           {heading("skills", "04", "Skill library", Wrench)}
+          <div className="skill-playback-modes" role="group" aria-label="Skill playback mode">
+            <button
+              type="button"
+              aria-pressed={skillMode === "manual"}
+              onClick={() => {
+                setSkillMode("manual");
+                setManualPlaying(false);
+              }}
+            >
+              <Play aria-hidden="true" /> Play on click
+            </button>
+            <button
+              type="button"
+              aria-pressed={skillMode === "cycle"}
+              onClick={() => {
+                setSkillMode("cycle");
+                setSelected(0);
+                setSkillReplay(value => value + 1);
+                setManualPlaying(false);
+                setPlaying(true);
+              }}
+            >
+              <RefreshCw aria-hidden="true" /> Loop all skills
+            </button>
+          </div>
           <div
             className="parallel-skills"
             role="group"
@@ -428,21 +405,34 @@ export function AnimatedArchitectureDiagram() {
                 className={`parallel-skill ${selected === index ? "selected" : ""}`}
                 key={clip.id}
               >
-                <ArchitectureClip
-                  {...clip}
-                  label={`${clip.label} skill video`}
-                  playing={running}
-                />
                 <button
                   className="skill-select"
+                  type="button"
+                  aria-label={skills[index].name}
                   aria-pressed={selected === index}
                   onClick={() => {
                     setSelected(index);
-                    setManualSkill(true);
+                    setSkillMode("manual");
+                    setManualPlaying(true);
+                    setSkillReplay(value => value + 1);
                     setStep(3);
                   }}
                 >
-                  {skills[index].name}
+                  <ArchitectureClip
+                    {...clip}
+                    label={`${clip.label} skill video`}
+                    playing={skillsPlaying && selected === index}
+                    loop={false}
+                    restartKey={skillReplay}
+                    onEnded={() => {
+                      if (selected !== index) return;
+                      if (skillMode === "cycle") {
+                        setSelected(value => (value + 1) % skills.length);
+                        setSkillReplay(value => value + 1);
+                      } else setManualPlaying(false);
+                    }}
+                  />
+                  <span>{skills[index].name}</span>
                 </button>
               </article>
             ))}
@@ -461,46 +451,13 @@ export function AnimatedArchitectureDiagram() {
           data-flow-panel="execution"
         >
           {heading("execution", "05", "Dual-arm execution", Grip)}
-          <div className="robot-arm-pair">
-            <figure>
-              <ArmIllustration />
-              <figcaption>
-                Manipulation arm<span>Hold · extract · reorient</span>
-              </figcaption>
-            </figure>
-            <figure>
-              <ArmIllustration tooling />
-              <figcaption>
-                Tooling arm<span>Align · engage · unscrew</span>
-              </figcaption>
-            </figure>
-          </div>
           <div className="execution-video">
             <ArchitectureClip
               {...execution}
               label="Dual-arm execution video"
               playing={running}
             />
-            <div className="execution-signal">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-          </div>
-          <div className="execution-return">
-            <RefreshCw aria-hidden="true" />
-            <span>Verify the physical outcome</span>
-          </div>
-          <div className="execution-status">
-            <span className="status-pip" />
-            {verified
-              ? "Observed result → state updated"
-              : "Observe → execute → verify"}
+            <p className="sequence-caption">HDD → Mini PC → Laptop · 2× recording</p>
           </div>
         </article>
 
@@ -528,23 +485,13 @@ export function AnimatedArchitectureDiagram() {
                   />
                   <div>
                     <h4>{device.name}</h4>
-                    <span>{device.steps} target steps</span>
                   </div>
                 </article>
               );
             })}
           </div>
         </article>
-        <div className="feedback-label">
-          <RefreshCw aria-hidden="true" />
-          Verified execution feedback → world state
-        </div>
       </div>
-      <p className="diagram-caption">
-        One shared perception stack and three programmed skills. State and
-        action previews are illustrative; the video windows show real robot
-        executions.
-      </p>
     </div>
   );
 }

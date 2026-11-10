@@ -49,15 +49,8 @@ export function WorldStateSection() {
       <div className="section-shell">
         <SectionHeader
           id="state-title"
-          eyebrow="04 / The planning interface"
-          title={
-            <>
-              Evidence in.
-              <br />
-              <em>Decisions grounded.</em>
-            </>
-          }
-          intro="The language agent reads a JSON record, rather than raw images. Dedicated perception and verification models update its four fields after each skill call. The record describes what was observed—not what the agent assumes an action achieved."
+          title="Structured world state"
+          intro="The world state is the robot’s shared record of visible parts, tool alignment, execution outcomes, and contact measurements. The planner reads these four JSON fields before choosing an action. The illustrative packet below records a failed unscrewing attempt."
         />
         <div className="state-walkthrough">
           <div className="state-explanation">
@@ -81,35 +74,31 @@ export function WorldStateSection() {
               ))}
             </div>
             <div className="state-change">
-              <strong>After a verified removal</strong>
+              <strong>After an unsuccessful invocation</strong>
               <p>
-                <code>holder_screw_03</code> enters <code>removed</code>, and{" "}
-                <code>last_outcome</code> becomes <code>success</code>. The
-                agent then reassesses which operation is possible.
+                The latest <code>unscrew</code> outcome is <code>failure</code>,
+                while <code>removed</code> stays empty. The next decision must
+                use the refreshed observations rather than treat the expected
+                removal as complete.
               </p>
             </div>
           </div>
           <article
             className="state-example"
-            aria-label="Updated world-state example"
+            aria-label="World-state packet example"
           >
             <div className="panel-toolbar">
               <div>
-                <span className="eyebrow">Illustrative values</span>
                 <h3>world_state.json</h3>
               </div>
               <CopyButton
                 value={JSON.stringify(exampleState, null, 2)}
-                label="Copy updated state"
+                label="Copy state JSON"
               />
             </div>
             <pre className="state-display">
               <code>{readableJson(exampleState)}</code>
             </pre>
-            <p className="code-note">
-              Schema follows the paper. Values demonstrate the interface; this
-              is not a recorded trial packet.
-            </p>
           </article>
         </div>
       </div>

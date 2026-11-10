@@ -17,8 +17,8 @@ export function DatasetSamples() {
       const sample = samples.find((item) => item.id === model.sampleId)!
       return <tr className="dataset-model sample-comparison" key={model.id}>
         <th scope="row" className="model-row-heading"><h3>{model.model}</h3><p>{model.purpose}</p><a href={model.dataset.href} target="_blank" rel="noreferrer">{model.dataset.label}<ExternalLink aria-hidden="true" /></a></th>
-        <td data-view="Raw image"><Figure src={sample.raw} alt={`${model.model}: ${sample.label}, raw camera image`} caption="Raw image" contain /></td>
-        <td data-view="Labelled image"><Figure src={sample.annotations ?? sample.raw} alt={`${model.model}: ${sample.label}, supplied dataset labels`} caption="Labelled image" imageLabel={sample.annotations ? undefined : sample.annotationClasses.join(' · ')} contain /></td>
+        <td data-view="Raw image"><Figure src={sample.raw} alt={`${model.model}: ${sample.label}, raw camera image`} caption="Raw image" showCaption={false} contain /></td>
+        <td data-view="Labelled image"><Figure src={sample.annotations ?? sample.raw} alt={`${model.model}: ${sample.label}, supplied dataset labels`} caption="Labelled image" showCaption={false} imageLabel={sample.annotations ? undefined : sample.annotationClasses.join(' · ')} contain /></td>
       </tr>
     })}</tbody>
   </table></div>
