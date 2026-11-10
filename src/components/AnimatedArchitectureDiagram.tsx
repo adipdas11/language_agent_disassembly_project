@@ -41,11 +41,7 @@ const devices = [
   { id: "mini-pc", name: "Mini PC", steps: 9 },
   { id: "laptop", name: "Laptop", steps: 12 },
 ];
-const execution = {
-  ...experimentClips.find((clip) => clip.id === "execution")!,
-  src: "/assets/architecture/execution-wide.mp4",
-  poster: "/assets/architecture/execution-wide-poster.webp",
-};
+const execution = experimentClips.find((clip) => clip.id === "execution")!;
 type Connection = { path: string; kind: "forward" | "feedback" };
 type Box = { l: number; r: number; t: number; b: number; x: number; y: number };
 
@@ -97,7 +93,9 @@ export function AnimatedArchitectureDiagram() {
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState(0);
-  const [manualSkill, setManualSkill] = useState(false);
+  const [skillMode, setSkillMode] = useState<"manual" | "cycle">("cycle");
+  const [manualPlaying, setManualPlaying] = useState(false);
+  const [skillReplay, setSkillReplay] = useState(0);
   const [connections, setConnections] = useState({
     width: 1200,
     height: 700,
@@ -107,6 +105,7 @@ export function AnimatedArchitectureDiagram() {
   const running = playing && visible && pageVisible;
   const active = stages[step];
   const skill = skills[selected];
+  const skillsPlaying = pageVisible && (skillMode === "cycle" ? running : manualPlaying);
   const verified = step === 5;
   const stateText = `{
   "global_view": { "detections": ["lid", "screw"] },
@@ -147,14 +146,6 @@ export function AnimatedArchitectureDiagram() {
     );
     return () => window.clearInterval(timer);
   }, [running]);
-  useEffect(() => {
-    if (!running || manualSkill) return;
-    const timer = window.setInterval(
-      () => setSelected((value) => (value + 1) % skills.length),
-      stages.length * 3200,
-    );
-    return () => window.clearInterval(timer);
-  }, [running, manualSkill]);
   useEffect(() => {
     const element = board.current;
     if (!element) return;
@@ -246,7 +237,10 @@ export function AnimatedArchitectureDiagram() {
         </p>
         <button
           className="icon-button"
-          onClick={() => setPlaying((value) => !value)}
+          onClick={() => {
+            setPlaying((value) => !value);
+            setManualPlaying(false);
+          }}
           aria-label={`${playing ? "Pause" : "Play"} architecture animation`}
         >
           {playing ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
@@ -389,6 +383,31 @@ export function AnimatedArchitectureDiagram() {
           data-flow-panel="skills"
         >
           {heading("skills", "04", "Skill library", Wrench)}
+          <div className="skill-playback-modes" role="group" aria-label="Skill playback mode">
+            <button
+              type="button"
+              aria-pressed={skillMode === "manual"}
+              onClick={() => {
+                setSkillMode("manual");
+                setManualPlaying(false);
+              }}
+            >
+              <Play aria-hidden="true" /> Play on click
+            </button>
+            <button
+              type="button"
+              aria-pressed={skillMode === "cycle"}
+              onClick={() => {
+                setSkillMode("cycle");
+                setSelected(0);
+                setSkillReplay(value => value + 1);
+                setManualPlaying(false);
+                setPlaying(true);
+              }}
+            >
+              <RefreshCw aria-hidden="true" /> Loop all skills
+            </button>
+          </div>
           <div
             className="parallel-skills"
             role="group"
@@ -399,21 +418,34 @@ export function AnimatedArchitectureDiagram() {
                 className={`parallel-skill ${selected === index ? "selected" : ""}`}
                 key={clip.id}
               >
-                <ArchitectureClip
-                  {...clip}
-                  label={`${clip.label} skill video`}
-                  playing={running && selected === index}
-                />
                 <button
                   className="skill-select"
+                  type="button"
+                  aria-label={skills[index].name}
                   aria-pressed={selected === index}
                   onClick={() => {
                     setSelected(index);
-                    setManualSkill(true);
+                    setSkillMode("manual");
+                    setManualPlaying(true);
+                    setSkillReplay(value => value + 1);
                     setStep(3);
                   }}
                 >
-                  {skills[index].name}
+                  <ArchitectureClip
+                    {...clip}
+                    label={`${clip.label} skill video`}
+                    playing={skillsPlaying && selected === index}
+                    loop={false}
+                    restartKey={skillReplay}
+                    onEnded={() => {
+                      if (selected !== index) return;
+                      if (skillMode === "cycle") {
+                        setSelected(value => (value + 1) % skills.length);
+                        setSkillReplay(value => value + 1);
+                      } else setManualPlaying(false);
+                    }}
+                  />
+                  <span>{skills[index].name}</span>
                 </button>
               </article>
             ))}
@@ -438,6 +470,7 @@ export function AnimatedArchitectureDiagram() {
               label="Dual-arm execution video"
               playing={running}
             />
+            <p className="sequence-caption">HDD → Mini PC → Laptop · 2× recording</p>
           </div>
         </article>
 
@@ -465,7 +498,7 @@ export function AnimatedArchitectureDiagram() {
                   />
                   <div>
                     <h4>{device.name}</h4>
-                    <span>{device.steps} target steps</span>
+                    <span>Full recorded sequence</span>
                   </div>
                 </article>
               );

@@ -88,3 +88,30 @@ test("worked state contains only the four runtime fields and no product identifi
   expect(parsed.assembly_state.last_outcome).toBe("failure");
   await expect(page.locator(".state-example")).toHaveCount(1);
 });
+
+test('device videos include all recorded actions and execution combines them at twice the recording speed', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#architecture');
+  const manifest = await (await page.request.get('/assets/architecture/clips.json')).json();
+  const execution = manifest.find((clip: {id: string}) => clip.id === 'execution');
+  expect(execution.speed_factor).toBe(2);
+  expect(execution.segments.map((clip: {id: string}) => clip.id)).toEqual(['hdd', 'mini-pc', 'laptop']);
+  for (const [label, duration] of [
+    ['Hard disk drive evaluation video', 41.5],
+    ['Mini PC evaluation video', 41.5],
+    ['Laptop evaluation video', 30.8],
+    ['Dual-arm execution video', 56.9],
+  ] as const) {
+    const video = page.getByLabel(label, { exact: true });
+    await video.scrollIntoViewIfNeeded();
+    await expect.poll(() => video.evaluate(node => (node as HTMLVideoElement).duration)).toBeGreaterThan(0);
+    expect(await video.evaluate(node => (node as HTMLVideoElement).duration)).toBeCloseTo(duration, 1);
+    expect(await video.evaluate(node => (node as HTMLVideoElement).controls)).toBe(false);
+    for (const proportion of [0.5, 0.99]) {
+      await video.evaluate((node, proportion) => { const clip = node as HTMLVideoElement; clip.pause(); clip.currentTime = clip.duration * proportion; }, proportion);
+      await expect.poll(() => video.evaluate(node => !(node as HTMLVideoElement).seeking && (node as HTMLVideoElement).readyState >= 2)).toBe(true);
+    }
+  }
+  const total = manifest.filter((clip: {id: string}) => clip.id !== 'execution').reduce((sum: number, clip: {duration: number}) => sum + clip.duration, 0);
+  expect(execution.duration).toBeCloseTo(total / 2, 1);
+});

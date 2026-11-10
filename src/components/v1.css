@@ -72,31 +72,31 @@
   font-family: inherit;
 }
 .perception-panel {
-  --accent: #356fc5;
-  --tab: #e4efff;
+  --accent: #1d4ed8;
+  --tab: #dbeafe;
 }
 .state-panel {
-  --accent: #4770aa;
-  --tab: #e8f0fc;
+  --accent: #0f766e;
+  --tab: #ccfbf1;
 }
 .agent-panel {
-  --accent: #3262b3;
-  --tab: #dceaff;
+  --accent: #6d28d9;
+  --tab: #ede9fe;
 }
 .execution-panel {
-  --accent: #427caa;
-  --tab: #e3f0fc;
+  --accent: #075985;
+  --tab: #dff5ff;
 }
 .devices-panel {
-  --accent: #5c7fa9;
-  --tab: #edf3fa;
+  --accent: #9d174d;
+  --tab: #ffe4ef;
 }
 .skills-panel {
-  --accent: #527e38;
-  --tab: #e3efd7;
+  --accent: #3f6212;
+  --tab: #ecfccb;
 }
 .flow-heading button {
-  color: #1b3458;
+  color: var(--accent);
 }
 .flow-heading {
   font-size: 14px;
@@ -1023,4 +1023,39 @@
   .comparison-plot svg .axis-label { font-size: 18px; }
   .comparison-plot svg .plot-device { font-size: 20px; }
   .flow-heading { font-size: 17px; }
+}
+
+.skill-playback-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin: 0 0 10px;
+}
+.skill-playback-modes button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 30px;
+  padding: 5px 3px;
+  border: 1px solid #bccdb1;
+  border-radius: 4px;
+  background: #fff;
+  color: #405a32;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.skill-playback-modes svg { width: 11px; height: 11px; flex-shrink: 0; }
+.skill-playback-modes button[aria-pressed="true"] { background: #e3efd7; border-color: #527e38; color: #294e1a; }
+.parallel-skill .skill-select { display: block; padding: 0; }
+.parallel-skill .skill-select > span { display: block; padding: 6px 1px 3px; }
+.parallel-skill .skill-select .flow-clip { width: 100%; }
+.parallel-skill:focus-within { outline: 2px solid #245bd8; outline-offset: 3px; }
+.parallel-device .flow-clip { aspect-ratio: 950/612; }
+.parallel-device .flow-clip video { object-fit: contain; }
+.sequence-caption { margin: 8px 2px 2px; text-align: center; font-size: 10px; line-height: 1.5; color: #3d5c79; }
+@media (max-width: 720px) {
+  .skill-playback-modes button { font-size: 11px; min-height: 36px; }
+  .sequence-caption { font-size: 11px; }
 }

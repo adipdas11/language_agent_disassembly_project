@@ -19,11 +19,13 @@ Open **http://localhost:5180/**. This branch has not been deployed.
 
 ## Presentation
 
+The six architecture headers use distinct blue, teal, violet, green, cyan, and rose accents on white surfaces.
+
 The page follows overview → architecture → perception → world state → results → agent instructions. Sections have short headings and brief explanations, without numbering or information tabs.
 
-The architecture keeps all three perception lanes, skills, and evaluated devices visible. Only the selected, green-bordered skill plays. Other skill clips remain paused. The animation pauses when offscreen, when the page is hidden, or for reduced-motion preferences; its control can explicitly resume it. Verified execution connects back to the world state.
+The architecture keeps all three perception lanes, skills, and evaluated devices visible. Skills offer two modes: **Play on click** plays the chosen skill once, and **Loop all skills** plays Unscrew → Pick-and-Extract → Flip in sequence and repeats. Only one skill plays at a time; the green border follows it. Selecting a skill switches to manual mode. The animation pauses when offscreen, when the page is hidden, or for reduced-motion preferences; its control can explicitly resume it. Verified execution connects back to the world state.
 
-The execution block contains a wider crop of the supplied robot recording, without the separate static arm drawings. It shows both arms and retains the recording's original tool-camera inset; it is not footage from a new external camera. Crop coordinates and time ranges are recorded in `public/assets/architecture/clips.json` and `public/assets/actions/clips.json`. No opening slide or full experiment video appears above the method.
+The execution block contains all three recorded device sequences at **2× recording speed**, using a wider crop without the separate static arm drawings. The evaluation videos contain each complete recorded device segment at the recording's playback speed. These are edited demonstrations, not uncut footage of every target step. Native video controls and timelines are hidden to keep the figure clean; playback follows the diagram animation control. It shows both arms and retains the recording's original tool-camera inset; it is not footage from a new external camera. Crop coordinates and time ranges are recorded in `public/assets/architecture/clips.json` and `public/assets/actions/clips.json`. Opening and summary slides are excluded. The source already contains accelerated passages; the combined video applies a further 2× speed-up. No experiment video appears above the method.
 
 ## Paper content
 
@@ -60,4 +62,4 @@ Production builds use `/language_agent_disassembly_project/`. To check the local
 node scripts/verify-pages.mjs
 ```
 
-Browser checks cover 17 viewport sizes from 320 to 2560 pixels, reduced motion, selected-skill playback, feedback connector geometry, seven video decodes, keyboard navigation, and desktop/phone accessibility.
+Browser checks cover 17 viewport sizes from 320 to 2560 pixels, reduced motion, manual playback, end-driven skill cycling, full-sequence duration and seeking, feedback connector geometry, seven video decodes, keyboard navigation, and desktop/phone accessibility.
