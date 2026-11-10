@@ -150,7 +150,7 @@
   background: #fff;
 }
 .execution-panel {
-  align-self: center;
+  align-self: end;
   display: block;
   padding: 24px 7px 7px;
 }
@@ -1170,4 +1170,20 @@
 #flow-arrow path { fill: #3d5f8c; stroke: #3d5f8c; stroke-width: 1.3; }
 @media (min-width: 721px) {
   .visual-flow-board { column-gap: 56px; }
+}
+
+/* Wider skill media sits directly above execution, with device examples below. */
+.state-panel { align-self: start; }
+.agent-panel { align-self: start; }
+.parallel-skill .skill-select > span { font-size: 10px; padding: 8px 2px 5px; }
+.parallel-skills { gap: 9px; }
+.parallel-devices { gap: 16px; }
+.parallel-device h4 { font-size: 14px; }
+@media (min-width: 721px) {
+  .visual-flow-board { row-gap: 72px; }
+}
+@media (min-width: 1151px) {
+  .flow-heading { font-size: 16px; }
+  .flow-json-window pre { font-size: 9px; }
+  .parallel-skill .skill-select > span { font-size: 11px; }
 }

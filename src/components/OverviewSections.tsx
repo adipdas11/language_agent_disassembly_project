@@ -30,7 +30,7 @@ export function ArchitectureSection() {
         <SectionHeader
           id="architecture-title"
           title="System architecture"
-          intro="The diagram follows the path from camera observations to a shared world state, a language-agent decision, and robot execution. Feedback updates the state after each action; the right-hand videos show the same system working on three devices."
+          intro="The diagram follows the path from camera observations to a shared world state, a language-agent decision, and robot execution. Feedback updates the state after each action; the device videos show the same system working on three devices."
         />
         <AnimatedArchitectureDiagram />
       </div>

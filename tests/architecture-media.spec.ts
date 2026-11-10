@@ -52,11 +52,18 @@ test("all three perception lanes and all skill and device clips are visible toge
     "Contact Aligned100.0%",
   );
   await expect(page.locator(".detection-boxes rect")).toHaveCount(11);
-  const figure = await page.locator(".visual-flow-board").boundingBox();
-  expect(figure!.height).toBeLessThan(900);
+  const skillBox = (await page.locator('.skills-panel').boundingBox())!;
+  const executionBox = (await page.locator('.execution-panel').boundingBox())!;
+  const deviceBox = (await page.locator('.devices-panel').boundingBox())!;
+  expect(skillBox.y + skillBox.height).toBeLessThan(executionBox.y);
+  expect(skillBox.x).toBeCloseTo(executionBox.x, 0);
+  expect(skillBox.width).toBeCloseTo(executionBox.width, 0);
+  expect(deviceBox.y).toBeGreaterThan(executionBox.y + executionBox.height);
+  const videoWidths = await page.locator('.parallel-skills video').evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().width));
+  expect(videoWidths.every(width => width >= 120)).toBe(true);
   const columns = await page
     .locator(
-      ".perception-panel, .state-panel, .execution-panel, .devices-panel",
+      ".perception-panel, .state-panel, .execution-panel",
     )
     .evaluateAll((items) =>
       items.map((item) => item.getBoundingClientRect().left),

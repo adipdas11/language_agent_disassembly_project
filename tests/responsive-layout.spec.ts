@@ -77,19 +77,14 @@ for (const [width, height] of viewports) {
     const state = (await page
       .locator('[data-flow-panel="state"]')
       .boundingBox())!;
-    const perception = (await page
-      .locator('[data-flow-panel="scene"]')
-      .boundingBox())!;
-    if (state.y > perception.y + perception.height || execution.y > perception.y + perception.height) {
-      expect(route.start.x).toBeCloseTo(execution.x + execution.width + 4, 0);
-      expect(route.start.y).toBeCloseTo(execution.y + execution.height / 2, 0);
-      expect(route.end.x).toBeCloseTo(state.x + state.width + 8, 0);
-      expect(route.end.y).toBeCloseTo(state.y + state.height / 2, 0);
-    } else {
-      expect(route.start.x).toBeCloseTo(execution.x + execution.width / 2, 0);
-      expect(route.start.y).toBeCloseTo(execution.y + execution.height + 4, 0);
+    expect(route.start.x).toBeCloseTo(execution.x + execution.width + 4, 0);
+    expect(route.start.y).toBeCloseTo(execution.y + execution.height / 2, 0);
+    if (execution.x > state.x + state.width) {
       expect(route.end.x).toBeCloseTo(state.x + state.width / 2, 0);
       expect(route.end.y).toBeCloseTo(state.y - 23, 0);
+    } else {
+      expect(route.end.x).toBeCloseTo(state.x + state.width + 8, 0);
+      expect(route.end.y).toBeCloseTo(state.y + state.height / 2, 0);
     }
     // Feedback must travel through gutters, never through a video or JSON card.
     const blocked = await page.locator('.feedback .connector-base').evaluate(node => {
