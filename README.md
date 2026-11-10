@@ -1,54 +1,63 @@
-# Adaptive Dual-Arm Robotic Disassembly — interactive research site
+# REMAKE — research website (`v1` local review)
 
-A React, TypeScript, and Vite research website with an animated architecture, real perception samples, robot action clips, structured-state examples, and system prompt templates.
+**REMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly**
 
-Website: https://adipdas11.github.io/language_agent_disassembly_project/
+This branch combines the first deployment's white-and-blue design with the animated architecture from `v2`. Content, tables, runtime prompts, and JSON examples follow `RAL-mainV11.tex`.
 
-## Run locally
+## Review locally
 
 ```bash
 npm ci
-npm run dev
+npm run dev -- --port 5180 --strictPort
 ```
 
-Production check:
+Open **http://localhost:5180/**. This branch has not been deployed.
+
+- `v1`: this review version, based on the first deployment (`0e47c1d`).
+- `v2`: preserved UNMAKE redesign (`a942e23`).
+- `main`: unchanged deployed version. Its existing workflow publishes on pushes to `main`; no push is needed for local review.
+
+## Presentation
+
+The page follows overview → architecture → perception → world state → results → agent instructions. Sections have short headings and brief explanations, without numbering or information tabs.
+
+The architecture keeps all three perception lanes, skills, and evaluated devices visible. Only the selected, green-bordered skill plays. Other skill clips remain paused. The animation pauses when offscreen, when the page is hidden, or for reduced-motion preferences; its control can explicitly resume it. Verified execution connects back to the world state.
+
+The execution block contains a wider crop of the supplied robot recording, without the separate static arm drawings. It shows both arms and retains the recording's original tool-camera inset; it is not footage from a new external camera. Crop coordinates and time ranges are recorded in `public/assets/architecture/clips.json` and `public/assets/actions/clips.json`. No opening slide or full experiment video appears above the method.
+
+## Paper content
+
+The source manuscript stays outside the repository. To regenerate its active tables, four prompt listings, and three JSON examples:
 
 ```bash
-npm run build
-npm run preview
+python3 scripts/extract-paper-results.py /home/adip/Downloads/RAL-mainV11.tex
 ```
 
-The development server uses `/`. The production preview uses `/language_agent_disassembly_project/`, matching GitHub Pages.
+Generated files:
 
-## GitHub Pages deployment
+- `src/content/manuscript-results.json`: all seven V11 result tables.
+- `src/content/paper-interfaces.json`: world-state, decision, and action-request examples.
+- `public/content/system-prompts.txt`: the four prompt listings, loaded at runtime.
 
-Push changes to `main` to run `.github/workflows/deploy.yml`. The workflow installs dependencies, runs unit tests, builds `dist`, and deploys the website to GitHub Pages. It can also be run manually from the repository's Actions tab. Pages uses **GitHub Actions** as its publishing source.
+Controller results are the physical-trial summaries reported in V11: 45 original trials and ten additional HDD trials, reported separately. Charts compare autonomous completion and elapsed time on their own scales; labels show mean ± sample SD. Summary statistics are unweighted device averages. Recovery excludes trials without failed invocations. Perception scores use the paper's post-augmentation development split and are not independent unseen-image validation.
 
-Vite's production base and the shared `sitePath` helper keep images, videos, icons, and prompt loading inside the repository's URL path. The workflow uses GitHub's built-in token; no personal access token or application secrets are needed.
+JSON values are illustrative interface examples. The world-state example records a failed invocation with an empty removed list, exactly as the paper does. The website does not present it as a successful removal or a recorded trial trace.
 
-## Content controls
+Authors and links are configured in `src/content/research-data.ts`. Paper and code links remain disabled until publication. The `showAuthors` switch also controls author metadata and email actions.
 
-- Authors and the `showAuthors` switch live in `src/content/research-data.ts`.
-- Runtime-editable prompt templates live in `public/content/system-prompts.txt`.
-- Devices, results, limitations, schemas, skills, and author details are centralised in `src/content/research-data.ts`.
-- Paper and Code controls intentionally remain disabled and labelled “Coming soon”.
-- The three Roboflow dataset controls are live external links supplied by the project owner.
-
-When `showAuthors` is false, author cards, email actions, and author metadata are omitted.
-
-## Verification
+## Checks
 
 ```bash
 npm test
 npm run test:e2e
+npm run build
+npm run preview -- --port 5181 --strictPort
 ```
 
-The Playwright suite covers media playback, prompts, keyboard navigation, diagram geometry, eighteen responsive viewport sizes, reduced motion, and accessibility.
-
-To verify a production build under the Pages path, run the preview on port 5181, then:
+Production builds use `/language_agent_disassembly_project/`. To check the local production preview, including all media, prompt loading, image expansion, and the project base path:
 
 ```bash
 node scripts/verify-pages.mjs
 ```
 
-The same check accepts a live website URL as its first argument.
+Browser checks cover 17 viewport sizes from 320 to 2560 pixels, reduced motion, selected-skill playback, feedback connector geometry, seven video decodes, keyboard navigation, and desktop/phone accessibility.

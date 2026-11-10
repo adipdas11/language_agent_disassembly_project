@@ -1,46 +1,323 @@
-import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { chartData } from '../content/research-data'
-import { SectionHeader, SourceBadge } from './Primitives'
-
-function useReducedMotion() {
-  return useMemo(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches, [])
-}
-
-function CompletionChart() {
-  const reduced = useReducedMotion()
+import type { ReactNode } from "react";
+import data from "../content/manuscript-results.json";
+import { SectionHeader } from "./Primitives";
+const tables = data.tables;
+const names = ["HDD", "Mini PC", "Laptop"];
+const metricNames: Record<string, string> = {
+  "R_{comp} (%)": "Autonomous completion (%)",
+  "T_{cycle} (s)": "Cycle time (s)",
+  "F_{step}": "Initially failed targets",
+  "R_{rec} (%)": "Recovery ratio (%)",
+  F_C: "Cascade failures",
+  "H_{int}": "Physical assistance",
+  "N_{replan}": "Replanning events",
+};
+const mean = (value: string) => parseFloat(value);
+function NumberValue({ value }: { value: string }) {
+  const [valueMean, sd] = value.split(" ± ");
   return (
-    <div className="chart-card">
-      <div className="chart-heading"><div><span>Target-step completion</span><h3>Agentic vs scripted</h3></div><SourceBadge source="paper" /></div>
-      <div className="chart-wrap" aria-hidden="true">
-        <ResponsiveContainer width="100%" height="100%"><BarChart data={chartData.completion} margin={{ top: 12, right: 10, bottom: 8, left: -18 }}><CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#d9d8d2" /><XAxis dataKey="method" tickLine={false} axisLine={false} /><YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} tickLine={false} axisLine={false} /><Tooltip formatter={(value) => [`${value}%`, 'Completion']} cursor={{ fill: '#f4f1e8' }} /><Bar dataKey="value" radius={[10, 10, 2, 2]} isAnimationActive={!reduced}>{chartData.completion.map((entry) => <Cell fill={entry.fill} key={entry.method} />)}</Bar></BarChart></ResponsiveContainer>
-      </div>
-      <table className="sr-only"><caption>Data for target-step completion chart</caption><thead><tr><th>Method</th><th>Mean completion</th></tr></thead><tbody>{chartData.completion.map((row) => <tr key={row.method}><th>{row.method}</th><td>{row.value.toFixed(1)}%</td></tr>)}</tbody></table>
-      <p className="chart-note">Completion is the proportion of required target steps achieved across the task.</p>
-    </div>
-  )
+    <span className="number-value">
+      {valueMean}
+      {sd && <small> ± {sd}</small>}
+    </span>
+  );
 }
-
-function ResilienceChart() {
-  const reduced = useReducedMotion()
+function Table({
+  title,
+  headers,
+  rows,
+  note,
+  className = "",
+}: {
+  title: string;
+  headers: string[];
+  rows: string[][];
+  note?: ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="chart-card">
-      <div className="chart-heading"><div><span>Failure handling</span><h3>Resilience indicators</h3></div><SourceBadge source="paper" /></div>
-      <div className="chart-wrap" aria-hidden="true">
-        <ResponsiveContainer width="100%" height="100%"><BarChart layout="vertical" data={chartData.resilience} margin={{ top: 12, right: 18, bottom: 8, left: 28 }}><CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#d9d8d2" /><XAxis type="number" domain={[0, 100]} tickFormatter={(v) => `${v}%`} tickLine={false} axisLine={false} /><YAxis type="category" dataKey="metric" width={118} tickLine={false} axisLine={false} fontSize={11} /><Tooltip formatter={(value) => [`${value}%`, 'Rate']} cursor={{ fill: '#f4f1e8' }} /><Bar dataKey="value" radius={[2, 10, 10, 2]} isAnimationActive={!reduced}>{chartData.resilience.map((entry) => <Cell fill={entry.fill} key={entry.metric} />)}</Bar></BarChart></ResponsiveContainer>
-      </div>
-      <table className="sr-only"><caption>Data for resilience indicators chart</caption><thead><tr><th>Metric</th><th>Reported value</th></tr></thead><tbody>{chartData.resilience.map((row) => <tr key={row.metric}><th>{row.metric}</th><td>{row.value.toFixed(1)}%</td></tr>)}</tbody></table>
-    </div>
-  )
+    <article className={`paper-table ${className}`}>
+      <table>
+        <caption>{title}</caption>
+        <thead>
+          <tr>
+            {headers.map((header) => (
+              <th scope="col" key={header}>
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={index}>
+              {row.map((cell, column) =>
+                column === 0 ? (
+                  <th scope="row" key={column}>
+                    {metricNames[cell] ?? cell}
+                  </th>
+                ) : (
+                  <td data-label={headers[column]} key={column}>
+                    <NumberValue value={cell} />
+                  </td>
+                ),
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {note && <p className="table-note">{note}</p>}
+    </article>
+  );
 }
-
+function ComparisonPlot({ time = false }: { time?: boolean }) {
+  const left = 108,
+    right = 516,
+    scale = time ? 450 : 100;
+  const x = (value: number) => left + (value / scale) * (right - left);
+  const ticks = time ? [0, 100, 200, 300, 400] : [0, 25, 50, 75, 100];
+  return (
+    <figure className="comparison-plot">
+      <figcaption>
+        {time ? "Cycle time" : "Autonomous target-step completion"}
+      </figcaption>
+      <div className="plot-legend">
+        <span className="scripted-dot" />
+        Scripted
+        <span className="agentic-dot" />
+        Agentic
+      </div>
+      <svg
+        viewBox="0 0 580 310"
+        role="img"
+        aria-label={
+          time
+            ? "Cycle time comparison, seconds. Agentic execution takes longer on all three devices."
+            : "Autonomous target-step completion comparison, percent. Agentic completion is higher on all three devices."
+        }
+      >
+        {ticks.map((tick) => (
+          <g key={tick}>
+            <line x1={x(tick)} x2={x(tick)} y1="30" y2="260" stroke="#e5ebf3" />
+            <text
+              x={x(tick)}
+              y="285"
+              textAnchor="middle"
+              className="axis-label"
+            >
+              {tick}
+              {time ? "" : "%"}
+            </text>
+          </g>
+        ))}
+        {names.map((name, index) => {
+          const baseline = tables.ablation[index * 2],
+            agent = tables.ablation[index * 2 + 1],
+            column = time ? 3 : 2,
+            y = 60 + index * 84,
+            a = x(mean(baseline[column])),
+            b = x(mean(agent[column]));
+          return (
+            <g key={name}>
+              <text x="0" y={y + 5} className="plot-device">
+                {name}
+              </text>
+              <line
+                x1={a}
+                x2={b}
+                y1={y}
+                y2={y}
+                stroke="#bed1ee"
+                strokeWidth="5"
+              />
+              <circle cx={a} cy={y} r="5" fill="#7b8799" />
+              <circle cx={b} cy={y} r="6" fill="#245bd8" />
+              <text
+                x={a}
+                y={y + 25}
+                textAnchor="middle"
+                className="baseline-label"
+              >
+                {baseline[column]}
+                {time ? " s" : "%"}
+              </text>
+              <text
+                x={Math.min(520, b)}
+                y={y - 17}
+                textAnchor="middle"
+                className="agent-label"
+              >
+                {agent[column]}
+                {time ? " s" : "%"}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+      <p>
+        {time
+          ? "Elapsed time per trial; higher completion comes with longer execution."
+          : "Completed autonomous targets divided by the fixed task size."}{" "}
+        Labels show mean ± sample SD.
+      </p>
+    </figure>
+  );
+}
 export function ResultsSection() {
   return (
-    <section className="section section-tint-lavender" id="results" aria-labelledby="results-title">
+    <section className="section" id="results" aria-labelledby="results-title">
       <div className="section-shell">
-        <SectionHeader id="results-title" eyebrow="Results" title="Higher completion. Fewer failure cascades." intro="Aggregate physical-trial results compare the integrated agentic system with a fixed scripted baseline." />
-        <div className="chart-grid"><CompletionChart /><ResilienceChart /></div>
+        <SectionHeader
+          id="results-title"
+          title="Experimental results"
+          intro="The original comparison includes 45 trials: five scripted and ten agentic runs on each of three devices. Both controllers share the hardware, perception, motion planning, and skills. Ten additional agentic HDD trials are reported separately."
+        />
+        <div className="results-summary">
+          <p>
+            <strong>58.1% → 89.7%</strong>
+            <span>Mean autonomous completion</span>
+          </p>
+          <p>
+            <strong>90.0% lower</strong>
+            <span>Mean cascade-failure count</span>
+          </p>
+          <p>
+            <strong>258.0 → 315.3 s</strong>
+            <span>Mean cycle time · +22.2%</span>
+          </p>
+        </div>
+        <div className="comparison-plots">
+          <ComparisonPlot />
+          <ComparisonPlot time />
+        </div>
+        <div className="results-context">
+          <p>
+            The completion gain is <strong>31.6 percentage points</strong>.
+            These are device-level macro-averages; the comparison assesses the
+            combined planning and feedback system, rather than isolating the
+            language model.
+          </p>
+        </div>
+        <div className="device-results">
+          {names.map((name, index) => {
+            const base = tables.ablation[index * 2],
+              agent = tables.ablation[index * 2 + 1],
+              replan = tables.generalisation[index][8];
+            return (
+              <Table
+                key={name}
+                title={`${name} · execution outcomes`}
+                headers={["Metric", "Scripted", "Agentic"]}
+                rows={[
+                  ["Initially failed targets", base[4], agent[4]],
+                  ["Recovery ratio (%)", base[5], agent[5]],
+                  ["Cascade failures", base[6], agent[6]],
+                  ["Physical assistance", base[7], agent[7]],
+                  ["Replanning events", "n/a", replan],
+                ]}
+                note={`Means ± sample SD per trial. Recovery uses ${[8, 8, 9][index]} eligible agentic trials.`}
+              />
+            );
+          })}
+        </div>
+        <div className="metric-notes">
+          <p>
+            <strong>Recovery:</strong> autonomously recovered targets divided by
+            all failed full invocations, averaged over trials with failures. The
+            paper reports a device-averaged ratio of 84.0%.
+          </p>
+          <p>
+            <strong>Assistance:</strong> assisted targets contribute neither to
+            autonomous completion nor to recovery. Initial deviations and
+            subsequent recovery calls are counted separately.
+          </p>
+        </div>
+        <div className="additional-hdd">
+          <div>
+            <h3>Additional HDD</h3>
+            <p>
+              A different-brand HDD excluded from global-camera detector
+              training was evaluated in ten further trials. It achieved 90.9%
+              mean autonomous completion and 88.9% mean recovery. This case is
+              separate from the three-device aggregate.
+            </p>
+            <p className="small-note">
+              Only the agentic controller was tested on this unit. Recovery
+              statistics use nine eligible trials.
+            </p>
+          </div>
+          <Table
+            title="HDD comparison"
+            headers={["Metric", "Original HDD", "Additional HDD"]}
+            rows={tables.additional_hdd}
+            note="Ten trials per device; mean ± sample SD."
+          />
+        </div>
+        <div className="results-subheading">
+          <h3>Skill execution</h3>
+          <p>
+            Invocation counts and initial success distinguish programmed
+            corrections within a skill from new planner-issued recovery calls.
+          </p>
+        </div>
+        <Table
+          title="Per-skill performance"
+          headers={[
+            "Device",
+            "Skill",
+            "Invocations",
+            "Initial success",
+            "Initial success %",
+            "Recovery calls",
+            "Duration (s)",
+          ]}
+          rows={tables.perskill}
+          className="skill-table"
+          note="Initial success is S₀/N₀. A complete initial invocation may include internal alignment or contact corrections. Counts span ten trials per device; duration is mean ± sample SD."
+        />
+        <div className="results-subheading">
+          <h3>Perception performance</h3>
+          <p>
+            Development-set metrics from a 70/20/10 split performed after
+            augmentation. Related image variants occur across partitions; these
+            scores do not measure independent unseen-image generalisation.
+          </p>
+        </div>
+        <div className="perception-metrics">
+          <Table
+            title="RF-DETR-Large"
+            headers={[
+              "Class",
+              "Precision %",
+              "Recall %",
+              "AP@0.5 %",
+              "AP@0.5:0.95 %",
+            ]}
+            rows={tables.vision_det}
+          />
+          <div>
+            <Table
+              title="RF-DETR-Small"
+              headers={[
+                "Class",
+                "Precision %",
+                "Recall %",
+                "AP@0.5 %",
+                "AP@0.5:0.95 %",
+              ]}
+              rows={tables.vision_local}
+            />
+            <Table
+              title="YOLOv11-Nano"
+              headers={["Class", "Samples", "Correct", "Accuracy %", "Errors"]}
+              rows={tables.vision_cls.map((row) => [
+                row[0].replaceAll("_", " "),
+                ...row.slice(1),
+              ])}
+            />
+          </div>
+        </div>
       </div>
     </section>
-  )
+  );
 }

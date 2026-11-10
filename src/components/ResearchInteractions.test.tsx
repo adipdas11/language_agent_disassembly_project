@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { Footer } from './ClosingSections'
 import { applyAuthorMetadata, Hero } from './HeaderHero'
-import { AgentSkillsSection } from './AgentSkillsSection'
 import { WorldStateSection } from './WorldStateSection'
 import { siteConfig } from '../content/research-data'
 
@@ -35,19 +34,20 @@ describe('research interactions', () => {
     unavailable.forEach((control) => expect(control).toBeDisabled())
   })
 
-  it('shows every decision example without scenario tabs', () => {
-    render(<AgentSkillsSection />)
-    expect(screen.queryByRole('tab')).not.toBeInTheDocument()
-    for (const name of ['Successful removal', 'Misaligned contact', 'Failed grasp', 'Newly revealed part']) expect(screen.getByRole('heading', { name })).toBeInTheDocument()
-  })
-
-  it('shows all formatted device states without switching or collapsing fields', () => {
-    render(<WorldStateSection />)
-    expect(screen.getAllByRole('article')).toHaveLength(3)
+  it('preserves the paper failure packet without inventing a successful removal', () => {
+    const { container } = render(<WorldStateSection />)
+    expect(container.querySelectorAll('.state-example')).toHaveLength(1)
+    for (const field of ['global_view', 'local_view', 'assembly_state', 'force_torque']) expect(screen.getByRole('heading', { name: field })).toBeInTheDocument()
+    const record = JSON.parse(container.querySelector('.state-display')!.textContent!)
+    expect(Object.keys(record)).toEqual(['global_view', 'local_view', 'assembly_state', 'force_torque'])
+    expect(record.assembly_state.removed).toEqual([])
+    expect(record.assembly_state.last_outcome).toBe('failure')
+    expect(record).not.toHaveProperty('device_id')
+    expect(screen.getByRole('button', { name: 'Copy state JSON' })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /simulate failed unscrew/i })).not.toBeInTheDocument()
     expect(screen.queryByText('State is ready')).not.toBeInTheDocument()
 
-    expect(screen.getByText('laptop_illustrative_001', { exact: false })).toBeInTheDocument()
+    expect(screen.queryByText('laptop_illustrative_001', { exact: false })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Laptop', exact: true })).not.toBeInTheDocument()
   })
 })

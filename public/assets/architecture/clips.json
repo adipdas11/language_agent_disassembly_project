@@ -42,5 +42,17 @@
     "crop": "688:516:0:148",
     "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
     "speed": "As shown in the experiment recording"
+  },
+  {
+    "id": "execution-wide",
+    "label": "Wider two-arm execution view",
+    "start": 80.0,
+    "duration": 12.0,
+    "src": "/assets/architecture/execution-wide.mp4",
+    "poster": "/assets/architecture/execution-wide-poster.webp",
+    "crop": "950:612:0:50",
+    "source": "https://www.youtube.com/watch?v=lEE3qmOJsXo",
+    "speed": "Original recording speed",
+    "note": "Widest available robot panel; original tool-camera inset retained."
   }
 ]

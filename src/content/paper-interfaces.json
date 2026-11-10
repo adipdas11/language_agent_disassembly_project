@@ -1,0 +1,70 @@
+{
+  "worldstate_packet": {
+    "global_view": {
+      "detections": [
+        {
+          "label": "heat_sink",
+          "confidence": 0.92,
+          "bbox": [
+            312,
+            199,
+            512,
+            362
+          ]
+        }
+      ]
+    },
+    "local_view": {
+      "target": "holder_screw_03",
+      "tool_center_px": [
+        317,
+        205
+      ],
+      "target_center_px": [
+        320,
+        206
+      ],
+      "alignment": "aligned"
+    },
+    "assembly_state": {
+      "held_by": "none",
+      "removed": [],
+      "last_action": "unscrew",
+      "last_outcome": "failure"
+    },
+    "force_torque": {
+      "frame": "tool0",
+      "force_n": [
+        0.0,
+        0.0,
+        -0.2
+      ],
+      "torque_nm": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "reasoning_response": {
+    "observation": "<brief summary of relevant supplied observations>",
+    "state_assessment": "<assessment of the current state and latest outcome>",
+    "next_action": "<unscrew | pickup_object | flip_object>",
+    "target": "<target identifier supported by the state>",
+    "rationale": "<short justification grounded in the observations>",
+    "confidence": 0.0
+  },
+  "action_response": {
+    "skill": "unscrew",
+    "target": "holder_screw_03",
+    "arm": "tooling_arm",
+    "parameters": {
+      "rotation_direction": "counterclockwise",
+      "retry_limit": 2
+    },
+    "expected_effect": "The selected fastener is removed.",
+    "verification": "Check fastener removal and update the world state.",
+    "on_failure": "Return the verified failure to the agent for a new decision."
+  },
+  "source": "RAL-mainV11.tex"
+}
