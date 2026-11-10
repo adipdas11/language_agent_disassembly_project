@@ -79,7 +79,6 @@ function ReActLoop() {
       <span className="flow-phase phase-2">Act</span>
       <div className="react-centre">
         <strong>ReAct</strong>
-        <span>Language agent</span>
       </div>
     </div>
   );
@@ -231,10 +230,6 @@ export function AnimatedArchitectureDiagram() {
       className={`system-diagram compact-architecture ${running ? "is-playing" : ""}`}
     >
       <div className="architecture-controls">
-        <p>
-          Perception-grounded planning{" "}
-          <span>· animated system architecture</span>
-        </p>
         <button
           className="icon-button"
           onClick={() => {
@@ -339,12 +334,6 @@ export function AnimatedArchitectureDiagram() {
                     }}
                   />
                 </div>
-                <div className="vision-key">
-                  <span>Raw image</span>
-                  <span>
-                    {lane.id === "state-2" ? "Contact aligned" : "Detections"}
-                  </span>
-                </div>
               </div>
             ))}
           </div>
@@ -360,7 +349,6 @@ export function AnimatedArchitectureDiagram() {
               <code>{stateText}</code>
             </pre>
           </div>
-          <span className="state-equation">Sₜ = {"{Oₜ, Fₜ, Eₜ, Wₜ}"}</span>
         </article>
 
         <article
@@ -370,7 +358,6 @@ export function AnimatedArchitectureDiagram() {
           {heading("agent", "03", "Language-agent reasoning", BrainCircuit)}
           <ReActLoop />
           <div className="agent-context">
-            <span>LangGraph + GPT-5.1</span>
             <code>
               {skill.call}({skill.target})
             </code>
@@ -498,23 +485,13 @@ export function AnimatedArchitectureDiagram() {
                   />
                   <div>
                     <h4>{device.name}</h4>
-                    <span>Full recorded sequence</span>
                   </div>
                 </article>
               );
             })}
           </div>
         </article>
-        <div className="feedback-label">
-          <RefreshCw aria-hidden="true" />
-          Verified execution feedback → world state
-        </div>
       </div>
-      <p className="diagram-caption">
-        One shared perception stack and three programmed skills. State and
-        action previews are illustrative; the video windows show real robot
-        executions.
-      </p>
     </div>
   );
 }

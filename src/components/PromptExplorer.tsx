@@ -78,7 +78,7 @@ export function PromptExplorer() {
         <SectionHeader
           id="prompts-title"
           title="Agent instructions"
-          intro="These prompts define how the agent turns the world state into a skill request. Fixed instructions describe the task and skills; the reasoning and action stages use the latest observations to choose and format the next step. The full prompt text and example responses follow the paper."
+          intro="The LangGraph/GPT-5.1 agent uses these prompts to turn the world state into a skill request. Fixed instructions describe the task and skills; reasoning and action stages use the latest observations to choose and format the next step. The prompt text and example responses follow the paper."
         />
         <div className="prompt-flow">
           <span>World state</span>
@@ -130,8 +130,8 @@ export function PromptExplorer() {
                       <div>
                         <h4>
                           {section.title === "Action formatting"
-                            ? "Skill request"
-                            : "Decision response"}
+                            ? "Skill request example"
+                            : "Decision response example"}
                         </h4>
                         <CopyButton
                           value={JSON.stringify(response, null, 2)}
@@ -141,7 +141,6 @@ export function PromptExplorer() {
                       <pre>
                         <code>{readableJson(response)}</code>
                       </pre>
-                      <p>Illustrative interface example.</p>
                     </div>
                   )}
                 </div>

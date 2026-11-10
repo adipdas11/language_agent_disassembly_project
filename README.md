@@ -21,7 +21,7 @@ Open **http://localhost:5180/**. This branch has not been deployed.
 
 The six architecture headers use distinct blue, teal, violet, green, cyan, and rose accents on white surfaces.
 
-The page follows overview → architecture → perception → world state → results → agent instructions. Sections have short headings and brief explanations, without numbering or information tabs.
+The page follows overview → architecture → perception → world state → agent instructions → results → conclusion. Sections have short headings and brief explanations, without numbering or information tabs. Decorative microcopy and image expansion overlays are omitted. The project icon is removed from the header and browser icons.
 
 The architecture keeps all three perception lanes, skills, and evaluated devices visible. Skills offer two modes: **Play on click** plays the chosen skill once, and **Loop all skills** plays Unscrew → Pick-and-Extract → Flip in sequence and repeats. Only one skill plays at a time; the green border follows it. Selecting a skill switches to manual mode. The animation pauses when offscreen, when the page is hidden, or for reduced-motion preferences; its control can explicitly resume it. Verified execution connects back to the world state.
 
@@ -63,3 +63,5 @@ node scripts/verify-pages.mjs
 ```
 
 Browser checks cover 17 viewport sizes from 320 to 2560 pixels, reduced motion, manual playback, end-driven skill cycling, full-sequence duration and seeking, feedback connector geometry, seven video decodes, keyboard navigation, and desktop/phone accessibility.
+
+The aligned-contact example is an original `Contact_Aligned` image from version 5 of the supplied process-state dataset. It shows the bit seated in the screw, and was checked using the supplied classifier. Its filename and provenance are recorded in `public/assets/vision/samples.json`; no signed download URL or credential is included. Refresh it from an exported folder-format archive with `scripts/refresh-aligned-sample.py`.

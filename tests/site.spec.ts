@@ -17,8 +17,9 @@ test("research story follows the paper with parallel content", async ({
     "architecture",
     "datasets",
     "state",
-    "results",
     "prompts",
+    "results",
+    "conclusion",
   ]);
   await expect(page.locator(".prompt-template")).toHaveCount(4);
   await expect(page.getByRole("tab")).toHaveCount(0);

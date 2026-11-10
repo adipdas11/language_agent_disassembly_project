@@ -93,6 +93,7 @@ export function Figure({
   alt,
   caption,
   imageLabel,
+  showCaption = true,
   contain = false,
 }: {
   src: string;
@@ -100,6 +101,7 @@ export function Figure({
   alt: string;
   caption: string;
   imageLabel?: string;
+  showCaption?: boolean;
   contain?: boolean;
 }) {
   const [open, setOpen] = useState(false);
@@ -142,7 +144,7 @@ export function Figure({
             <span className="figure-image-label">{imageLabel}</span>
           )}
         </button>
-        <figcaption>{caption}</figcaption>
+        {showCaption && <figcaption>{caption}</figcaption>}
       </figure>
       {open && (
         <div

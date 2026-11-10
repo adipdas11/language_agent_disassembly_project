@@ -8,7 +8,7 @@ for (const width of [1440, 768, 390, 360]) {
   await page.setViewportSize({ width, height: 1000 })
   await page.goto('http://127.0.0.1:5180/')
   await page.screenshot({ path: `${folder}/hero-${width}.png` })
-  for (const id of ['abstract', 'architecture', 'actions', 'datasets', 'state', 'devices', 'results', 'prompts']) {
+  for (const id of ['abstract', 'architecture', 'actions', 'datasets', 'state', 'devices', 'prompts', 'results', 'conclusion']) {
     const target = page.locator(`#${id}`)
     await target.scrollIntoViewIfNeeded()
     await target.screenshot({ path: `${folder}/${id}-${width}.png`, style: '.site-header, .skip-link { visibility: hidden !important }' })

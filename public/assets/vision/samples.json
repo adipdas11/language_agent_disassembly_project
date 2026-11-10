@@ -675,16 +675,18 @@
     "detections": [
       {
         "label": "Contact Aligned",
-        "confidence": 0.9996321201324463
+        "confidence": 0.9999998807907104
       },
       {
         "label": "Contact Misaligned",
-        "confidence": 0.00036786735290661454
+        "confidence": 6.38374899608607e-08
       }
     ],
-    "source": "Project 3 (Classification)/yolo11/yolo11-train.ipynb \u00b7 cell 2 image output",
+    "source": "Roboflow hard-drive/hdd_process_states v5 / train/Contact_Aligned/22-1_mp4-0020_jpg.rf.10d87268aff16a4cf366fba1d40ca068.jpg",
     "annotationClasses": [
       "Contact aligned"
-    ]
+    ],
+    "sourceUrl": "https://universe.roboflow.com/hard-drive/hdd_process_states/5",
+    "selectionNote": "Original Contact_Aligned class image; tool bit visibly seated in the screw. Classifier result recomputed from supplied state_model/best.pt."
   }
 ]

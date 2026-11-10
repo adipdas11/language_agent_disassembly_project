@@ -8,7 +8,7 @@ import {
 import { WorldStateSection } from "./components/WorldStateSection";
 import { ResultsSection } from "./components/DevicesResultsSection";
 import { PromptExplorer } from "./components/PromptExplorer";
-import { Footer } from "./components/ClosingSections";
+import { ConclusionSection, Footer } from "./components/ClosingSections";
 import { siteConfig } from "./content/research-data";
 import "./components/v1.css";
 
@@ -23,8 +23,9 @@ export default function App() {
         <ArchitectureSection />
         <DatasetsSection />
         <WorldStateSection />
-        <ResultsSection />
         <PromptExplorer />
+        <ResultsSection />
+        <ConclusionSection />
       </main>
       <Footer />
     </>

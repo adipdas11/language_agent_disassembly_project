@@ -9,8 +9,8 @@ const navItems = [
   ["architecture", "System"],
   ["datasets", "Perception"],
   ["actions", "Actions"],
+  ["prompts", "Instructions"],
   ["results", "Results"],
-  ["prompts", "Resources"],
 ];
 
 export function applyAuthorMetadata(showAuthors: boolean) {
@@ -51,9 +51,8 @@ export function Header() {
   return (
     <header className="site-header">
       <a className="brand" href="#top" aria-label="REMAKE home">
-        <img src={sitePath("/assets/project-icon.svg")} alt="" />
         <span>
-          <strong>REMAKE</strong> Robotic Disassembly
+          <strong>REMAKE</strong>
         </span>
       </a>
       <button

@@ -50,7 +50,7 @@ export function WorldStateSection() {
         <SectionHeader
           id="state-title"
           title="Structured world state"
-          intro="The world state is the robot’s shared record of visible parts, tool alignment, execution outcomes, and contact measurements. The planner reads these four JSON fields before choosing an action. The paper’s example below records a failed unscrewing attempt."
+          intro="The world state is the robot’s shared record of visible parts, tool alignment, execution outcomes, and contact measurements. The planner reads these four JSON fields before choosing an action. The illustrative packet below records a failed unscrewing attempt."
         />
         <div className="state-walkthrough">
           <div className="state-explanation">
@@ -89,7 +89,6 @@ export function WorldStateSection() {
           >
             <div className="panel-toolbar">
               <div>
-                <span className="eyebrow">Illustrative values</span>
                 <h3>world_state.json</h3>
               </div>
               <CopyButton
@@ -100,10 +99,6 @@ export function WorldStateSection() {
             <pre className="state-display">
               <code>{readableJson(exampleState)}</code>
             </pre>
-            <p className="code-note">
-              Schema follows the paper. Values demonstrate the interface; this
-              is not a recorded trial packet.
-            </p>
           </article>
         </div>
       </div>

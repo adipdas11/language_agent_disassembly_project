@@ -41,7 +41,7 @@ try {
     }
     if (width === 390) {
       await page.getByRole('button', { name: 'Toggle navigation' }).click()
-      await page.getByRole('navigation').getByRole('link', { name: 'Resources', exact: true }).click()
+      await page.getByRole('navigation').getByRole('link', { name: 'Instructions', exact: true }).click()
       assert.equal(new URL(page.url()).pathname, url.pathname)
     }
     assert.deepEqual(failures, [])
