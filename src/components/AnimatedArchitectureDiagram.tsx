@@ -92,8 +92,6 @@ export function AnimatedArchitectureDiagram() {
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState(0);
-  const [skillMode, setSkillMode] = useState<"manual" | "cycle">("cycle");
-  const [manualPlaying, setManualPlaying] = useState(false);
   const [skillReplay, setSkillReplay] = useState(0);
   const [connections, setConnections] = useState({
     width: 1200,
@@ -104,7 +102,6 @@ export function AnimatedArchitectureDiagram() {
   const running = playing && visible && pageVisible;
   const active = stages[step];
   const skill = skills[selected];
-  const skillsPlaying = pageVisible && (skillMode === "cycle" ? running : manualPlaying);
   const verified = step === 5;
   const stateText = `{
   "global_view": { "detections": ["lid", "screw"] },
@@ -169,7 +166,7 @@ export function AnimatedArchitectureDiagram() {
         if (b.l > a.r && b.t < a.b) {
           const startY = a.y;
           const endY = b.y;
-          const gutter = (a.r + b.l) / 2;
+          const gutter = a.r + (b.l - a.r) * 0.36;
           return {
             path: `M${a.r + 4},${startY} H${gutter} V${endY} H${b.l - 8}`,
             kind: "forward",
@@ -232,10 +229,7 @@ export function AnimatedArchitectureDiagram() {
       <div className="architecture-controls">
         <button
           className="icon-button"
-          onClick={() => {
-            setPlaying((value) => !value);
-            setManualPlaying(false);
-          }}
+          onClick={() => setPlaying((value) => !value)}
           aria-label={`${playing ? "Pause" : "Play"} architecture animation`}
         >
           {playing ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
@@ -252,14 +246,14 @@ export function AnimatedArchitectureDiagram() {
             <marker
               id="flow-arrow"
               markerUnits="userSpaceOnUse"
-              viewBox="0 0 12 12"
-              markerWidth="12"
-              markerHeight="12"
-              refX="10"
-              refY="6"
+              viewBox="0 0 16 16"
+              markerWidth="16"
+              markerHeight="16"
+              refX="14"
+              refY="8"
               orient="auto"
             >
-              <path d="M1 1 L10 6 L1 11" />
+              <path d="M2 2 L14 8 L2 14 Z" />
             </marker>
             <marker
               id="feedback-arrow"
@@ -370,31 +364,6 @@ export function AnimatedArchitectureDiagram() {
           data-flow-panel="skills"
         >
           {heading("skills", "04", "Skill library", Wrench)}
-          <div className="skill-playback-modes" role="group" aria-label="Skill playback mode">
-            <button
-              type="button"
-              aria-pressed={skillMode === "manual"}
-              onClick={() => {
-                setSkillMode("manual");
-                setManualPlaying(false);
-              }}
-            >
-              <Play aria-hidden="true" /> Play on click
-            </button>
-            <button
-              type="button"
-              aria-pressed={skillMode === "cycle"}
-              onClick={() => {
-                setSkillMode("cycle");
-                setSelected(0);
-                setSkillReplay(value => value + 1);
-                setManualPlaying(false);
-                setPlaying(true);
-              }}
-            >
-              <RefreshCw aria-hidden="true" /> Loop all skills
-            </button>
-          </div>
           <div
             className="parallel-skills"
             role="group"
@@ -412,8 +381,7 @@ export function AnimatedArchitectureDiagram() {
                   aria-pressed={selected === index}
                   onClick={() => {
                     setSelected(index);
-                    setSkillMode("manual");
-                    setManualPlaying(true);
+                    setPlaying(true);
                     setSkillReplay(value => value + 1);
                     setStep(3);
                   }}
@@ -421,15 +389,13 @@ export function AnimatedArchitectureDiagram() {
                   <ArchitectureClip
                     {...clip}
                     label={`${clip.label} skill video`}
-                    playing={skillsPlaying && selected === index}
+                    playing={running && selected === index}
                     loop={false}
                     restartKey={skillReplay}
                     onEnded={() => {
                       if (selected !== index) return;
-                      if (skillMode === "cycle") {
-                        setSelected(value => (value + 1) % skills.length);
-                        setSkillReplay(value => value + 1);
-                      } else setManualPlaying(false);
+                      setSelected(value => (value + 1) % skills.length);
+                      setSkillReplay(value => value + 1);
                     }}
                   />
                   <span>{skills[index].name}</span>
