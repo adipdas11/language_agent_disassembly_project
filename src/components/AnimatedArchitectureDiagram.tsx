@@ -174,23 +174,20 @@ export function AnimatedArchitectureDiagram() {
         }
         if (Math.abs(a.x - b.x) < 2)
           return { path: `M${a.x},${a.b + 4} V${b.t - 23}`, kind: "forward" };
-        const mid = a.b + (b.t - a.b) / 2;
+        const mid = (a.b + 4 + b.t - 23) / 2;
         return {
-          path: `M${a.x},${a.b + 4} C${a.x},${mid} ${b.x},${mid} ${b.x},${b.t - 23}`,
+          path: `M${a.x},${a.b + 4} V${mid} H${b.x} V${b.t - 23}`,
           kind: "forward",
         };
       });
       const a = boxes[4],
         state = boxes[1],
-        scene = boxes[0],
         rail = parent.width - 7;
-      const bottom = Math.max(...boxes.map((box) => box.b)) + 26;
       const feedback =
-        // On stacked layouts, use the outer gutter instead of crossing the
-        // device evaluation row below the full-width execution video.
-        state.t > scene.b || a.t > scene.b
-          ? `M${a.r + 4},${a.y} H${rail - 8} Q${rail},${a.y} ${rail},${a.y - 8} V${state.y + 8} Q${rail},${state.y} ${rail - 8},${state.y} H${state.r + 8}`
-          : `M${a.x},${a.b + 4} V${bottom - 8} Q${a.x},${bottom} ${a.x + 8},${bottom} H${rail - 8} Q${rail},${bottom} ${rail},${bottom - 8} V18 Q${rail},10 ${rail - 8},10 H${state.x + 8} Q${state.x},10 ${state.x},18 V${state.t - 23}`;
+        // Return through the outer gutter, clear of the device videos below.
+        a.l > state.r
+          ? `M${a.r + 4},${a.y} H${rail - 8} Q${rail},${a.y} ${rail},${a.y - 8} V18 Q${rail},10 ${rail - 8},10 H${state.x + 8} Q${state.x},10 ${state.x},18 V${state.t - 23}`
+          : `M${a.r + 4},${a.y} H${rail - 8} Q${rail},${a.y} ${rail},${a.y - 8} V${state.y + 8} Q${rail},${state.y} ${rail - 8},${state.y} H${state.r + 8}`;
       lines.push({ path: feedback, kind: "feedback" });
       setConnections({ width: parent.width, height: parent.height, lines });
     };

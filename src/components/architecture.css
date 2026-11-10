@@ -1,4 +1,4 @@
-/* One responsive scientific figure: four columns on desktop, a two-column
+/* One responsive scientific figure: three columns on desktop, a two-column
    figure on tablets, and a continuous vertical flow on narrow phones. */
 .architecture-section .section-shell {
   width: min(1360px, calc(100% - 72px));
@@ -31,8 +31,8 @@
   display: grid;
   position: relative;
   isolation: isolate;
-  grid-template-columns: 1.04fr 1.08fr 1.18fr 0.94fr;
-  grid-template-areas: "scene state execution devices" "scene agent execution devices" "scene skills execution devices";
+  grid-template-columns: 1.02fr 0.95fr 1.42fr;
+  grid-template-areas: "scene state skills" "scene agent execution" "devices devices devices";
   grid-template-rows: auto auto auto;
   gap: 52px 40px;
   padding: 42px 28px 46px 0;
@@ -646,9 +646,8 @@
 }
 .parallel-devices {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 .parallel-device {
@@ -803,7 +802,7 @@
   }
   .visual-flow-board {
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "scene state" "scene agent" "scene skills" "execution execution" "devices devices";
+    grid-template-areas: "scene state" "scene agent" "skills skills" "execution execution" "devices devices";
     gap: 52px 40px;
     padding-right: 28px;
   }
@@ -1024,6 +1023,7 @@
     font-size: 10px;
   }
   .parallel-devices {
+    grid-template-columns: 1fr;
     gap: 15px;
   }
   .parallel-device h4 {
