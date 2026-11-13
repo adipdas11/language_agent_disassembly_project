@@ -17,8 +17,8 @@ export interface PromptSection {
 }
 
 export const siteConfig: SiteContent = {
-  title: "REMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly",
-  shortTitle: "REMAKE",
+  title: "UNMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly",
+  shortTitle: "UNMAKE",
   showAuthors: true,
   authors: [
     {

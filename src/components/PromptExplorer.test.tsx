@@ -28,6 +28,7 @@ describe('prompt explorer', () => {
     expect(await screen.findByText('Mission template')).toBeInTheDocument()
     expect(screen.getByText('Action template')).toBeInTheDocument()
     expect(screen.getByText('{skill_name}')).toBeInTheDocument()
+    await user.click(screen.getByText('Action template'))
     await user.click(screen.getByRole('button', { name: /copy action template/i }))
     expect(screen.getByRole('button', { name: 'Copied' })).toBeInTheDocument()
   })

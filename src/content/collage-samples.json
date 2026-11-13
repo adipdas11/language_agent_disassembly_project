@@ -1,0 +1,368 @@
+{
+  "global": [
+    {
+      "src": "/assets/vision/collages/global-01.webp",
+      "category": "mini_pc",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-02.webp",
+      "category": "mini_pc",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-03.webp",
+      "category": "laptop",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-04.webp",
+      "category": "hdd",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-05.webp",
+      "category": "hdd",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-06.webp",
+      "category": "mini_pc",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-07.webp",
+      "category": "laptop",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-08.webp",
+      "category": "laptop",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-09.webp",
+      "category": "laptop",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-10.webp",
+      "category": "hdd",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-11.webp",
+      "category": "hdd",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-12.webp",
+      "category": "hdd",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-13.webp",
+      "category": "hdd",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-14.webp",
+      "category": "laptop",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-15.webp",
+      "category": "mini_pc",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-16.webp",
+      "category": "mini_pc",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-17.webp",
+      "category": "mini_pc",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-18.webp",
+      "category": "hdd",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-19.webp",
+      "category": "laptop",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "src": "/assets/vision/collages/global-20.webp",
+      "category": "mini_pc",
+      "width": 800,
+      "height": 800
+    }
+  ],
+  "local": [
+    {
+      "src": "/assets/vision/collages/local-01.webp",
+      "category": "session_20260423_165617",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-02.webp",
+      "category": "session_20260423_170109",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-03.webp",
+      "category": "session_20260423_165148",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-04.webp",
+      "category": "session_20260423_164555",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-05.webp",
+      "category": "session_20260423_165148",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-06.webp",
+      "category": "session_20260423_164555",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-07.webp",
+      "category": "session_20260423_165617",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-08.webp",
+      "category": "session_20260423_170109",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-09.webp",
+      "category": "session_20260423_165148",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-10.webp",
+      "category": "session_20260423_165617",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-11.webp",
+      "category": "session_20260423_164555",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-12.webp",
+      "category": "session_20260423_164555",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-13.webp",
+      "category": "session_20260423_170109",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-14.webp",
+      "category": "session_20260423_165148",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-15.webp",
+      "category": "session_20260423_165617",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-16.webp",
+      "category": "session_20260423_165617",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-17.webp",
+      "category": "session_20260423_165148",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-18.webp",
+      "category": "session_20260423_164555",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-19.webp",
+      "category": "session_20260423_170109",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "src": "/assets/vision/collages/local-20.webp",
+      "category": "session_20260423_170109",
+      "width": 640,
+      "height": 640
+    }
+  ],
+  "classification": [
+    {
+      "src": "/assets/vision/collages/classification-01.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-02.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-03.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-04.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-05.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-06.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-07.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-08.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-09.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-10.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-11.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-12.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-13.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-14.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-15.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-16.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-17.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-18.webp",
+      "category": "Contact_Aligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-19.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "src": "/assets/vision/collages/classification-20.webp",
+      "category": "Contact_Misaligned",
+      "width": 800,
+      "height": 600
+    }
+  ]
+}

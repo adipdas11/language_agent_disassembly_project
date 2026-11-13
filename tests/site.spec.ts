@@ -6,7 +6,7 @@ test("research story follows the paper with parallel content", async ({
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
-    "REMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly",
+    "UNMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly",
   );
   const sections = await page
     .locator("main > section")
@@ -23,29 +23,19 @@ test("research story follows the paper with parallel content", async ({
   ]);
   await expect(page.locator(".prompt-template")).toHaveCount(4);
   await expect(page.getByRole("tab")).toHaveCount(0);
-  await expect(page.locator("main details")).toHaveCount(0);
+  await expect(page.locator("main details")).toHaveCount(9);
   await expect(page.locator(".author")).toHaveCount(3);
   await expect(page.getByRole("button", { name: /coming soon/ })).toHaveCount(
     2,
   );
 });
 
-test("dataset figure expands and closes using the keyboard", async ({
-  page,
-}) => {
+test("dataset samples magnify on hover without opening a click viewer", async ({ page }) => {
   await page.goto("/#datasets");
-  await page
-    .getByRole("button", {
-      name: "Open full-size figure: Raw image",
-      exact: true,
-    })
-    .first()
-    .click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Close figure" }),
-  ).toBeFocused();
-  await page.keyboard.press("Escape");
+  const tile = page.locator(".collage-tile").first();
+  await tile.hover();
+  await expect.poll(() => tile.evaluate(node => getComputedStyle(node).transform)).not.toBe("none");
+  await tile.click();
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
 

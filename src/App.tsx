@@ -11,6 +11,9 @@ import { PromptExplorer } from "./components/PromptExplorer";
 import { ConclusionSection, Footer } from "./components/ClosingSections";
 import { siteConfig } from "./content/research-data";
 import "./components/v1.css";
+import "./components/v3.css";
+import "./components/v3-art-direction.css";
+import "./components/results-visuals.css";
 
 export default function App() {
   useEffect(() => applyAuthorMetadata(siteConfig.showAuthors), []);

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import data from "../content/manuscript-results.json";
 import { SectionHeader } from "./Primitives";
+import { OutcomeVisuals, HddTransferVisual, SkillVisuals, PerceptionVisuals } from "./ResultsVisuals";
 const tables = data.tables;
 const names = ["HDD", "Mini PC", "Laptop"];
 const metricNames: Record<string, string> = {
@@ -215,12 +216,15 @@ export function ResultsSection() {
         <div className="results-subheading">
           <h3>Failures and recovery</h3>
           <p>
-            These tables separate initially failed targets, autonomous recovery,
+            The plots separate initially failed targets, autonomous recovery,
             failures that spread to later steps, and physical assistance.
             Lower failure and assistance counts are better; a higher recovery
             ratio means more successful recovery per failed invocation.
           </p>
         </div>
+        <OutcomeVisuals />
+        <details className="results-reference">
+          <summary>Full execution-outcome tables <span>Exact means, sample SD and eligible trial counts</span></summary>
         <div className="device-results">
           {names.map((name, index) => {
             const base = tables.ablation[index * 2],
@@ -265,6 +269,7 @@ export function ResultsSection() {
             progression to the next target are excluded.
           </p>
         </div>
+        </details>
         <div className="additional-hdd">
           <div>
             <h3>Additional HDD</h3>
@@ -280,12 +285,16 @@ export function ResultsSection() {
               statistics use nine eligible trials.
             </p>
           </div>
+          <HddTransferVisual />
+          <details className="results-reference">
+            <summary>Full HDD comparison table <span>All seven reported metrics</span></summary>
           <Table
             title="HDD comparison"
             headers={["Metric", "Original HDD", "Additional HDD"]}
             rows={tables.additional_hdd}
             note="Ten trials per device; mean ± sample SD."
           />
+          </details>
         </div>
         <div className="results-subheading">
           <h3>Skill execution</h3>
@@ -293,9 +302,12 @@ export function ResultsSection() {
             An invocation is one complete request to unscrew, extract, or flip.
             Initial success measures completion on the first invocation;
             recovery calls are additional requests for the same target. The
-            table separates these calls from corrections performed inside a skill.
+            plots distinguish these calls from corrections performed inside a skill.
           </p>
         </div>
+        <SkillVisuals />
+        <details className="results-reference">
+          <summary>Full per-skill table <span>Every invocation count, success denominator and duration</span></summary>
         <Table
           title="Per-skill performance"
           headers={[
@@ -311,6 +323,7 @@ export function ResultsSection() {
           className="skill-table"
           note="Initial success is S₀/N₀. A complete initial invocation may include internal alignment or contact corrections. Counts span ten trials per device; duration is mean ± sample SD."
         />
+        </details>
         <div className="results-subheading">
           <h3>Perception performance</h3>
           <p>
@@ -320,6 +333,9 @@ export function ResultsSection() {
             box overlap. The classifier is evaluated by correct state labels.
           </p>
         </div>
+        <PerceptionVisuals />
+        <details className="results-reference">
+          <summary>Full perception tables <span>All classes, metrics and evaluation sample counts</span></summary>
         <div className="perception-metrics">
           <Table
             title="RF-DETR-Large"
@@ -357,6 +373,7 @@ export function ResultsSection() {
             />
           </div>
         </div>
+        </details>
         <p className="results-split-note">
           Perception scores use a 70/20/10 development split made after
           augmentation. Related image variants occur across partitions, so
