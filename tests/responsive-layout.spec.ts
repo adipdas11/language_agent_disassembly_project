@@ -33,7 +33,7 @@ for (const [width, height] of viewports) {
     ).toBeLessThanOrEqual(1);
     const clipped = await page
       .locator(
-        ".parallel-skills, .parallel-devices, .state-walkthrough, .prompt-list, .comparison-plots, .device-results, .perception-metrics, .prompt-layout",
+        ".parallel-skills, .parallel-devices, .runtime-fields, .process-stage, .prompt-list, .comparison-plots, .device-results, .perception-metrics, .prompt-layout",
       )
       .evaluateAll((groups) =>
         groups.flatMap((group) => {

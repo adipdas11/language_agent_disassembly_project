@@ -25,7 +25,7 @@ test("all three perception lanes and all skill and device clips are visible toge
     );
     expect(lanes).toEqual([true, true, true]);
     const clippedLabels = await page
-      .locator(".detection-label")
+      .locator("#architecture .detection-label")
       .evaluateAll((labels) =>
         labels
           .filter((label) => {
@@ -48,10 +48,10 @@ test("all three perception lanes and all skill and device clips are visible toge
     "Think",
     "Act",
   ]);
-  await expect(page.locator(".classification-label")).toHaveText(
+  await expect(page.locator("#architecture .classification-label")).toHaveText(
     "Contact Aligned100.0%",
   );
-  await expect(page.locator(".detection-boxes rect")).toHaveCount(11);
+  await expect(page.locator("#architecture .detection-boxes rect")).toHaveCount(11);
   const skillBox = (await page.locator('.skills-panel').boundingBox())!;
   const executionBox = (await page.locator('.execution-panel').boundingBox())!;
   const deviceBox = (await page.locator('.devices-panel').boundingBox())!;

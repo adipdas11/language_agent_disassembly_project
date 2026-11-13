@@ -1,31 +1,30 @@
 import { expect, test } from "@playwright/test";
 
-test("perception matrix has raw and labelled images, including aligned contact", async ({
-  page,
-}) => {
+test("three model collages show two rows of five samples without raw/labelled pairs", async ({ page }) => {
   await page.goto("/#datasets");
-  const viewer = page.locator(".dataset-samples");
-  await expect(viewer.locator("tbody tr")).toHaveCount(3);
-  await expect(viewer.locator(".research-figure")).toHaveCount(6);
-  await expect(viewer.locator(".figure-image-label")).toHaveText(
-    "Contact aligned",
-  );
+  const viewer = page.locator(".dataset-collages");
+  await expect(viewer.locator(".collage-model")).toHaveCount(3);
+  await expect(viewer.locator(".collage-tile img")).toHaveCount(30);
+  for (const grid of await viewer.locator(".collage-grid").all()) {
+    await expect(grid.locator("img")).toHaveCount(10);
+    const rowPositions = await grid.locator('.collage-tile').evaluateAll(tiles => [...new Set(tiles.map(tile => Math.round(tile.getBoundingClientRect().top)))]);
+    expect(rowPositions).toHaveLength(2);
+    for (const image of await grid.locator("img").all()) {
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+    }
+  }
+  await expect(viewer.locator(".figure-button")).toHaveCount(0);
   await expect(viewer.locator('img[src*="prediction"]')).toHaveCount(0);
-  for (const label of [
-    "Global device dataset",
-    "Local fastener dataset",
-    "Process-state dataset",
-  ])
-    await expect(
-      viewer.getByRole("link", { name: label, exact: true }),
-    ).toHaveCount(1);
+  for (const label of ["Global device dataset", "Local fastener dataset", "Process-state dataset"])
+    await expect(viewer.getByRole("link", { name: label, exact: true })).toHaveCount(1);
 });
 
 test("all seven unique diagram clips decode, including the wider execution view", async ({
   page,
 }) => {
   await page.goto("/");
-  const videos = page.locator("video");
+  const videos = page.locator("#architecture video");
   await expect(videos).toHaveCount(7);
   const sources = await videos.evaluateAll((items) =>
     items.map(

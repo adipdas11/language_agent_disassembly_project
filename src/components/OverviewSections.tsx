@@ -13,7 +13,7 @@ export function AbstractSection() {
         <SectionHeader
           id="abstract-title"
           title="Overview"
-          intro="REMAKE lets a dual-arm robot choose its next disassembly action as new parts become visible. A language agent uses observations and verified outcomes to select one of three programmed skills: unscrew, pick-and-extract, or flip."
+          intro="UNMAKE lets a dual-arm robot choose its next disassembly action as new parts become visible. A language agent uses observations and verified outcomes to select one of three programmed skills: unscrew, pick-and-extract, or flip."
         />
       </div>
     </section>
@@ -48,7 +48,7 @@ export function DatasetsSection() {
         <SectionHeader
           id="datasets-title"
           title="Perception"
-          intro="Three vision models answer different questions: which parts are visible, where the tool and screw are, and whether contact is aligned. Each row pairs a raw camera image with its supplied dataset labels, showing what that model is trained to recognise."
+          intro="Three complementary models identify visible components, refine fastener localisation and verify physical outcomes. These collages show the diversity of their training images; hover over a sample for a closer look."
         />
         <DatasetSamples />
       </div>

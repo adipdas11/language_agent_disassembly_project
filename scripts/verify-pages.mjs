@@ -14,6 +14,9 @@ try {
     await page.goto(url.href)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(page.locator('.prompt-template')).toHaveCount(4)
+    await expect(page.locator('.collage-tile img')).toHaveCount(30)
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('UNMAKE:')
+    await expect(page.locator('.results-summary')).toContainText('58.1% → 89.7%')
     for (const section of await page.locator('main > section').all()) await section.scrollIntoViewIfNeeded()
     for (const image of await page.locator('main img').all()) {
       await image.scrollIntoViewIfNeeded()
@@ -35,17 +38,26 @@ try {
         await video.evaluate(node => node.pause())
       }
       await page.getByRole('button', { name: 'Pause architecture animation', exact: true }).click()
-      await page.getByRole('button', { name: 'Open full-size figure: Raw image', exact: true }).first().click()
-      await expect.poll(() => page.getByRole('dialog').locator('img').evaluate((node) => node.naturalWidth)).toBeGreaterThan(0)
-      await page.keyboard.press('Escape')
+      await page.locator('.schema-reference > summary').click()
+      const packet = JSON.parse(await page.locator('.state-display').textContent())
+      assert.deepEqual(Object.keys(packet), ['global_view', 'local_view', 'assembly_state', 'force_torque'])
+      assert.equal(packet.assembly_state.last_outcome, 'failure')
+      assert.deepEqual(packet.assembly_state.removed, [])
+      await page.locator('.prompt-template > summary').filter({ hasText: 'System instruction' }).click()
+      await expect(page.locator('.prompt-template[open] .prompt-prose')).toContainText('structured world state')
+      const tile = page.locator('.collage-tile').first()
+      await tile.click()
+      await expect(page.getByRole('dialog')).toHaveCount(0)
+      await page.getByRole('group', { name: 'Skill execution device' }).getByRole('button', { name: 'Laptop', exact: true }).click()
+      await expect(page.getByLabel('Laptop: Pick & Extract', { exact: true })).toContainText('23 / 30')
     }
     if (width === 390) {
       await page.getByRole('button', { name: 'Toggle navigation' }).click()
-      await page.getByRole('navigation').getByRole('link', { name: 'Instructions', exact: true }).click()
+      await page.getByRole('navigation').getByRole('link', { name: 'Planning', exact: true }).click()
       assert.equal(new URL(page.url()).pathname, url.pathname)
     }
     assert.deepEqual(failures, [])
-    console.log(`Verified ${url.href} at ${width}px: assets, prompts, layout${width === 1440 ? ', seven videos and figure expansion' : ''}`)
+    console.log(`Verified ${url.href} at ${width}px: assets, prompts, layout${width === 1440 ? ', seven videos, schema, prompts and interactive results' : ''}`)
     await page.close()
   }
 } finally {

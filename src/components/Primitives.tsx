@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { Check, Clipboard, X } from "lucide-react";
+import { Check, Clipboard, X } from "./ResearchIcons";
 import { EvidenceSource } from "../content/research-data";
 import { sitePath } from "../lib/site-path";
 
@@ -21,7 +21,9 @@ export function SectionHeader({
 }) {
   return (
     <div className="section-header reveal">
-      <h2 id={id}>{title}</h2>
+      <div className="section-heading-row">
+        <h2 id={id}>{title}</h2>
+      </div>
       <p>{intro}</p>
     </div>
   );

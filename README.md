@@ -1,69 +1,42 @@
-# REMAKE — research website
+# UNMAKE — research website
 
-**REMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly**
+**UNMAKE: Language-Agent Planning over Structured World States for Adaptive Dual-arm Robotic Disassembly**
 
-This website combines the first deployment's white-and-blue design with the animated architecture from `v2`. Content, tables, runtime prompts, and JSON examples follow `RAL-mainV11.tex`.
+Published site: **https://adipdas11.github.io/language_agent_disassembly_project/**.
 
-## Review locally
+## Local development
 
 ```bash
 npm ci
 npm run dev -- --port 5180 --strictPort
 ```
 
-Local preview: **http://localhost:5180/**.
+Local preview: **http://localhost:5180/**. GitHub Pages publishes when `main` is updated. `devel_v3` preserves the reviewed development version; `v1` and `v2` retain earlier designs.
 
-Published site: **https://adipdas11.github.io/language_agent_disassembly_project/**.
+## Research presentation
 
-- `v1`: preserved reviewed version, based on the first deployment (`0e47c1d`).
-- `v2`: preserved UNMAKE redesign (`a942e23`).
-- `main`: the reviewed `v1` website merged for publication. The GitHub Pages workflow publishes on pushes to `main`; no push is needed for local review.
+The page follows overview → system architecture → perception → planning → agent instructions → results → conclusion. The design uses white surfaces with blue, teal, violet and green diagram headings, simple vector symbols, and text-only section headings.
 
-## Presentation
+- The architecture preserves three perception lanes, the programmed skill library, dual-arm execution, three device demonstrations and verification feedback to the world state. Only the selected skill video plays, cycling Unscrew → Pick-and-Extract → Flip. The combined execution video shows all devices at a further 2× recording speed. Editing ranges and crops are recorded in the existing media manifests.
+- Each model has a two-row collage of ten mixed samples. Detector samples retain supplied dataset segmentation masks; classifier samples are camera images. Samples magnify gently on hover or keyboard focus, without a click-to-zoom viewer.
+- The six-stage planning walkthrough animates perception → structured state → prompt context → agent selection → action formatting → execution verification. JSON appears a complete line at a time. Pause, replay, stage selection and previous/next controls support inspection. Automatic playback pauses offscreen, when the document is hidden, or for reduced-motion preferences.
+- The four-field state and prompt interfaces are schematic examples based on Section III and Figures 3–5 of `RAL_2026.pdf`. Camera samples and footage are illustrative context, not a synchronised recorded trial. The failure example preserves `last_outcome: failure` and an empty `removed` list.
+- Results use zero-based comparisons with separate count, percentage and time scales. Interactive views cover failure metrics, recovery, replanning, additional-HDD transfer, per-skill success/call accounting/duration, and class-wise perception scores. Exact means and sample SD remain visible, with full source tables in expandable references.
 
-The six architecture headers use distinct blue, teal, violet, green, cyan, and rose accents on white surfaces.
+The latest PDF informed the wording and interface flow. The numerical data and full prompt templates remain the extracted manuscript records in `src/content/manuscript-results.json`, `src/content/paper-interfaces.json`, and `public/content/system-prompts.txt`. The 45-trial original comparison and ten additional-HDD trials are reported separately. Summary statistics are unweighted device averages; recovery excludes trials without failed invocations. Perception scores use a post-augmentation development split and do not measure independent unseen-image generalisation.
 
-The page follows overview → architecture → perception → world state → agent instructions → results → conclusion. Sections have short headings and brief explanations, without numbering or information tabs. Decorative microcopy and image expansion overlays are omitted. The project icon is removed from the header and browser icons.
+Authors and resource availability are configured in `src/content/research-data.ts`. Paper/code download buttons remain disabled until those resources are released.
 
-The architecture keeps all three perception lanes, skills, and evaluated devices visible. The wider skill library sits directly above robot execution; the three device examples appear together below. Skills automatically play Unscrew → Pick-and-Extract → Flip in sequence and repeat. Only one skill plays at a time; its border is green. Selecting a skill starts it immediately, then the automatic cycle continues. Keyboard focus also uses a green outline. The animation pauses when offscreen, when the page is hidden, or for reduced-motion preferences; its control can explicitly resume it. Verified execution connects back to the world state.
-
-The execution block contains all three recorded device sequences at **2× recording speed**, using a wider crop without the separate static arm drawings. The evaluation videos contain each complete recorded device segment at the recording's playback speed. These are edited demonstrations, not uncut footage of every target step. Native video controls and timelines are hidden to keep the figure clean; playback follows the diagram animation control. It shows both arms and retains the recording's original tool-camera inset; it is not footage from a new external camera. Crop coordinates and time ranges are recorded in `public/assets/architecture/clips.json` and `public/assets/actions/clips.json`. Opening and summary slides are excluded. The source already contains accelerated passages; the combined video applies a further 2× speed-up. No experiment video appears above the method.
-
-## Paper content
-
-The source manuscript stays outside the repository. To regenerate its active tables, four prompt listings, and three JSON examples:
-
-```bash
-python3 scripts/extract-paper-results.py /home/adip/Downloads/RAL-mainV11.tex
-```
-
-Generated files:
-
-- `src/content/manuscript-results.json`: all seven V11 result tables.
-- `src/content/paper-interfaces.json`: world-state, decision, and action-request examples.
-- `public/content/system-prompts.txt`: the four prompt listings, loaded at runtime.
-
-Controller results are the physical-trial summaries reported in V11: 45 original trials and ten additional HDD trials, reported separately. Charts compare autonomous completion and elapsed time on their own scales; labels show mean ± sample SD. Summary statistics are unweighted device averages. Recovery excludes trials without failed invocations. Perception scores use the paper's post-augmentation development split and are not independent unseen-image validation.
-
-JSON values are illustrative interface examples. The world-state example records a failed invocation with an empty removed list, exactly as the paper does. The website does not present it as a successful removal or a recorded trial trace.
-
-Authors and links are configured in `src/content/research-data.ts`. Paper and code links remain disabled until publication. The `showAuthors` switch also controls author metadata and email actions.
-
-## Checks
+## Validation and production preview
 
 ```bash
 npm test
 npm run test:e2e
 npm run build
 npm run preview -- --port 5181 --strictPort
-```
-
-Production builds use `/language_agent_disassembly_project/`. To check the local production preview, including all media, prompt loading, image expansion, and the project base path:
-
-```bash
 node scripts/verify-pages.mjs
 ```
 
-Browser checks cover 17 viewport sizes from 320 to 2560 pixels, reduced motion, skill selection, end-driven skill cycling, full-sequence duration and seeking, feedback connector geometry, seven video decodes, keyboard navigation, and desktop/phone accessibility.
+Production assets use the `/language_agent_disassembly_project/` base path. The verification script accepts a live URL as its first argument and checks the site, media, collages, prompts, schemas, results and mobile navigation under that path.
 
-The aligned-contact example is an original `Contact_Aligned` image from version 5 of the supplied process-state dataset. It shows the bit seated in the screw, and was checked using the supplied classifier. Its filename and provenance are recorded in `public/assets/vision/samples.json`; no signed download URL or credential is included. Refresh it from an exported folder-format archive with `scripts/refresh-aligned-sample.py`.
+Browser tests cover viewport widths from 320 to 2560 pixels, reduced motion, playback controls and skill cycling, feedback routing, hover magnification, line-by-line JSON, exact result values and denominators, reference panels, and desktop/phone accessibility.

@@ -10,7 +10,7 @@ import {
   RefreshCw,
   ShieldCheck,
   Wrench,
-} from "lucide-react";
+} from "./ResearchIcons";
 import actionClips from "../../public/assets/actions/clips.json";
 import experimentClips from "../../public/assets/architecture/clips.json";
 import { sitePath } from "../lib/site-path";
@@ -78,6 +78,7 @@ function ReActLoop() {
       <span className="flow-phase phase-1">Think</span>
       <span className="flow-phase phase-2">Act</span>
       <div className="react-centre">
+        <BrainCircuit aria-hidden="true" />
         <strong>ReAct</strong>
       </div>
     </div>

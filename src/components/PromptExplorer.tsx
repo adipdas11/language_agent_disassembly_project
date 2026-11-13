@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { AlertCircle, ArrowRight } from "lucide-react";
+import { AlertCircle, ChevronDown } from "./ResearchIcons";
 import type { PromptSection } from "../content/research-data";
 import interfaces from "../content/paper-interfaces.json";
 import { readableJson } from "../content/world-state";
@@ -78,17 +78,9 @@ export function PromptExplorer() {
         <SectionHeader
           id="prompts-title"
           title="Agent instructions"
-          intro="The LangGraph/GPT-5.1 agent uses these prompts to turn the world state into a skill request. Fixed instructions describe the task and skills; reasoning and action stages use the latest observations to choose and format the next step. The prompt text and example responses follow the paper."
+          intro="The prompt layer combines fixed task instructions with the latest world state. Reasoning selects a skill and target; action formatting prepares the request for execution. Open a reference below to inspect the templates and response fields."
         />
-        <div className="prompt-flow">
-          <span>World state</span>
-          <ArrowRight />
-          <span>Decision</span>
-          <ArrowRight />
-          <span>Skill request</span>
-          <ArrowRight />
-          <span>Verified feedback</span>
-        </div>
+        <a className="prompt-animation-link" href="#state">Follow the animated planning sequence ↑</a>
         {status === "loading" && <p role="status">Loading prompt file…</p>}
         {status === "error" && (
           <div className="prompt-error" role="alert">
@@ -105,22 +97,14 @@ export function PromptExplorer() {
                   ? interfaces.action_response
                   : null;
             return (
-              <article
+              <details
                 className={`prompt-template ${response ? "prompt-with-response" : ""}`}
                 key={section.title}
               >
-                <header>
-                  <h3>{section.title}</h3>
-                  <CopyButton
-                    value={section.body}
-                    label={`Copy ${section.title}`}
-                  />
-                </header>
-                {descriptions[section.title] && (
-                  <p className="prompt-description">{descriptions[section.title]}</p>
-                )}
+                <summary><span><strong>{section.title}</strong>{descriptions[section.title] && <span>{descriptions[section.title]}</span>}</span><ChevronDown aria-hidden="true" /></summary>
                 <div className="prompt-layout">
                   <div className="prompt-body">
+                    <CopyButton value={section.body} label={`Copy ${section.title}`} />
                     <div className="prompt-prose">
                       <PromptText text={section.body} />
                     </div>
@@ -144,7 +128,7 @@ export function PromptExplorer() {
                     </div>
                   )}
                 </div>
-              </article>
+              </details>
             );
           })}
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, Play, X } from "lucide-react";
+import { Menu, Play, X } from "./ResearchIcons";
 import { siteConfig } from "../content/research-data";
 import { ComingSoon } from "./Primitives";
 import { sitePath } from "../lib/site-path";
@@ -9,7 +9,7 @@ const navItems = [
   ["architecture", "System"],
   ["datasets", "Perception"],
   ["actions", "Actions"],
-  ["prompts", "Instructions"],
+  ["state", "Planning"],
   ["results", "Results"],
 ];
 
@@ -50,9 +50,9 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <a className="brand" href="#top" aria-label="REMAKE home">
+      <a className="brand" href="#top" aria-label="UNMAKE home">
         <span>
-          <strong>REMAKE</strong>
+          <strong>UNMAKE</strong>
         </span>
       </a>
       <button
@@ -145,7 +145,7 @@ export function Hero() {
       </div>
       <div className="hero-title-content">
         <h1 id="hero-title">
-          <em>REMAKE:</em> Language-Agent Planning over Structured World States
+          <em>UNMAKE:</em> Language-Agent Planning over Structured World States
           for Adaptive Dual-arm Robotic Disassembly
         </h1>
 

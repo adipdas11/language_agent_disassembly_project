@@ -1,25 +1,33 @@
-import { ExternalLink } from 'lucide-react'
-import samples from '../../public/assets/vision/samples.json'
+import { ExternalLink } from './ResearchIcons'
+import collages from '../content/collage-samples.json'
 import { datasets } from '../content/research-data'
-import { Figure } from './Primitives'
+import { sitePath } from '../lib/site-path'
 
 const models = [
-  { id: 'global', model: 'RF-DETR-Large', sampleId: 'global-2', dataset: datasets[1], purpose: 'Finds parts and fasteners in the global camera view.' },
-  { id: 'local', model: 'RF-DETR-Small', sampleId: 'local-2', dataset: datasets[0], purpose: 'Locates the screwdriver and target screw in the tool camera view.' },
-  { id: 'state', model: 'YOLOv11-Nano', sampleId: 'state-2', dataset: datasets[2], purpose: 'Classifies tool contact; this example is labelled aligned.' },
+  { id: 'global' as const, model: 'RF-DETR-Large', name: 'Scene-level perception', dataset: datasets[1], purpose: 'Components, fasteners and holes across the HDD, mini PC and laptop.', note: 'Supplied segmentation masks · global camera', colour: 'blue' },
+  { id: 'local' as const, model: 'RF-DETR-Small', name: 'Local fastener perception', dataset: datasets[0], purpose: 'The screw, screw head, tool head and hole used for close-range localisation.', note: 'Supplied segmentation masks · tool camera', colour: 'teal' },
+  { id: 'classification' as const, model: 'YOLOv11-Nano', name: 'State verification', dataset: datasets[2], purpose: 'Aligned and misaligned contact examples. The model also recognises component removal.', note: 'Classification samples · camera images', colour: 'violet' },
 ]
 
+const categoryName = (category: string) => ({ hdd: 'HDD', mini_pc: 'Mini PC', laptop: 'Laptop' }[category] ?? category.replaceAll('_', ' '))
+
 export function DatasetSamples() {
-  return <div className="dataset-samples"><table className="perception-matrix">
-    <caption className="sr-only">Raw and labelled samples for the three perception models</caption>
-    <thead><tr><th scope="col">Vision model</th><th scope="col">Raw image</th><th scope="col">Labelled image</th></tr></thead>
-    <tbody>{models.map((model) => {
-      const sample = samples.find((item) => item.id === model.sampleId)!
-      return <tr className="dataset-model sample-comparison" key={model.id}>
-        <th scope="row" className="model-row-heading"><h3>{model.model}</h3><p>{model.purpose}</p><a href={model.dataset.href} target="_blank" rel="noreferrer">{model.dataset.label}<ExternalLink aria-hidden="true" /></a></th>
-        <td data-view="Raw image"><Figure src={sample.raw} alt={`${model.model}: ${sample.label}, raw camera image`} caption="Raw image" showCaption={false} contain /></td>
-        <td data-view="Labelled image"><Figure src={sample.annotations ?? sample.raw} alt={`${model.model}: ${sample.label}, supplied dataset labels`} caption="Labelled image" showCaption={false} imageLabel={sample.annotations ? undefined : sample.annotationClasses.join(' · ')} contain /></td>
-      </tr>
-    })}</tbody>
-  </table></div>
+  return <div className="dataset-collages">
+    {models.map(model => <article className={`collage-model collage-${model.colour}`} key={model.id} aria-labelledby={`collage-${model.id}-title`}>
+      <header className="collage-description">
+        <span className="collage-purpose">{model.name}</span>
+        <h3 id={`collage-${model.id}-title`}>{model.model}</h3>
+        <p>{model.purpose}</p>
+        <a href={model.dataset.href} target="_blank" rel="noreferrer">{model.dataset.label}<ExternalLink aria-hidden="true" /></a>
+      </header>
+      <figure className={`collage-figure collage-${model.id}`}>
+        <div className="collage-grid" aria-label={`${model.model}: 10 representative dataset images in two rows`}>
+          {collages[model.id].slice(0, 10).map((sample, i) => <div className="collage-tile" tabIndex={0} key={sample.src}>
+            <img src={sitePath(sample.src)} width={sample.width} height={sample.height} loading="lazy" alt={`${model.model}, sample ${i + 1}: ${model.id === 'classification' ? categoryName(sample.category) : model.id === 'global' ? `${categoryName(sample.category)} with supplied segmentation masks` : 'tool-camera fastener with supplied segmentation masks'}`} />
+          </div>)}
+        </div>
+        <figcaption>{model.note}</figcaption>
+      </figure>
+    </article>)}
+  </div>
 }
