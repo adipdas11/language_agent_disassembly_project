@@ -1,0 +1,914 @@
+{
+  "annotation_note": "Segmentation overlays use the supplied polygon annotations, not predicted masks. Classification images use the original dataset class labels; the classifier has no masks.",
+  "outputs": [
+    {
+      "file": "RF_DETR_Large_segmentation_collage.png",
+      "pixels": [
+        5528,
+        4418
+      ],
+      "dpi": 600,
+      "visible_text": false,
+      "panels": [
+        {
+          "panel": "a",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_160539_004103_png.rf.35c00a1004caa49a10becf2c46338920.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "245091d7ddc881ba9311fda82f7418bb5ccbe038d833291fb7e9028e103893c7",
+          "annotations": {
+            "3": 1,
+            "4": 3,
+            "5": 1,
+            "6": 4,
+            "7": 1,
+            "12": 1,
+            "15": 1
+          }
+        },
+        {
+          "panel": "b",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_160707_070883_png.rf.31b7d353eda3626c1632673480d2acef.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "ff53b8da65e83a9683e965e3b9d72a863967397e6626c7a112898d79b5435fa9",
+          "annotations": {
+            "3": 1,
+            "4": 3,
+            "5": 1,
+            "6": 4,
+            "7": 1,
+            "12": 1,
+            "15": 2
+          }
+        },
+        {
+          "panel": "c",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_155424_125417_png.rf.cc3504dda5617834e01612824785b1ec.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "4ccd23782964ff97f6ed31ad6295791724c2eae90650b28c983a871f2041bdc4",
+          "annotations": {
+            "0": 1,
+            "1": 2,
+            "7": 1,
+            "8": 6,
+            "9": 1,
+            "13": 1,
+            "12": 1,
+            "14": 5,
+            "15": 4,
+            "16": 1,
+            "17": 1
+          }
+        },
+        {
+          "panel": "d",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_163720_798078_png.rf.2ae3f197113470cf92cc774671fef7a2.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "2e9a1fdd11f28ae590f435da5976772b3ba0a5e816d194606639adc7978bfab9",
+          "annotations": {
+            "11": 7,
+            "10": 1
+          }
+        },
+        {
+          "panel": "e",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_162808_267734_png.rf.73829e7f023d1327abd19104d46a3cc6.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "a8e35efcc90c1b566d22c775a91605a0ae415f8df9f296390b28b50b41954f6b",
+          "annotations": {
+            "15": 4,
+            "9": 4,
+            "12": 1,
+            "2": 1
+          }
+        },
+        {
+          "panel": "f",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_161155_470913_png.rf.a191c6da5bb39be68165f7d225efe3f1.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "61cb3e0bdf7153c993d3871a4c6809c0ea8991022e1e3708e02c0e9b38527913",
+          "annotations": {
+            "3": 1,
+            "4": 3,
+            "5": 1,
+            "6": 4,
+            "7": 1,
+            "12": 1,
+            "15": 1
+          }
+        },
+        {
+          "panel": "g",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_155947_725324_png.rf.7f5c9423ed824d8bdcc2779456a8ca37.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "77063a8a1748b3959844a94aeb63d08fcda9a47cf25f4a87c01d4fd6ab192558",
+          "annotations": {
+            "0": 1,
+            "1": 2,
+            "7": 1,
+            "8": 6,
+            "9": 1,
+            "12": 1,
+            "13": 1,
+            "14": 6,
+            "15": 4,
+            "16": 1,
+            "17": 1
+          }
+        },
+        {
+          "panel": "h",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_155927_392093_png.rf.6b6cfc054860837c6033e8c8ed78ba4d.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "8c386aa4229916a7c53d523f51868ac2b79c757cf76891d2362df26df29c17d3",
+          "annotations": {
+            "0": 1,
+            "1": 2,
+            "7": 1,
+            "8": 6,
+            "9": 2,
+            "13": 1,
+            "12": 1,
+            "14": 6,
+            "15": 3,
+            "16": 1,
+            "17": 1
+          }
+        },
+        {
+          "panel": "i",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/test/images/orbbec_155609_925488_png.rf.2d732eff7f8d4b03ac5b6f22787c31cd.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "513773f54051212c37505ec320ab99d8e1516c0860d61789f60599d75c39ff97",
+          "annotations": {
+            "0": 1,
+            "1": 2,
+            "7": 1,
+            "8": 6,
+            "9": 2,
+            "12": 1,
+            "13": 1,
+            "14": 6,
+            "15": 3,
+            "16": 1,
+            "17": 2
+          }
+        },
+        {
+          "panel": "j",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_163505_998017_png.rf.faaaee86a8dea22aa388103471fbd776.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "fa8f8d65a42e110cca44fabc8574c3b3daad7287a817880f46aea53522f2aaee",
+          "annotations": {
+            "11": 7,
+            "10": 1
+          }
+        },
+        {
+          "panel": "k",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/valid/images/orbbec_163037_131276_png.rf.3de913eb8e1b226ca1e7ffcc5544a012.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "5b65e2b2b3954177e6159f51a033190deca9eee1bb438e8d5fbe847cdcd94f27",
+          "annotations": {
+            "10": 1,
+            "11": 7
+          }
+        },
+        {
+          "panel": "l",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_162629_066595_png.rf.c7b79e25abea088f0c95d41eef5bf5d6.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "8aeeeb3c864eb539e4652aafd87fa6d08f694232259800d5cfeaf280e0d589b9",
+          "annotations": {
+            "2": 1,
+            "12": 1,
+            "9": 5,
+            "15": 4
+          }
+        },
+        {
+          "panel": "m",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_162126_737582_png.rf.e8579e2fc0e616fc921f88e217a14a6b.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "08a1281f2315738cb67e585322b2c182443637fe8aea1abf2cd35a95ac56a52c",
+          "annotations": {
+            "2": 1,
+            "9": 5,
+            "12": 1,
+            "15": 4
+          }
+        },
+        {
+          "panel": "n",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_155337_059896_png.rf.455222a5c790e7f602d932e2d231f45b.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "21655b832af324f736c0afc426611872e17d31cad83a074980536f0bd88833af",
+          "annotations": {
+            "0": 1,
+            "1": 2,
+            "7": 1,
+            "8": 6,
+            "9": 2,
+            "12": 1,
+            "13": 1,
+            "14": 4,
+            "15": 3,
+            "16": 1,
+            "17": 2
+          }
+        },
+        {
+          "panel": "o",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_160746_204310_png.rf.ede288c0956444b0712801c21b07e832.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "ac6a253e1fee241579c88c01f10e8d1a7077700a73ea3dec4febd25cae83735b",
+          "annotations": {
+            "3": 1,
+            "4": 3,
+            "5": 1,
+            "6": 4,
+            "7": 1,
+            "12": 1,
+            "15": 1
+          }
+        },
+        {
+          "panel": "p",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/test/images/orbbec_161101_937456_png.rf.a6867e4f21dcbabc6b1dba80eaacf2b4.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "0c320327b39be8dfc58deb979d35b2746d1ae78d738126cf149a932394861879",
+          "annotations": {
+            "3": 1,
+            "4": 3,
+            "7": 1,
+            "5": 1,
+            "6": 4,
+            "12": 1,
+            "15": 2
+          }
+        },
+        {
+          "panel": "q",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_160654_004422_png.rf.82639f79be75fc2478d975c6af9daaf4.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "f4b7b828b29b88177db6c8cf54495ca8560d9c44e0b4bd8a5884d77b64525e66",
+          "annotations": {
+            "3": 1,
+            "4": 3,
+            "7": 1,
+            "5": 1,
+            "6": 4,
+            "12": 1,
+            "15": 1
+          }
+        },
+        {
+          "panel": "r",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_162459_202142_png.rf.c1f4f5cb7ca3fb1eaf46bcf9bc61d02f.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "7bc43acdd3c20306bd9a0a6387dceb40070c620fb2a58cdcd755e0b05979b7b7",
+          "annotations": {
+            "9": 4,
+            "15": 4,
+            "12": 1,
+            "2": 1
+          }
+        },
+        {
+          "panel": "s",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/valid/images/orbbec_154904_792201_png.rf.11b307518cde1fca76304ff194d0de4e.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "8f5812d53899ddc74a2621d1f31aa7e232f6262458f5e2749dd49b439c312ff6",
+          "annotations": {
+            "0": 1,
+            "1": 2,
+            "7": 1,
+            "8": 6,
+            "9": 2,
+            "12": 1,
+            "13": 1,
+            "14": 5,
+            "15": 3,
+            "16": 1,
+            "17": 2
+          }
+        },
+        {
+          "panel": "t",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 1 (Segmentation)/rfdetr/dataset_yolo11_seg_1080/train/images/orbbec_161342_137575_png.rf.faacade22e7ae448886081884e1ff219.jpg",
+          "source_pixels": [
+            1088,
+            1088
+          ],
+          "sha256": "4c4b0fc6dc282d83819fe0120f5f613135c80605e8d45c55bb516fe1bbccef02",
+          "annotations": {
+            "3": 1,
+            "4": 3,
+            "5": 1,
+            "6": 4,
+            "7": 1,
+            "12": 1,
+            "15": 1
+          }
+        }
+      ]
+    },
+    {
+      "file": "RF_DETR_Small_segmentation_collage.png",
+      "pixels": [
+        3252,
+        2599
+      ],
+      "dpi": 600,
+      "visible_text": false,
+      "panels": [
+        {
+          "panel": "a",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165642_287487_png.rf.a5b98c59a55beafec3a8484dd6ddbd13.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "72c019efb2b6e08704a8063d563f689ec7ead17a3201bf3cdfb8bf013db86231",
+          "annotations": {
+            "1": 3,
+            "2": 2,
+            "3": 1
+          }
+        },
+        {
+          "panel": "b",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/test/images/tool_camera_170444_593719_png.rf.2c9a4d206f5e30979e54387325ac4118.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "3b935a51771755c36f78e6e0bf132b184e38a81eb84ba8e64c518b4ad76c3df2",
+          "annotations": {
+            "1": 2,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "c",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/test/images/tool_camera_165310_055568_png.rf.536422a48fbf73b90b64178c2509f310.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "737d024a483b3998e242a32377efd415035b38c575889aba6b2580a34503cad3",
+          "annotations": {
+            "1": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "d",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_164912_314525_png.rf.e9c2b6e77b1900629e64fb10a384275a.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "e224f0e8a592631e6961dff0c9a985cb5da1475923d9c153fce7c122f0063fac",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "e",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165420_122158_png.rf.c3dc2e5a9129366ff2e07141570baaa5.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "7bc5e5cb4174f997a339092492b209fb905ced7eac9bb9537e4b872be56fda3d",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "f",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165034_047699_png.rf.4266e85edcccb4eea2be3416143075a6.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "c338424b73082316ad38654c1b020a1c24c7959a342d996416f1b542e0e40cfa",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "0": 1
+          }
+        },
+        {
+          "panel": "g",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165721_620850_png.rf.7f0d817b27360298f2125dc9263bde85.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "eda8d5a8d1dbb064ba95508f38eec6cc48d7b86b5df77d65309c49c52e6c279a",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "h",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_170313_527281_png.rf.fc176dcc5012f67f4ade0ab562c2fb05.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "378c690ca21e4714018643b474f7958251c7cddaad8865c726ef1330cdb9faa3",
+          "annotations": {
+            "3": 1,
+            "1": 1
+          }
+        },
+        {
+          "panel": "i",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/test/images/tool_camera_165505_522244_png.rf.25f01889c85ef6ffe70613e78f25fddd.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "55247529cb20094e4b4cf87a2a510d6a246f69faf943b4cf9b4d487c2b1552e2",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "j",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165947_220858_png.rf.e1b0429e86a61391e0fbe746876f1fd8.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "a5d193868f4985196f3ba75c925de1d3a83d4983e6a434857f481aa74362c861",
+          "annotations": {
+            "1": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "k",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165137_047806_png.rf.fc7d1c87dd5e7a101750511013dbebdf.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "32a4f41798db0e851161aaf7b0299a2de324c76c597a6f19b522315a8c4b3803",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "l",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_164956_981304_png.rf.54b4618643e2818481db7917aadd5f8c.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "386a93fb2030efce8e6d048953572d9e37209c4e9b1d073415391b6b1da3e704",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "m",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/valid/images/tool_camera_170209_460403_png.rf.29c507502e809cf596fedeef64240d08.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "eb70bb4df0b5582c698608cc3f39603f752cadb1cf2bc5d489599162bdbc95d5",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "n",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/test/images/tool_camera_165317_255582_png.rf.16fe41f539d2e2945c9e83d31465c499.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "bf5559016512ea5c69e13105462f4f01383f069f9403e27b0e308dab53a0f3d9",
+          "annotations": {
+            "1": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "o",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165848_420897_png.rf.7829f24e2091e1f79e79edcdd484b196.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "1374b1b1919af2a17c71029964ebcd35c3e12be7604d5d64464609ef281840ba",
+          "annotations": {
+            "1": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "p",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165744_954345_png.rf.ab419a39e53c21049fab28a65c03b114.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "6c0b9781fab0a6f58698c604c742cc7286af9b026b90dbc0d4685d3e1ecbfac0",
+          "annotations": {
+            "1": 1,
+            "0": 2,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "q",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_165218_455547_png.rf.0ab64724fc2ae3ac739e98d9f79e509b.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "d8232253978e5c90126fec452cdcbfc483eecbf951a06cb497d38bc887092377",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "0": 1
+          }
+        },
+        {
+          "panel": "r",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_164809_381101_png.rf.987ef390ccaa76ecfbcf4221e9efce7d.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "0d62ba431c8ec8dfd78a079d56ee040864868b169daf886f362a6da7afd31508",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "s",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_170144_193861_png.rf.d944e6f09e6adcee3b5761283e40acaa.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "201cfb9b50b07397b790890b10fd96b0c54fd88fd1cd780cd68bb841170f2783",
+          "annotations": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+          }
+        },
+        {
+          "panel": "t",
+          "file": "/home/adip/workspace/disassembly_ws/src/agentic_disassembly/vision_training/Project 2 (Tool-Screw)/rfdetr/dataset_yolo11_seg_640/train/images/tool_camera_170235_126971_png.rf.85d51242cd793683e267c08fc8ad49aa.jpg",
+          "source_pixels": [
+            640,
+            640
+          ],
+          "sha256": "f57f36b80187880f6408495980293a58c6b308c75b276282c5e47016e21690e4",
+          "annotations": {
+            "3": 1,
+            "1": 1,
+            "2": 1,
+            "0": 1
+          }
+        }
+      ]
+    },
+    {
+      "file": "YOLOv11_Nano_classification_collage.png",
+      "pixels": [
+        7316,
+        4407
+      ],
+      "dpi": 600,
+      "visible_text": false,
+      "panels": [
+        {
+          "panel": "a",
+          "file": "/tmp/disassembly-collage-source/classifier/BDpXKNrhf283ov4gKgDt.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "5b049b2f04b167b33e1879dcda8f6a9d8c9021a4685774777a6957539c37f084",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "b",
+          "file": "/tmp/disassembly-collage-source/classifier/0Rc1Z04pNF9ENVd4oxRc.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "4b2170f3f22ca63fcc10e68a616f7a746423724a5f9d713d62116b082a22427b",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "c",
+          "file": "/tmp/disassembly-collage-source/classifier/qT3QziqU2Feai4nz0ZNO.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "fa19cbef9f7af3a303eae47dde4a4654601da68fb8ce3c6546aeeccf58bf00ba",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "d",
+          "file": "/tmp/disassembly-collage-source/classifier/QwPBCgL2aWOZP82JD5dt.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "c2d6ecd33d313f4795fa188087748ebc52044819dc6fdf982a1d7c37f4913f8c",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "e",
+          "file": "/tmp/disassembly-collage-source/classifier/1s7fA5vZTs2pU8fmCzKw.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "bb35e513a4637ee11a296f3b2fe8b653b604fc34c3bf59c74046c3101e6af6f6",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "f",
+          "file": "/tmp/disassembly-collage-source/classifier/4iQ7BHFgVlyFq0Epd1Up.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "f131dcc5fa3f8895699c095123037fe8517273d8d384ed69d485d59bdecc0f0e",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "g",
+          "file": "/tmp/disassembly-collage-source/classifier/2BDrfn2H2A2D98U90u4D.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "8f037d0d67f043bd6455ce4826f9d0c9d186bdbb2aac4bba34465101375c0a39",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "h",
+          "file": "/tmp/disassembly-collage-source/classifier/Por5EIFw7fsOZ6kVM02T.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "10e6bc7626d5a98c5a873bde42428198aef8cf9b2b96d23db5e90514e67934e1",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "i",
+          "file": "/tmp/disassembly-collage-source/classifier/N7BtkMQfxZ2pVlj4Owit.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "00c9f6be77407f517939396050d46371103b896c1b954c685c8a28e093769595",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "j",
+          "file": "/tmp/disassembly-collage-source/classifier/EN3fsTfXMdCKGYX0xEuo.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "46093c3918d515045831514b205216b63363b75a19ed3c98de8b854d3b242a5b",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "k",
+          "file": "/tmp/disassembly-collage-source/classifier/RWMFwcqMJjIfFzzYnQ4W.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "30e06cf985f5fbb84526e7dd0c4d5e6c266ed684f0acab9ace9ce0498c6c8ad7",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "l",
+          "file": "/tmp/disassembly-collage-source/classifier/1IDzSCHlRf2Bm49v25jX.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "476f2b981289004916eac115dcb9ec35e6cc8bf4257205ab118dfdc571ab9246",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "m",
+          "file": "/tmp/disassembly-collage-source/classifier/ZjpUjcyLhGFTPCU26qaI.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "8cef0445dfa727cfb08767d43680dc6ab7a643ceeef58c7be4c6ba7415941761",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "n",
+          "file": "/tmp/disassembly-collage-source/classifier/GyGlsBkXoNVyaBwAjeT4.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "fd23497041aff6b2fdc7bf2c3f7a0cb051264f73e2e42f21791707694d46d929",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "o",
+          "file": "/tmp/disassembly-collage-source/classifier/5oTdkvyPajFBtO2MQcJy.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "e8b79966b8133b49d0008c475bc896741e4d7634c0bf577202e869a5c5b25999",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "p",
+          "file": "/tmp/disassembly-collage-source/classifier/Hw8xG6jFyDa8LasG5eLx.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "8b55f17c4541549768c89c30f2ae6cdd98e1a74b57f5874c88b498917b8ec487",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "q",
+          "file": "/tmp/disassembly-collage-source/classifier/VQ8MiwTPf6XqFO6hPwfS.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "a6e00c56a802989182eae6750e89d78d8e467968f844684aec271a33a4abd721",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "r",
+          "file": "/tmp/disassembly-collage-source/classifier/C3HMSD06g8oAKiLMMVAk.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "f8e0dbceb479faebef675115c4c95cc16a465768e40742e3d8c943b1bee20a2f",
+          "annotations": {
+            "Contact_Aligned": 1
+          }
+        },
+        {
+          "panel": "s",
+          "file": "/tmp/disassembly-collage-source/classifier/Qo38yr2O2ohnIQxMXqF1.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "f67ea6fc25a3895104c9aa50b844f6628951f7af2ef60424be9546fad9412b46",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        },
+        {
+          "panel": "t",
+          "file": "/tmp/disassembly-collage-source/classifier/AAnXPcsejx2xDiSfkBSq.jpg",
+          "source_pixels": [
+            1440,
+            1080
+          ],
+          "sha256": "550b16daa1011f1c2e25a9e87c7344b141c5765a87c15b3b6c3f0ad8445817d1",
+          "annotations": {
+            "Contact_Misaligned": 1
+          }
+        }
+      ]
+    }
+  ]
+}
